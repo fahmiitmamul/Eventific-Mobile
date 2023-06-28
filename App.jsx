@@ -38,10 +38,10 @@ const App = () => {
           <NavigationContainer>
             <Stack.Navigator screenOptions={{headerShown: false}}>
               <Stack.Screen name="PurchaseTicket" component={PurchaseTicket} />
+              <Stack.Screen name="SignUp" component={SignUp} />
               <Stack.Screen name="Profile" component={Profile} />
               <Stack.Screen name="PaymentMethod" component={PaymentMethod} />
               <Stack.Screen name="ManageEvent" component={ManageEvent} />
-              <Stack.Screen name="SignUp" component={SignUp} />
               <Stack.Screen name="SignIn" component={SignIn} />
               <Stack.Screen name="MyBooking" component={MyBooking} />
               <Stack.Screen name="MyWishlists" component={MyWishlists} />

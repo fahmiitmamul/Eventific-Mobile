@@ -10,6 +10,7 @@ import {Appbar} from 'react-native-paper';
 import {asyncRegisterAction} from '../redux/actions/auth';
 import {useDispatch, useSelector} from 'react-redux';
 import {clearMessage} from '../redux/reducers/auth';
+import SplashScreen from 'react-native-splash-screen';
 import styles from '../styles/global';
 
 const validationSchema = Yup.object().shape({
@@ -58,6 +59,10 @@ const SignUp = ({navigation}) => {
       dispatch(clearMessage());
     }, 3000);
   }
+
+  React.useEffect(() => {
+    SplashScreen.hide();
+  }, []);
 
   return (
     <React.Fragment>
