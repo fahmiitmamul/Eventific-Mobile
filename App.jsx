@@ -1,3 +1,4 @@
+import 'react-native-gesture-handler';
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -18,8 +19,11 @@ import {Provider} from 'react-redux';
 import {store, persistor} from './src/redux/store';
 import {PersistGate} from 'redux-persist/lib/integration/react';
 import ManageEvent from './src/screen/ManageEvent';
+import {createDrawerNavigator} from '@react-navigation/drawer';
 
 const Stack = createNativeStackNavigator();
+
+const Drawer = createDrawerNavigator();
 
 const theme = {
   ...DefaultTheme,
@@ -37,19 +41,27 @@ const App = () => {
         <PaperProvider theme={theme}>
           <NavigationContainer>
             <Stack.Navigator screenOptions={{headerShown: false}}>
-              <Stack.Screen name="PurchaseTicket" component={PurchaseTicket} />
               <Stack.Screen name="SignUp" component={SignUp} />
-              <Stack.Screen name="Profile" component={Profile} />
-              <Stack.Screen name="PaymentMethod" component={PaymentMethod} />
-              <Stack.Screen name="ManageEvent" component={ManageEvent} />
               <Stack.Screen name="SignIn" component={SignIn} />
-              <Stack.Screen name="MyBooking" component={MyBooking} />
-              <Stack.Screen name="MyWishlists" component={MyWishlists} />
-              <Stack.Screen name="Home" component={Home} />
-              <Stack.Screen name="EventDetails" component={EventDetails} />
               <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
               <Stack.Screen name="ResetPassword" component={ResetPassword} />
-              <Stack.Screen name="ChangePassword" component={ChangePassword} />
+              <Drawer.Navigator>
+                <Drawer.Screen name="Home" component={Home} />
+                <Drawer.Screen
+                  name="PurchaseTicket"
+                  component={PurchaseTicket}
+                />
+                <Drawer.Screen name="Profile" component={Profile} />
+                <Drawer.Screen name="PaymentMethod" component={PaymentMethod} />
+                <Drawer.Screen name="ManageEvent" component={ManageEvent} />
+                <Drawer.Screen name="MyBooking" component={MyBooking} />
+                <Drawer.Screen name="MyWishlists" component={MyWishlists} />
+                <Drawer.Screen name="EventDetails" component={EventDetails} />
+                <Drawer.Screen
+                  name="ChangePassword"
+                  component={ChangePassword}
+                />
+              </Drawer.Navigator>
             </Stack.Navigator>
           </NavigationContainer>
         </PaperProvider>
