@@ -16,6 +16,7 @@ import {PaperProvider, MD3LightTheme as DefaultTheme} from 'react-native-paper';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
+import {useSelector} from 'react-redux';
 
 const AuthStack = createNativeStackNavigator();
 
@@ -31,24 +32,34 @@ const theme = {
 };
 
 const Main = () => {
+  const token = useSelector(state => state.auth.token);
   return (
     <PaperProvider theme={theme}>
       <NavigationContainer>
-        <AuthStack.Navigator screenOptions={{headerShown: false}}>
-          <AuthStack.Screen name="SignUp" component={SignUp} />
-          <AuthStack.Screen name="SignIn" component={SignIn} />
-          <AuthStack.Screen name="ForgotPassword" component={ForgotPassword} />
-          <AuthStack.Screen name="ResetPassword" component={ResetPassword} />
-          <AuthStack.Screen name="Home" component={Home} />
-          <AuthStack.Screen name="PurchaseTicket" component={PurchaseTicket} />
-          <AuthStack.Screen name="Profile" component={Profile} />
-          <AuthStack.Screen name="PaymentMethod" component={PaymentMethod} />
-          <AuthStack.Screen name="ManageEvent" component={ManageEvent} />
-          <AuthStack.Screen name="MyBooking" component={MyBooking} />
-          <AuthStack.Screen name="MyWishlists" component={MyWishlists} />
-          <AuthStack.Screen name="EventDetails" component={EventDetails} />
-          <AuthStack.Screen name="ChangePassword" component={ChangePassword} />
-        </AuthStack.Navigator>
+        {!token && (
+          <AuthStack.Navigator screenOptions={{headerShown: false}}>
+            <AuthStack.Screen name="SignUp" component={SignUp} />
+            <AuthStack.Screen name="SignIn" component={SignIn} />
+            <AuthStack.Screen
+              name="ForgotPassword"
+              component={ForgotPassword}
+            />
+            <AuthStack.Screen name="ResetPassword" component={ResetPassword} />
+          </AuthStack.Navigator>
+        )}
+        {token && (
+          <Drawer.Navigator>
+            <Drawer.Screen name="Home" component={Home} />
+            <Drawer.Screen name="PurchaseTicket" component={PurchaseTicket} />
+            <Drawer.Screen name="Profile" component={Profile} />
+            <Drawer.Screen name="PaymentMethod" component={PaymentMethod} />
+            <Drawer.Screen name="ManageEvent" component={ManageEvent} />
+            <Drawer.Screen name="MyBooking" component={MyBooking} />
+            <Drawer.Screen name="MyWishlists" component={MyWishlists} />
+            <Drawer.Screen name="EventDetails" component={EventDetails} />
+            <Drawer.Screen name="ChangePassword" component={ChangePassword} />
+          </Drawer.Navigator>
+        )}
       </NavigationContainer>
     </PaperProvider>
   );
