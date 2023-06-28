@@ -112,6 +112,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
+    gap: 10,
   },
   LogoBorderStyle: {
     borderWidth: 2,
