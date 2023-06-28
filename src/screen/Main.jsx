@@ -19,7 +19,7 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 import {useSelector} from 'react-redux';
 
 const AuthStack = createNativeStackNavigator();
-
+const PaymentStack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
 const theme = {
@@ -48,16 +48,16 @@ const Main = () => {
           </AuthStack.Navigator>
         )}
         {token && (
-          <Drawer.Navigator>
+          <Drawer.Navigator screenOptions={{headerShown: false}}>
             <Drawer.Screen name="Home" component={Home} />
-            <Drawer.Screen name="PurchaseTicket" component={PurchaseTicket} />
             <Drawer.Screen name="Profile" component={Profile} />
-            <Drawer.Screen name="PaymentMethod" component={PaymentMethod} />
-            <Drawer.Screen name="ManageEvent" component={ManageEvent} />
-            <Drawer.Screen name="MyBooking" component={MyBooking} />
-            <Drawer.Screen name="MyWishlists" component={MyWishlists} />
-            <Drawer.Screen name="EventDetails" component={EventDetails} />
-            <Drawer.Screen name="ChangePassword" component={ChangePassword} />
+            <Drawer.Screen name="Manage Event" component={ManageEvent} />
+            <Drawer.Screen name="My Booking" component={MyBooking} />
+            <Drawer.Screen name="My Wishlists" component={MyWishlists} />
+            <Drawer.Screen name="Detail Event" component={EventDetails} />
+            <Drawer.Screen name="Change Password" component={ChangePassword} />
+            <Drawer.Screen name="Payment Method" component={PaymentMethod} />
+            <Drawer.Screen name="Purchase Ticket" component={PurchaseTicket} />
           </Drawer.Navigator>
         )}
       </NavigationContainer>

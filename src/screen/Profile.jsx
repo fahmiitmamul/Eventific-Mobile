@@ -12,8 +12,9 @@ import SelectDropdown from 'react-native-select-dropdown';
 import DatePicker from 'react-native-date-picker';
 import moment from 'moment';
 import styles from '../styles/global';
+import HamburgerIcon from '../assets/images/hamburger.png';
 
-const Profile = () => {
+const Profile = ({navigation}) => {
   const [checked2, setChecked2] = React.useState(false);
   const [checked1, setChecked1] = React.useState(false);
   const [open, setOpen] = React.useState(false);
@@ -29,7 +30,13 @@ const Profile = () => {
   return (
     <ScrollView style={styles.ContentWrapper}>
       <Appbar.Header style={styles.ManageHeaderStyle}>
-        <Appbar.BackAction onPress={() => {}} />
+        <Appbar.Action
+          color="black"
+          icon={HamburgerIcon}
+          onPress={() => {
+            navigation.openDrawer();
+          }}
+        />
         <Appbar.Content titleStyle={styles.FontStyle} title="Profile" />
       </Appbar.Header>
       <View style={styles.PictureWrapper}>

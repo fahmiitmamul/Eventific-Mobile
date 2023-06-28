@@ -2,9 +2,49 @@
 import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
+  //Home
+  TextInputWrapper: {
+    height: 80,
+    backgroundColor: '#19A7CE',
+    padding: 18,
+    zIndex: 0,
+  },
+  TextInputChildWrapper: {
+    position: 'relative',
+  },
+  IconSearchStyle: {
+    position: 'absolute',
+    top: 9,
+    left: 15,
+    color: 'white',
+  },
+  SearchInput: {
+    borderWidth: 1,
+    borderColor: 'white',
+    fontSize: 18,
+    color: 'white',
+    borderRadius: 10,
+    paddingLeft: 50,
+    fontFamily: 'Poppins-Regular',
+    paddingBottom: 4,
+  },
+  EventsTextStyle: {
+    fontSize: 20,
+    fontFamily: 'Poppins-Medium',
+  },
+  EventsWrapperStyle: {
+    margin: 20,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
   //Sign In
   ScrollViewStyle: {
     backgroundColor: 'white',
+  },
+  HomeHeaderStyle: {
+    backgroundColor: '#19A7CE',
   },
   ViewHeader: {
     display: 'flex',
