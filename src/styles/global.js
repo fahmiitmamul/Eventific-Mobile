@@ -307,6 +307,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     paddingLeft: 10,
+    width: '100%',
   },
   EditBtnStyle: {
     fontFamily: 'Poppins-Medium',
