@@ -7,6 +7,7 @@ import {Button} from 'react-native-paper';
 import * as Yup from 'yup';
 import {Appbar} from 'react-native-paper';
 import styles from '../styles/global';
+import http from '../helpers/http';
 
 const validationSchema = Yup.object().shape({
   code: Yup.string().required('Code is Required'),
@@ -24,6 +25,8 @@ const validationSchema = Yup.object().shape({
 const ResetPassword = ({navigation}) => {
   const [openPassword, setOpenPassword] = React.useState(false);
   const [openConfirm, setOpenConfirm] = React.useState(false);
+  const [successMsg, setSuccessMsg] = React.useState('');
+  const [errorMsg, setErrorMsg] = React.useState('');
 
   function Password() {
     setOpenPassword(!openPassword);
@@ -32,6 +35,38 @@ const ResetPassword = ({navigation}) => {
   function Confirm() {
     setOpenConfirm(!openConfirm);
   }
+
+  const doReset = async function (values) {
+    const {code, email, password, confirmPassword} = values;
+    const form = new URLSearchParams({
+      code,
+      email,
+      password,
+      confirmPassword,
+    }).toString();
+    try {
+      const {data} = await http().post('/auth/reset-password', form);
+      setSuccessMsg(data.message);
+    } catch (err) {
+      const errMsg = err.response?.data?.message;
+      setErrorMsg(errMsg);
+    }
+  };
+
+  if (successMsg) {
+    setTimeout(() => {
+      navigation.navigate('SignIn');
+    }, 3000);
+  }
+
+  React.useEffect(() => {
+    setTimeout(() => {
+      if (successMsg || errorMsg) {
+        setErrorMsg(false);
+        setSuccessMsg(false);
+      }
+    }, 3000);
+  }, []);
 
   return (
     <React.Fragment>
@@ -49,6 +84,16 @@ const ResetPassword = ({navigation}) => {
             </Text>
           </View>
         </View>
+        {successMsg && (
+          <View style={styles.FormErrorViewStyle}>
+            <Text style={styles.FormErrorTextStyle}>{successMsg}</Text>
+          </View>
+        )}
+        {errorMsg && (
+          <View style={styles.FormErrorViewStyle}>
+            <Text style={styles.FormErrorTextStyle}>{errorMsg}</Text>
+          </View>
+        )}
         <View>
           <Formik
             initialValues={{
@@ -58,7 +103,7 @@ const ResetPassword = ({navigation}) => {
               confirmPassword: '',
             }}
             validationSchema={validationSchema}
-            onSubmit={values => console.log(values)}>
+            onSubmit={doReset}>
             {({
               values,
               errors,
@@ -179,9 +224,7 @@ const ResetPassword = ({navigation}) => {
                     </View>
                   </View>
                   <View style={styles.BtnWrapperStyle}>
-                    <Button
-                      mode="contained"
-                      onPress={() => navigation.navigate('ChangePassword')}>
+                    <Button mode="contained" onPress={handleSubmit}>
                       <Text style={styles.FontStyle}>Reset Password</Text>
                     </Button>
                   </View>

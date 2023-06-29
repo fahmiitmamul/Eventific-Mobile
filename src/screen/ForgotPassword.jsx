@@ -5,6 +5,7 @@ import {Button} from 'react-native-paper';
 import * as Yup from 'yup';
 import {Appbar} from 'react-native-paper';
 import styles from '../styles/global';
+import http from '../helpers/http';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
@@ -13,6 +14,36 @@ const validationSchema = Yup.object().shape({
 });
 
 const ForgotPassword = ({navigation}) => {
+  const [successMsg, setSuccessMsg] = React.useState('');
+  const [errorMsg, setErrorMsg] = React.useState('');
+
+  const doForgot = async function (values) {
+    const email = values.email;
+    const form = new URLSearchParams({email}).toString();
+    try {
+      const {data} = await http().post('/auth/forgot-password', form);
+      setSuccessMsg(data.message);
+    } catch (err) {
+      const errMsg = err?.response?.data?.message;
+      setErrorMsg(errMsg);
+    }
+  };
+
+  if (successMsg) {
+    setTimeout(() => {
+      navigation.navigate('ResetPassword');
+    }, 3000);
+  }
+
+  React.useEffect(() => {
+    setTimeout(() => {
+      if (successMsg || errorMsg) {
+        setErrorMsg(false);
+        setSuccessMsg(false);
+      }
+    }, 3000);
+  }, []);
+
   return (
     <React.Fragment>
       <Appbar.Header style={styles.ScrollViewStyle}>
@@ -29,13 +60,23 @@ const ForgotPassword = ({navigation}) => {
             </Text>
           </View>
         </View>
+        {successMsg && (
+          <View style={styles.FormErrorViewStyle}>
+            <Text style={styles.FormErrorTextStyle}>{successMsg}</Text>
+          </View>
+        )}
+        {errorMsg && (
+          <View style={styles.FormErrorViewStyle}>
+            <Text style={styles.FormErrorTextStyle}>{errorMsg}</Text>
+          </View>
+        )}
         <View>
           <Formik
             initialValues={{
               email: '',
             }}
             validationSchema={validationSchema}
-            onSubmit={values => console.log(values)}>
+            onSubmit={doForgot}>
             {({
               values,
               errors,
@@ -72,9 +113,7 @@ const ForgotPassword = ({navigation}) => {
                     </View>
                   </View>
                   <View style={styles.BtnWrapperStyle}>
-                    <Button
-                      mode="contained"
-                      onPress={() => navigation.navigate('ResetPassword')}>
+                    <Button mode="contained" onPress={handleSubmit}>
                       <Text style={styles.FontStyle}>Send</Text>
                     </Button>
                   </View>
