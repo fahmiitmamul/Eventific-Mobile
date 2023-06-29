@@ -1,5 +1,5 @@
 import React from 'react';
-import {Appbar} from 'react-native-paper';
+import {Appbar, Button} from 'react-native-paper';
 import styles from '../styles/global';
 import SplashScreen from 'react-native-splash-screen';
 import HamburgerIcon from '../assets/images/hamburger.png';
@@ -251,6 +251,217 @@ const Home = ({navigation}) => {
               <Text style={{color: '#3366ff', fontFamily: 'Poppins-Regular'}}>
                 See All
               </Text>
+            </View>
+            <View
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                marginRight: 55,
+                gap: 18,
+              }}>
+              <View
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <View
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    padding: 5,
+                  }}>
+                  <Text
+                    style={{
+                      fontFamily: 'Poppins-Medium',
+                      color: '#FF8900',
+                      fontSize: 20,
+                    }}>
+                    15
+                  </Text>
+                  <Text style={{fontFamily: 'Poppins-Regular'}}>Wed</Text>
+                </View>
+                <View
+                  style={{
+                    height: 430,
+                    width: 5,
+                    borderRightColor: '#C1C5D080',
+                    borderLeftWidth: 0,
+                    borderTopWidth: 0,
+                    borderBottomWidth: 0,
+                    borderWidth: 3,
+                    borderStyle: 'dotted',
+                  }}></View>
+              </View>
+              <View style={{width: '100%'}}>
+                <View style={{position: 'relative'}}>
+                  <View
+                    style={{
+                      overflow: 'hidden',
+                      borderRadius: 25,
+                    }}>
+                    <Image
+                      source={require('../assets/images/jakarta.jpg')}
+                      style={{width: '100%', height: 450}}
+                    />
+                  </View>
+                  <View
+                    style={{
+                      position: 'absolute',
+                      backgroundColor: 'black',
+                      opacity: 0.5,
+                      borderRadius: 25,
+                      width: '100%',
+                      height: 451,
+                    }}></View>
+                  <View style={{position: 'absolute', top: 250, margin: 20}}>
+                    <Text
+                      style={{
+                        color: 'white',
+                        fontFamily: 'Poppins-Regular',
+                      }}>
+                      Wed, 15 Nov, 4:00 PM
+                    </Text>
+                    <Text
+                      style={{
+                        color: 'white',
+                        fontFamily: 'Poppins-Medium',
+                        fontSize: 25,
+                      }}>
+                      Sights & Sounds Exhibition
+                    </Text>
+                    <View
+                      style={{
+                        marginTop: 5,
+                        backgroundColor: 'red',
+                        width: 40,
+                        borderRadius: 10,
+                        padding: 5,
+                      }}>
+                      <FontAwesomeIcon
+                        icon={faArrowRight}
+                        color="white"
+                        size={25}
+                      />
+                    </View>
+                  </View>
+                </View>
+                <Button
+                  style={{
+                    backgroundColor: '#19a7ce',
+                    borderRadius: 8,
+                    marginTop: 10,
+                  }}>
+                  <Text style={{fontFamily: 'Poppins-Regular', color: 'white'}}>
+                    Show All 5 Events
+                  </Text>
+                </Button>
+              </View>
+            </View>
+            <View
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                marginRight: 55,
+                gap: 18,
+                marginTop: 25,
+              }}>
+              <View>
+                <View
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    padding: 5,
+                  }}>
+                  <Text
+                    style={{
+                      fontFamily: 'Poppins-Medium',
+                      color: '#FF8900',
+                      fontSize: 20,
+                    }}>
+                    15
+                  </Text>
+                  <Text style={{fontFamily: 'Poppins-Regular'}}>Wed</Text>
+                  <View
+                    style={{
+                      height: 430,
+                      width: 5,
+                      borderRightColor: '#C1C5D080',
+                      borderLeftWidth: 0,
+                      borderTopWidth: 0,
+                      borderBottomWidth: 0,
+                      borderWidth: 3,
+                      borderStyle: 'dotted',
+                    }}></View>
+                </View>
+              </View>
+              <View style={{width: '100%'}}>
+                <View style={{position: 'relative'}}>
+                  <View
+                    style={{
+                      overflow: 'hidden',
+                      borderRadius: 25,
+                    }}>
+                    <Image
+                      source={require('../assets/images/jakarta.jpg')}
+                      style={{width: '100%', height: 450}}
+                    />
+                  </View>
+                  <View
+                    style={{
+                      position: 'absolute',
+                      backgroundColor: 'black',
+                      opacity: 0.5,
+                      borderRadius: 25,
+                      width: '100%',
+                      height: 451,
+                    }}></View>
+                  <View style={{position: 'absolute', top: 250, margin: 20}}>
+                    <Text
+                      style={{
+                        color: 'white',
+                        fontFamily: 'Poppins-Regular',
+                      }}>
+                      Wed, 15 Nov, 4:00 PM
+                    </Text>
+                    <Text
+                      style={{
+                        color: 'white',
+                        fontFamily: 'Poppins-Medium',
+                        fontSize: 25,
+                      }}>
+                      Sights & Sounds Exhibition
+                    </Text>
+                    <View
+                      style={{
+                        marginTop: 5,
+                        backgroundColor: 'red',
+                        width: 40,
+                        borderRadius: 10,
+                        padding: 5,
+                      }}>
+                      <FontAwesomeIcon
+                        icon={faArrowRight}
+                        color="white"
+                        size={25}
+                      />
+                    </View>
+                  </View>
+                </View>
+                <Button
+                  style={{
+                    backgroundColor: '#19a7ce',
+                    borderRadius: 8,
+                    marginTop: 10,
+                  }}>
+                  <Text style={{fontFamily: 'Poppins-Regular', color: 'white'}}>
+                    Show All 5 Events
+                  </Text>
+                </Button>
+              </View>
             </View>
           </View>
         </ScrollView>
