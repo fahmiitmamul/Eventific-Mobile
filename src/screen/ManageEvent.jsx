@@ -4,12 +4,19 @@ import {View, Text} from 'react-native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faHeart} from '@fortawesome/free-solid-svg-icons';
 import styles from '../styles/global';
+import HamburgerIcon from '../assets/images/hamburger.png';
 
-const ManageEvent = () => {
+const ManageEvent = ({navigation}) => {
   return (
     <View style={styles.AppWrapper}>
       <Appbar.Header style={styles.ScrollViewStyle}>
-        <Appbar.BackAction onPress={() => {}} />
+        <Appbar.Action
+          color="black"
+          icon={HamburgerIcon}
+          onPress={() => {
+            navigation.openDrawer();
+          }}
+        />
         <Appbar.Content
           titleStyle={styles.ManageHeaderStyle}
           title="Manage Event"

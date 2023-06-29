@@ -2,15 +2,22 @@ import {Appbar} from 'react-native-paper';
 import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import styles from '../styles/global';
+import HamburgerIcon from '../assets/images/hamburger.png';
 
-const MyBooking = () => {
+const MyBooking = ({navigation}) => {
   return (
     <View style={styles.AppWrapper}>
       <Appbar.Header style={styles.ScrollViewStyle}>
-        <Appbar.BackAction onPress={() => {}} />
+        <Appbar.Action
+          color="black"
+          icon={HamburgerIcon}
+          onPress={() => {
+            navigation.openDrawer();
+          }}
+        />
         <Appbar.Content
           titleStyle={styles.ManageHeaderStyle}
-          title="My Booking"
+          title="MyBooking"
         />
       </Appbar.Header>
       <View style={styles.ManageWrapperStyle}>

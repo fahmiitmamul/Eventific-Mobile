@@ -6,6 +6,7 @@ import {faEye, faEyeSlash} from '@fortawesome/free-solid-svg-icons';
 import {Button} from 'react-native-paper';
 import {Appbar} from 'react-native-paper';
 import * as Yup from 'yup';
+import HamburgerIcon from '../assets/images/hamburger.png';
 import styles from '../styles/global';
 
 const validationSchema = Yup.object().shape({
@@ -40,8 +41,17 @@ const ChangePassword = ({navigation}) => {
   return (
     <React.Fragment>
       <Appbar.Header style={styles.ScrollViewStyle}>
-        <Appbar.BackAction onPress={() => {}} />
-        <Appbar.Content titleStyle={styles} title="Change Password" />
+        <Appbar.Action
+          color="black"
+          icon={HamburgerIcon}
+          onPress={() => {
+            navigation.openDrawer();
+          }}
+        />
+        <Appbar.Content
+          titleStyle={styles.ManageHeaderStyle}
+          title="Change Password"
+        />
       </Appbar.Header>
       <ScrollView style={styles.ScrollViewStyle}>
         <View style={styles.ChangePassFormWrapper}>
