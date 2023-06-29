@@ -100,7 +100,7 @@ const Profile = ({navigation}) => {
     'Network Engineer',
     'Database Administrator',
   ];
-  const nationality = ['Egypt', 'Canada', 'Australia', 'Ireland'];
+  const nationality = ['Indonesia', 'Malaysia', 'Singapore', 'Vietnam'];
 
   const handleDocumentSelection = React.useCallback(async () => {
     try {
