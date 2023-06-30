@@ -8,6 +8,8 @@ import {Appbar} from 'react-native-paper';
 import * as Yup from 'yup';
 import HamburgerIcon from '../assets/images/hamburger.png';
 import styles from '../styles/global';
+import {useSelector} from 'react-redux';
+import http from '../helpers/http';
 
 const validationSchema = Yup.object().shape({
   oldPassword: Yup.string()
@@ -25,6 +27,8 @@ const ChangePassword = ({navigation}) => {
   const [openPassword, setOpenPassword] = React.useState(false);
   const [openConfirm, setOpenConfirm] = React.useState(false);
   const [openOld, setOpenOld] = React.useState(false);
+  const [successMsg, setSuccessMsg] = React.useState('');
+  const [errorMsg, setErrorMsg] = React.useState('');
 
   function Passwords() {
     setOpenOld(!openOld);
@@ -37,6 +41,23 @@ const ChangePassword = ({navigation}) => {
   function Confirm() {
     setOpenConfirm(!openConfirm);
   }
+
+  const doChange = async function (values) {
+    const token = useSelector(state => state.auth.token);
+    const {oldPassword, newPassword, confirmPassword} = values;
+    const form = new URLSearchParams({
+      oldPassword,
+      newPassword,
+      confirmPassword,
+    }).toString();
+    try {
+      const {data} = await http(token).post('/changepassword', form);
+      setSuccessMsg(data.message);
+    } catch (err) {
+      const message = err?.response?.data?.message;
+      setErrorMsg(message);
+    }
+  };
 
   return (
     <React.Fragment>
@@ -62,8 +83,15 @@ const ChangePassword = ({navigation}) => {
               confirmPassword: '',
             }}
             validationSchema={validationSchema}
-            onSubmit={values => console.log(values)}>
-            {({values, errors, handleBlur, handleChange, touched}) => {
+            onSubmit={doChange}>
+            {({
+              values,
+              errors,
+              handleBlur,
+              handleChange,
+              touched,
+              handleSubmit,
+            }) => {
               return (
                 <View>
                   <View style={styles.FormWrapperStyle}>
@@ -158,9 +186,7 @@ const ChangePassword = ({navigation}) => {
                     </View>
                   </View>
                   <View style={styles.BtnWrapperStyle}>
-                    <Button
-                      mode="contained"
-                      onPress={() => navigation.navigate('ChangePassword')}>
+                    <Button mode="contained" onPress={handleSubmit}>
                       <Text style={styles.FontStyle}>Update</Text>
                     </Button>
                   </View>
