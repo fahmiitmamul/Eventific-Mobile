@@ -211,6 +211,7 @@ const styles = StyleSheet.create({
   },
   DateWrapper: {
     display: 'flex',
+    flexDirection: 'column',
     alignItems: 'center',
     padding: 5,
     borderRadius: 10,
@@ -339,11 +340,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     gap: 10,
-  },
-  DateWrapper: {
-    display: 'flex',
-    flexDirection: 'row',
-    gap: 3,
   },
   SaveBtnStyle: {
     width: '100%',

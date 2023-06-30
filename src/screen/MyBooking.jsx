@@ -20,6 +20,26 @@ const MyBooking = ({navigation}) => {
           title="MyBooking"
         />
       </Appbar.Header>
+      <View>
+        <TouchableOpacity
+          style={{
+            backgroundColor: '#19a7ce',
+            width: 100,
+            margin: 20,
+            padding: 10,
+            borderRadius: 10,
+          }}>
+          <Text
+            style={{
+              fontFamily: 'Poppins-Medium',
+              color: 'white',
+              paddingTop: 3,
+              textAlign: 'center',
+            }}>
+            Create
+          </Text>
+        </TouchableOpacity>
+      </View>
       <View style={styles.ManageWrapperStyle}>
         <View style={styles.ManageWrapperChildStyle}>
           <View style={styles.DateWrapper}>

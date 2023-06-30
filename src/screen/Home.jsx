@@ -11,10 +11,23 @@ import {
   faFilter,
   faSearch,
 } from '@fortawesome/free-solid-svg-icons';
+import http from '../helpers/http';
+import {useSelector} from 'react-redux';
+import moment from 'moment';
 
 const Home = ({navigation}) => {
+  const token = useSelector(state => state.auth.token);
+  const [events, setEvents] = React.useState([]);
+
   React.useEffect(() => {
     SplashScreen.hide();
+
+    async function getEvents() {
+      const {data} = await http(token).get('/events?limit=20');
+      setEvents(data.results);
+    }
+
+    getEvents();
   }, []);
 
   return (
@@ -61,110 +74,67 @@ const Home = ({navigation}) => {
               flexDirection: 'row',
             }}
             horizontal={true}>
-            <View style={{margin: 20, position: 'relative', height: '100%'}}>
-              <View
-                style={{
-                  overflow: 'hidden',
-                  borderRadius: 25,
-                }}>
-                <Image
-                  source={require('../assets/images/jakarta.jpg')}
-                  style={{width: 300, height: 450}}
-                />
-              </View>
-              <View
-                style={{
-                  position: 'absolute',
-                  backgroundColor: 'black',
-                  opacity: 0.5,
-                  borderRadius: 25,
-                  width: 300,
-                  height: 451,
-                }}></View>
-              <View style={{position: 'absolute', top: 250, margin: 20}}>
-                <Text
-                  style={{
-                    color: 'white',
-                    fontFamily: 'Poppins-Regular',
-                  }}>
-                  Wed, 15 Nov, 4:00 PM
-                </Text>
-                <Text
-                  style={{
-                    color: 'white',
-                    fontFamily: 'Poppins-Medium',
-                    fontSize: 25,
-                  }}>
-                  Sights & Sounds Exhibition
-                </Text>
-                <View
-                  style={{
-                    marginTop: 5,
-                    backgroundColor: 'red',
-                    width: 40,
-                    borderRadius: 10,
-                    padding: 5,
-                  }}>
-                  <FontAwesomeIcon
-                    icon={faArrowRight}
-                    color="white"
-                    size={25}
-                  />
+            {events.map(e => {
+              return (
+                <View key={e.id}>
+                  <View
+                    style={{margin: 20, position: 'relative', height: '100%'}}>
+                    <View
+                      style={{
+                        overflow: 'hidden',
+                        borderRadius: 25,
+                      }}>
+                      <Image
+                        source={{
+                          uri: `https://res.cloudinary.com/dxnewldiy/image/upload/v1683808473/${e.picture}`,
+                        }}
+                        style={{width: 300, height: 450}}
+                      />
+                    </View>
+                    <View
+                      style={{
+                        position: 'absolute',
+                        backgroundColor: 'black',
+                        opacity: 0.5,
+                        borderRadius: 25,
+                        width: 300,
+                        height: 451,
+                      }}></View>
+                    <View style={{position: 'absolute', top: 250, margin: 20}}>
+                      <Text
+                        style={{
+                          color: 'white',
+                          fontFamily: 'Poppins-Regular',
+                        }}>
+                        {moment(e.date).format('LLLL')}
+                      </Text>
+                      <Text
+                        style={{
+                          color: 'white',
+                          fontFamily: 'Poppins-Medium',
+                          fontSize: 25,
+                        }}>
+                        {e.title}
+                      </Text>
+                      <View
+                        style={{
+                          marginTop: 5,
+                          backgroundColor: 'red',
+                          width: 40,
+                          borderRadius: 10,
+                          padding: 5,
+                        }}>
+                        <FontAwesomeIcon
+                          icon={faArrowRight}
+                          color="white"
+                          size={25}
+                        />
+                      </View>
+                    </View>
+                  </View>
                 </View>
-              </View>
-            </View>
-            <View style={{margin: 20, position: 'relative', height: '100%'}}>
-              <View
-                style={{
-                  overflow: 'hidden',
-                  borderRadius: 25,
-                }}>
-                <Image
-                  source={require('../assets/images/jakarta.jpg')}
-                  style={{width: 300, height: 450}}
-                />
-              </View>
-              <View
-                style={{
-                  position: 'absolute',
-                  backgroundColor: 'black',
-                  opacity: 0.5,
-                  borderRadius: 25,
-                  width: 300,
-                  height: 451,
-                }}></View>
-              <View style={{position: 'absolute', top: 250, margin: 20}}>
-                <Text
-                  style={{
-                    color: 'white',
-                    fontFamily: 'Poppins-Regular',
-                  }}>
-                  Wed, 15 Nov, 4:00 PM
-                </Text>
-                <Text
-                  style={{
-                    color: 'white',
-                    fontFamily: 'Poppins-Medium',
-                    fontSize: 25,
-                  }}>
-                  Sights & Sounds Exhibition
-                </Text>
-                <View
-                  style={{
-                    marginTop: 5,
-                    backgroundColor: 'red',
-                    width: 40,
-                    borderRadius: 10,
-                    padding: 5,
-                  }}>
-                  <FontAwesomeIcon
-                    icon={faArrowRight}
-                    color="white"
-                    size={25}
-                  />
-                </View>
-              </View>
-            </View>
+              );
+            })}
           </ScrollView>
           <View style={{margin: 20}}>
             <Text style={{fontFamily: 'Poppins-Medium', fontSize: 20}}>
