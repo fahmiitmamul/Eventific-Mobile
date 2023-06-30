@@ -17,6 +17,13 @@ import DocumentPicker from 'react-native-document-picker';
 import {Formik} from 'formik';
 import {useSelector} from 'react-redux';
 import http from '../helpers/http';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {
+  faArrowDown,
+  faArrowUp,
+  faChevronDown,
+  faChevronUp,
+} from '@fortawesome/free-solid-svg-icons';
 
 const Profile = ({navigation}) => {
   const token = useSelector(state => state.auth.token);
@@ -29,6 +36,7 @@ const Profile = ({navigation}) => {
   const [editUsername, setEditUsername] = React.useState(false);
   const [editPhoneNumber, setEditPhoneNumber] = React.useState(false);
   const [editName, setEditName] = React.useState(false);
+  const [editGender, setEditGender] = React.useState(false);
   const [profile, setProfile] = React.useState([]);
   const [prof, setProf] = React.useState('');
   const [nation, setNation] = React.useState('');
@@ -92,6 +100,7 @@ const Profile = ({navigation}) => {
     setEditPhoneNumber(false);
     setEditUsername(false);
     setEditName(false);
+    setEditGender(false);
     getProfile();
   };
 
@@ -151,7 +160,9 @@ const Profile = ({navigation}) => {
                 <View style={styles.PictureChildWrapper}>
                   <Image
                     style={styles.ImageStyle}
-                    source={require('../assets/images/profilephoto.jpg')}
+                    source={{
+                      uri: `https://res.cloudinary.com/dxnewldiy/image/upload/v1683808473/${profile?.picture}`,
+                    }}
                   />
                   <TouchableOpacity
                     style={{
@@ -178,7 +189,9 @@ const Profile = ({navigation}) => {
                 <View>
                   <Text style={styles.ProfileContentHeader}>Name</Text>
                   <View style={styles.ProfileValueWrapper}>
-                    {!editName && <Text style={styles.FontStyle}>Fahmi</Text>}
+                    {!editName && (
+                      <Text style={styles.FontStyle}>{profile?.fullName}</Text>
+                    )}
                     {!editName && (
                       <Text
                         onPress={() => setEditName(true)}
@@ -199,7 +212,7 @@ const Profile = ({navigation}) => {
                   <Text style={styles.ProfileContentHeader}>Username</Text>
                   <View style={styles.ProfileValueWrapper}>
                     {!editUsername && (
-                      <Text style={styles.FontStyle}>@jhont0</Text>
+                      <Text style={styles.FontStyle}>{profile?.username}</Text>
                     )}
                     {!editUsername && (
                       <Text
@@ -221,7 +234,7 @@ const Profile = ({navigation}) => {
                   <Text style={styles.ProfileContentHeader}>Email</Text>
                   <View style={styles.ProfileValueWrapper}>
                     {!editEmail && (
-                      <Text style={styles.FontStyle}>jhont0@gmail.com</Text>
+                      <Text style={styles.FontStyle}>{profile?.email}</Text>
                     )}
                     {!editEmail && (
                       <Text
@@ -243,7 +256,9 @@ const Profile = ({navigation}) => {
                   <Text style={styles.ProfileContentHeader}>Phone Number</Text>
                   <View style={styles.ProfileValueWrapper}>
                     {!editPhoneNumber && (
-                      <Text style={styles.FontStyle}>+62812345678</Text>
+                      <Text style={styles.FontStyle}>
+                        {profile?.phoneNumber}
+                      </Text>
                     )}
                     {!editPhoneNumber && (
                       <Text
@@ -264,42 +279,64 @@ const Profile = ({navigation}) => {
                 <View>
                   <Text style={styles.ProfileContentHeader}>Gender</Text>
                   <View style={styles.GenderWrapperStyle}>
-                    <View style={styles.RadioWrapperStyle}>
-                      <RadioButton
-                        value="first"
-                        status={checked1 ? 'checked' : 'unchecked'}
-                        onPress={function () {
-                          setChecked1(!checked1);
-                          setChecked2(false);
-                        }}
-                      />
-                      <Text
-                        onPress={function () {
-                          setChecked1(!checked1);
-                          setChecked2(false);
-                        }}
-                        style={styles.FontStyle}>
-                        Male
-                      </Text>
-                    </View>
-                    <View style={styles.RadioWrapperStyle}>
-                      <RadioButton
-                        value="first"
-                        status={checked2 ? 'checked' : 'unchecked'}
-                        onPress={function () {
-                          setChecked2(!checked2);
-                          setChecked1(false);
-                        }}
-                      />
-                      <Text
-                        onPress={function () {
-                          setChecked2(!checked2);
-                          setChecked1(false);
-                        }}
-                        style={styles.FontStyle}>
-                        Female
-                      </Text>
-                    </View>
+                    {editGender && (
+                      <>
+                        <View style={styles.RadioWrapperStyle}>
+                          <RadioButton
+                            value="1"
+                            status={checked1 ? 'checked' : 'unchecked'}
+                            onPress={function () {
+                              setChecked1(!checked1);
+                              setChecked2(false);
+                            }}
+                          />
+                          <Text
+                            onPress={function () {
+                              setChecked1(!checked1);
+                              setChecked2(false);
+                            }}
+                            style={styles.FontStyle}>
+                            Male
+                          </Text>
+                        </View>
+                        <View style={styles.RadioWrapperStyle}>
+                          <RadioButton
+                            value="0"
+                            status={checked2 ? 'checked' : 'unchecked'}
+                            onPress={function () {
+                              setChecked2(!checked2);
+                              setChecked1(false);
+                            }}
+                          />
+                          <Text
+                            onPress={function () {
+                              setChecked2(!checked2);
+                              setChecked1(false);
+                            }}
+                            style={styles.FontStyle}>
+                            Female
+                          </Text>
+                        </View>
+                      </>
+                    )}
+                    {!editGender && (
+                      <>
+                        <View style={styles.RadioWrapperStyle}>
+                          <Text style={styles.FontStyle}>
+                            {profile?.gender === true ? 'Male' : 'Female'}
+                          </Text>
+                        </View>
+                      </>
+                    )}
+                    <Text
+                      onPress={() => setEditGender(true)}
+                      style={{
+                        fontFamily: 'Poppins-Medium',
+                        color: '#3366ff',
+                        marginLeft: 10,
+                      }}>
+                      Edit
+                    </Text>
                   </View>
                 </View>
                 <View>
@@ -308,14 +345,31 @@ const Profile = ({navigation}) => {
                   </Text>
                   <SelectDropdown
                     data={profession}
+                    defaultButtonText={profile?.profession}
+                    dropdownStyle={{backgroundColor: '#EFEFEF'}}
                     buttonStyle={styles.SelectDropdownStyle}
-                    onSelect={(selectedItem, index) => {
+                    buttonTextStyle={{color: '#444', textAlign: 'left'}}
+                    rowStyle={{
+                      backgroundColor: '#EFEFEF',
+                      borderBottomColor: '#C5C5C5',
+                    }}
+                    rowTextStyle={{color: '#444', textAlign: 'left'}}
+                    renderDropdownIcon={isOpened => {
+                      return (
+                        <FontAwesomeIcon
+                          icon={isOpened ? faChevronUp : faChevronDown}
+                          color={'#444'}
+                          size={18}
+                        />
+                      );
+                    }}
+                    onSelect={selectedItem => {
                       setProf(selectedItem);
                     }}
-                    buttonTextAfterSelection={(selectedItem, index) => {
+                    buttonTextAfterSelection={selectedItem => {
                       return selectedItem;
                     }}
-                    rowTextForSelection={(item, index) => {
+                    rowTextForSelection={item => {
                       return item;
                     }}
                   />
@@ -326,14 +380,31 @@ const Profile = ({navigation}) => {
                   </Text>
                   <SelectDropdown
                     data={nationality}
+                    defaultButtonText={profile?.nationality}
+                    dropdownStyle={{backgroundColor: '#EFEFEF'}}
+                    buttonTextStyle={{color: '#444', textAlign: 'left'}}
+                    rowStyle={{
+                      backgroundColor: '#EFEFEF',
+                      borderBottomColor: '#C5C5C5',
+                    }}
+                    rowTextStyle={{color: '#444', textAlign: 'left'}}
+                    renderDropdownIcon={isOpened => {
+                      return (
+                        <FontAwesomeIcon
+                          icon={isOpened ? faChevronUp : faChevronDown}
+                          color={'#444'}
+                          size={18}
+                        />
+                      );
+                    }}
                     buttonStyle={styles.SelectDropdownStyle}
-                    onSelect={(selectedItem, index) => {
+                    onSelect={selectedItem => {
                       setNation(selectedItem);
                     }}
-                    buttonTextAfterSelection={(selectedItem, index) => {
+                    buttonTextAfterSelection={selectedItem => {
                       return selectedItem;
                     }}
-                    rowTextForSelection={(item, index) => {
+                    rowTextForSelection={item => {
                       return item;
                     }}
                   />
@@ -344,13 +415,7 @@ const Profile = ({navigation}) => {
                     <View style={styles.BirthDateWrapper}>
                       <View style={styles.DateWrapper}>
                         <Text style={styles.FontStyle}>
-                          {moment(date).format('d')} /
-                        </Text>
-                        <Text style={styles.FontStyle}>
-                          {moment(date).format('m')} /
-                        </Text>
-                        <Text style={styles.FontStyle}>
-                          {moment(date).format('y')}
+                          {moment(profile?.birthDate).format('DD/MM/YYYY')}
                         </Text>
                       </View>
                       <View>
@@ -364,6 +429,7 @@ const Profile = ({navigation}) => {
                     <DatePicker
                       modal
                       open={open}
+                      mode="date"
                       date={date}
                       onConfirm={date => {
                         setOpen(false);

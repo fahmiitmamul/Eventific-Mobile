@@ -328,11 +328,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   SelectDropdownStyle: {
-    width: '100%',
+    width: '80%',
+    height: 50,
+    backgroundColor: '#FFF',
+    borderRadius: 8,
     borderWidth: 1,
-    borderColor: 'gray',
-    borderRadius: 5,
-    backgroundColor: 'white',
+    borderColor: '#444',
   },
   BirthDateWrapper: {
     display: 'flex',
