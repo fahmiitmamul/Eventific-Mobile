@@ -17,6 +17,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {useSelector} from 'react-redux';
+import EditProfile from './EditProfile';
 
 const AuthStack = createNativeStackNavigator();
 const PaymentStack = createNativeStackNavigator();
@@ -51,6 +52,7 @@ const Main = () => {
           <Drawer.Navigator screenOptions={{headerShown: false}}>
             <Drawer.Screen name="Home" component={Home} />
             <Drawer.Screen name="Profile" component={Profile} />
+            <Drawer.Screen name="Edit Profile" component={EditProfile} />
             <Drawer.Screen name="Manage Event" component={ManageEvent} />
             <Drawer.Screen name="My Booking" component={MyBooking} />
             <Drawer.Screen name="My Wishlists" component={MyWishlists} />

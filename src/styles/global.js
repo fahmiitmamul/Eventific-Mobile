@@ -293,6 +293,8 @@ const styles = StyleSheet.create({
     height: '80%',
     borderRadius: 100,
     marginLeft: 20,
+    borderWidth: 3,
+    borderColor: '#19a7ce',
   },
   ProfileContentWrapper: {
     margin: 20,
