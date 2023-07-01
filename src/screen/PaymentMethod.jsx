@@ -12,6 +12,7 @@ const PaymentMethod = ({route, navigation}) => {
   const token = useSelector(state => state.auth.token);
   const [payment, setPayment] = React.useState([]);
   const [paymentId, setPaymentId] = React.useState('');
+  const [checked, setChecked] = React.useState(false);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -55,10 +56,18 @@ const PaymentMethod = ({route, navigation}) => {
               <View style={styles.PaymentMethodChildWrapper}>
                 <RadioButton
                   value="0"
-                  status="checked"
-                  onPress={() => setPaymentId(p.id)}
+                  status={checked === p.id ? 'checked' : 'unchecked'}
+                  onPress={() => {
+                    setPaymentId(p.id);
+                    setChecked(p.id);
+                  }}
                 />
-                <Image source={require('../assets/images/creditcard.png')} />
+                <Image
+                  source={{
+                    uri: `https://res.cloudinary.com/dxnewldiy/image/upload/f_auto,q_auto/v1/payment/${p.picture}`,
+                  }}
+                  style={{width: 50, height: 50}}
+                />
                 <Text
                   style={styles.PaymentMethodText}
                   onPress={() => setPaymentId(p.id)}>
