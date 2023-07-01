@@ -3,12 +3,24 @@ import {Appbar} from 'react-native-paper';
 import {View, Text, Image} from 'react-native';
 import {RadioButton} from 'react-native-paper';
 import styles from '../styles/global';
+import {useFocusEffect} from '@react-navigation/native';
+import http from '../helpers/http';
+import {useSelector} from 'react-redux';
 
 const PaymentMethod = () => {
+  const token = useSelector(state => state.auth.token);
+  const [payment, setPayment] = React.useState([]);
   const [checked, setChecked] = React.useState(false);
-  const [checked1, setChecked1] = React.useState(false);
-  const [checked2, setChecked2] = React.useState(false);
-  const [checked3, setChecked3] = React.useState(false);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      async function getPayment() {
+        const {data} = await http(token).get('/payment');
+        setPayment(data.results);
+      }
+      getPayment();
+    }, []),
+  );
 
   return (
     <React.Fragment>
@@ -20,78 +32,28 @@ const PaymentMethod = () => {
         <View>
           <Text style={styles.TextPayment}>Payment Method</Text>
         </View>
-        <View style={styles.PaymentMethodWrapper}>
-          <View style={styles.PaymentMethodChildWrapper}>
-            <RadioButton
-              value="first"
-              status={checked ? 'checked' : 'unchecked'}
-              onPress={() => setChecked(!checked)}
-            />
-            <Image source={require('../assets/images/creditcard.png')} />
-            <Text
-              style={styles.PaymentMethodText}
-              onPress={() => setChecked(!checked)}>
-              Card
-            </Text>
-          </View>
-          <View>
-            <Image source={require('../assets/images/chevron-down.png')} />
-          </View>
-        </View>
-        <View style={styles.PaymentMethodWrapper}>
-          <View style={styles.PaymentMethodChildWrapper}>
-            <RadioButton
-              value="first"
-              status={checked1 ? 'checked' : 'unchecked'}
-              onPress={() => setChecked1(!checked1)}
-            />
-            <Image source={require('../assets/images/creditcard.png')} />
-            <Text
-              style={styles.PaymentMethodText}
-              onPress={() => setChecked1(!checked1)}>
-              Card
-            </Text>
-          </View>
-          <View>
-            <Image source={require('../assets/images/chevron-down.png')} />
-          </View>
-        </View>
-        <View style={styles.PaymentMethodWrapper}>
-          <View style={styles.PaymentMethodChildWrapper}>
-            <RadioButton
-              value="first"
-              status={checked2 ? 'checked' : 'unchecked'}
-              onPress={() => setChecked2(!checked2)}
-            />
-            <Image source={require('../assets/images/creditcard.png')} />
-            <Text
-              style={styles.PaymentMethodText}
-              onPress={() => setChecked2(!checked2)}>
-              Card
-            </Text>
-          </View>
-          <View>
-            <Image source={require('../assets/images/chevron-down.png')} />
-          </View>
-        </View>
-        <View style={styles.PaymentMethodWrapper}>
-          <View style={styles.PaymentMethodChildWrapper}>
-            <RadioButton
-              value="first"
-              status={checked3 ? 'checked' : 'unchecked'}
-              onPress={() => setChecked3(!checked3)}
-            />
-            <Image source={require('../assets/images/creditcard.png')} />
-            <Text
-              style={styles.PaymentMethodText}
-              onPress={() => setChecked3(!checked3)}>
-              Card
-            </Text>
-          </View>
-          <View>
-            <Image source={require('../assets/images/chevron-down.png')} />
-          </View>
-        </View>
+        {payment.map(p => {
+          return (
+            <View style={styles.PaymentMethodWrapper} key={p.id}>
+              <View style={styles.PaymentMethodChildWrapper}>
+                <RadioButton
+                  value="0"
+                  status={checked ? 'checked' : 'unchecked'}
+                  onPress={() => setChecked(!checked)}
+                />
+                <Image source={require('../assets/images/creditcard.png')} />
+                <Text
+                  style={styles.PaymentMethodText}
+                  onPress={() => setChecked(!checked)}>
+                  {p.name}
+                </Text>
+              </View>
+              <View>
+                <Image source={require('../assets/images/chevron-down.png')} />
+              </View>
+            </View>
+          );
+        })}
       </View>
     </React.Fragment>
   );

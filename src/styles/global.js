@@ -387,13 +387,12 @@ const styles = StyleSheet.create({
   TicketContentWrapper: {
     display: 'flex',
     flexDirection: 'column',
-    gap: 30,
-    marginBottom: 20,
+    justifyContent: 'space-between',
   },
   TicketSectionWrapper: {
     display: 'flex',
     flexDirection: 'row',
-    gap: 30,
+    gap: 70,
   },
   TicketSectionTextStyle: {
     fontFamily: 'Poppins-Bold',

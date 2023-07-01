@@ -11,13 +11,15 @@ import {
   faTimes,
 } from '@fortawesome/free-solid-svg-icons';
 import moment from 'moment';
-import {ScrollView} from 'react-native-gesture-handler';
+import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import http from '../helpers/http';
 import {useFocusEffect} from '@react-navigation/native';
+import {useSelector} from 'react-redux';
 
 const EventDetails = ({route, navigation}) => {
   const {id} = route.params;
   const [events, setEvents] = React.useState([]);
+  const token = useSelector(state => state.auth.token);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -29,6 +31,24 @@ const EventDetails = ({route, navigation}) => {
       getEventDetails();
     }),
   );
+
+  async function makePayments() {
+    const eventId = id;
+    const statusId = 1;
+    const paymentMethodId = 1;
+    const body = new URLSearchParams({
+      eventId,
+      statusId,
+      paymentMethodId,
+    }).toString();
+    const {data} = await http(token).post('/reservations', body);
+    if (data.success === true) {
+      navigation.navigate('Purchase Ticket', {
+        reservationId: data.results.reservation.id,
+        eventTitle: data.results.title,
+      });
+    }
+  }
 
   return (
     <ScrollView>
@@ -201,16 +221,23 @@ const EventDetails = ({route, navigation}) => {
             <Image source={require('../assets/images/maps.png')} />
           </View>
           <View style={{marginTop: 30}}>
-            <Button
+            <TouchableOpacity
+              onPress={makePayments}
               style={{
                 backgroundColor: '#19a7ce',
                 borderRadius: 8,
                 padding: 8,
               }}>
-              <Text style={{color: 'white', fontFamily: 'Poppins-Medium'}}>
+              <Text
+                style={{
+                  color: 'white',
+                  fontFamily: 'Poppins-Medium',
+                  textAlign: 'center',
+                  padding: 5,
+                }}>
                 Buy Tickets
               </Text>
-            </Button>
+            </TouchableOpacity>
           </View>
         </View>
       </View>
