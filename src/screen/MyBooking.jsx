@@ -60,8 +60,8 @@ const MyBooking = ({navigation}) => {
         </TouchableOpacity>
         {history.map(h => {
           return (
-            <View key={h.id}>
-              <View style={styles.ManageWrapperStyle}>
+            <>
+              <View style={styles.ManageWrapperStyle} key={h.id}>
                 <View style={styles.ManageWrapperChildStyle}>
                   <View style={styles.DateWrapper}>
                     <Text style={styles.TextDate}>
@@ -93,7 +93,7 @@ const MyBooking = ({navigation}) => {
                   </View>
                 </View>
               </View>
-            </View>
+            </>
           );
         })}
       </ScrollView>
