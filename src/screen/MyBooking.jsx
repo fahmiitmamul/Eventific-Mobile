@@ -3,8 +3,27 @@ import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import styles from '../styles/global';
 import HamburgerIcon from '../assets/images/hamburger.png';
+import {useSelector} from 'react-redux';
+import {useFocusEffect} from '@react-navigation/native';
+import http from '../helpers/http';
+import {ScrollView} from 'react-native-gesture-handler';
+import moment from 'moment';
 
 const MyBooking = ({navigation}) => {
+  const [history, setHistory] = React.useState([]);
+  const token = useSelector(state => state.auth.token);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      async function getWishlist() {
+        const {data} = await http(token).get('/history');
+        setHistory(data.results);
+      }
+
+      getWishlist();
+    }, []),
+  );
+
   return (
     <View style={styles.AppWrapper}>
       <Appbar.Header style={styles.ScrollViewStyle}>
@@ -20,7 +39,7 @@ const MyBooking = ({navigation}) => {
           title="MyBooking"
         />
       </Appbar.Header>
-      <View>
+      <ScrollView>
         <TouchableOpacity
           style={{
             backgroundColor: '#19a7ce',
@@ -39,85 +58,45 @@ const MyBooking = ({navigation}) => {
             Create
           </Text>
         </TouchableOpacity>
-      </View>
-      <View style={styles.ManageWrapperStyle}>
-        <View style={styles.ManageWrapperChildStyle}>
-          <View style={styles.DateWrapper}>
-            <Text style={styles.TextDate}>15</Text>
-            <Text style={styles.FontStyle}>Wed</Text>
-          </View>
-        </View>
-        <View style={styles.TitleWrapper}>
-          <View>
-            <Text style={styles.TitleStyles}>Sights & Sounds Exhibition</Text>
-          </View>
-          <View>
-            <View>
-              <Text style={styles.FontStyle}>Jakarta, Indonesia</Text>
+        {history.map(h => {
+          return (
+            <View key={h.id}>
+              <View style={styles.ManageWrapperStyle}>
+                <View style={styles.ManageWrapperChildStyle}>
+                  <View style={styles.DateWrapper}>
+                    <Text style={styles.TextDate}>
+                      {moment(h.date).format('DD')}
+                    </Text>
+                    <Text style={styles.FontStyle}>
+                      {moment(h.date).format('ddd')}
+                    </Text>
+                  </View>
+                </View>
+                <View style={styles.TitleWrapper}>
+                  <View>
+                    <Text style={styles.TitleStyles}>{h.title}</Text>
+                  </View>
+                  <View>
+                    <View>
+                      <Text style={styles.FontStyle}>{h.name}</Text>
+                    </View>
+                    <View>
+                      <Text style={styles.FontStyle}>
+                        {moment(h.date).format('LLLL')}
+                      </Text>
+                    </View>
+                    <View>
+                      <TouchableOpacity>
+                        <Text style={styles.ManageBtn}>Detail</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </View>
+              </View>
             </View>
-            <View>
-              <Text style={styles.FontStyle}>Wed, 15 Nov, 4: 00 PM</Text>
-            </View>
-            <View>
-              <TouchableOpacity>
-                <Text style={styles.ManageBtn}>Detail</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      </View>
-      <View style={styles.ManageWrapperStyle}>
-        <View style={styles.ManageWrapperChildStyle}>
-          <View style={styles.DateWrapper}>
-            <Text style={styles.TextDate}>15</Text>
-            <Text style={styles.FontStyle}>Wed</Text>
-          </View>
-        </View>
-        <View style={styles.TitleWrapper}>
-          <View>
-            <Text style={styles.TitleStyles}>Sights & Sounds Exhibition</Text>
-          </View>
-          <View>
-            <View>
-              <Text style={styles.FontStyle}>Jakarta, Indonesia</Text>
-            </View>
-            <View>
-              <Text style={styles.FontStyle}>Wed, 15 Nov, 4: 00 PM</Text>
-            </View>
-            <View>
-              <TouchableOpacity>
-                <Text style={styles.ManageBtn}>Detail</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      </View>
-      <View style={styles.ManageWrapperStyle}>
-        <View style={styles.ManageWrapperChildStyle}>
-          <View style={styles.DateWrapper}>
-            <Text style={styles.TextDate}>15</Text>
-            <Text style={styles.FontStyle}>Wed</Text>
-          </View>
-        </View>
-        <View style={styles.TitleWrapper}>
-          <View>
-            <Text style={styles.TitleStyles}>Sights & Sounds Exhibition</Text>
-          </View>
-          <View>
-            <View>
-              <Text style={styles.FontStyle}>Jakarta, Indonesia</Text>
-            </View>
-            <View>
-              <Text style={styles.FontStyle}>Wed, 15 Nov, 4: 00 PM</Text>
-            </View>
-            <View>
-              <TouchableOpacity>
-                <Text style={styles.ManageBtn}>Detail</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      </View>
+          );
+        })}
+      </ScrollView>
     </View>
   );
 };

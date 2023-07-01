@@ -29,13 +29,13 @@ const PaymentMethod = ({route, navigation}) => {
       const body = new URLSearchParams({
         reservationId,
         paymentMethodId,
-      });
+      }).toString();
       const {data} = await http(token).post('/payment', body);
       if (data.success == true) {
         navigation.navigate('My Booking');
       }
     } catch (err) {
-      console.warn(err);
+      console.warn(err.response?.data?.message);
     }
   }
 
