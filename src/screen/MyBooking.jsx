@@ -58,31 +58,31 @@ const MyBooking = ({navigation}) => {
             Create
           </Text>
         </TouchableOpacity>
-        {history.map(h => {
+        {history.map(item => {
           return (
-            <>
-              <View style={styles.ManageWrapperStyle} key={h.id}>
+            <View key={item.id}>
+              <View style={styles.ManageWrapperStyle}>
                 <View style={styles.ManageWrapperChildStyle}>
                   <View style={styles.DateWrapper}>
                     <Text style={styles.TextDate}>
-                      {moment(h.date).format('DD')}
+                      {moment(item.date).format('DD')}
                     </Text>
                     <Text style={styles.FontStyle}>
-                      {moment(h.date).format('ddd')}
+                      {moment(item.date).format('ddd')}
                     </Text>
                   </View>
                 </View>
                 <View style={styles.TitleWrapper}>
                   <View>
-                    <Text style={styles.TitleStyles}>{h.title}</Text>
+                    <Text style={styles.TitleStyles}>{item.title}</Text>
                   </View>
                   <View>
                     <View>
-                      <Text style={styles.FontStyle}>{h.name}</Text>
+                      <Text style={styles.FontStyle}>{item.name}</Text>
                     </View>
                     <View>
                       <Text style={styles.FontStyle}>
-                        {moment(h.date).format('LLLL')}
+                        {moment(item.date).format('LLLL')}
                       </Text>
                     </View>
                     <View>
@@ -93,7 +93,7 @@ const MyBooking = ({navigation}) => {
                   </View>
                 </View>
               </View>
-            </>
+            </View>
           );
         })}
       </ScrollView>
