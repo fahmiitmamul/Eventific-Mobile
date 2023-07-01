@@ -242,8 +242,8 @@ const styles = StyleSheet.create({
   },
   //Payment Method
   PaymentWrapper: {
-    height: '100%',
     width: '100%',
+    height: '80%',
     backgroundColor: 'white',
     paddingLeft: 30,
     paddingTop: 30,
