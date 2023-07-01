@@ -10,10 +10,26 @@ import {
   faLocation,
   faTimes,
 } from '@fortawesome/free-solid-svg-icons';
-import {getAccordionColors} from 'react-native-paper/lib/typescript/src/components/List/utils';
+import moment from 'moment';
 import {ScrollView} from 'react-native-gesture-handler';
+import http from '../helpers/http';
+import {useFocusEffect} from '@react-navigation/native';
 
-const EventDetails = ({navigation}) => {
+const EventDetails = ({route, navigation}) => {
+  const {id} = route.params;
+  const [events, setEvents] = React.useState([]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      async function getEventDetails() {
+        const {data} = await http().get(`/events/${id}`);
+        setEvents(data.results);
+      }
+
+      getEventDetails();
+    }),
+  );
+
   return (
     <ScrollView>
       <Appbar.Header style={styles.ScrollViewStyle}>
@@ -36,7 +52,9 @@ const EventDetails = ({navigation}) => {
               overflow: 'hidden',
             }}>
             <Image
-              source={require('../assets/images/jakarta.jpg')}
+              source={{
+                uri: `https://res.cloudinary.com/dxnewldiy/image/upload/v1683808473/${events?.picture}`,
+              }}
               style={{height: 400}}
             />
           </View>
@@ -55,7 +73,7 @@ const EventDetails = ({navigation}) => {
                 fontFamily: 'Poppins-Medium',
                 fontSize: 25,
               }}>
-              Sights & Sounds Exhibition
+              {events?.title}
             </Text>
             <View
               style={{
@@ -70,7 +88,7 @@ const EventDetails = ({navigation}) => {
                   color: 'white',
                   fontFamily: 'Poppins-Regular',
                 }}>
-                Jakarta, Indonesia
+                {events?.location}
               </Text>
             </View>
             <View
@@ -86,7 +104,7 @@ const EventDetails = ({navigation}) => {
                   color: 'white',
                   fontFamily: 'Poppins-Regular',
                 }}>
-                Wed, 15 Nov, 4:00 PM
+                {moment(events?.date).format('LLLL')}
               </Text>
             </View>
             <Text
@@ -159,8 +177,7 @@ const EventDetails = ({navigation}) => {
               Event Detail
             </Text>
             <Text style={{fontFamily: 'Poppins-Regular'}}>
-              After his controversial art exhibition "Tear and Consume" back in
-              November 2018, in which guests were invited to tear up…
+              {events?.description}
             </Text>
             <Text
               style={{

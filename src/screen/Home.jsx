@@ -4,7 +4,11 @@ import styles from '../styles/global';
 import SplashScreen from 'react-native-splash-screen';
 import HamburgerIcon from '../assets/images/hamburger.png';
 import {View, StatusBar, Text, Image} from 'react-native';
-import {ScrollView, TextInput} from 'react-native-gesture-handler';
+import {
+  ScrollView,
+  TextInput,
+  TouchableOpacity,
+} from 'react-native-gesture-handler';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {
   faArrowRight,
@@ -76,7 +80,13 @@ const Home = ({navigation}) => {
             horizontal={true}>
             {events.map(e => {
               return (
-                <View key={e.id}>
+                <TouchableOpacity
+                  key={e.id}
+                  onPress={() => {
+                    navigation.navigate('Detail Event', {
+                      id: e.id,
+                    });
+                  }}>
                   <View
                     style={{margin: 20, position: 'relative', height: '100%'}}>
                     <View
@@ -132,7 +142,7 @@ const Home = ({navigation}) => {
                       </View>
                     </View>
                   </View>
-                </View>
+                </TouchableOpacity>
               );
             })}
           </ScrollView>
