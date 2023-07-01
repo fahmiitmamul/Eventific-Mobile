@@ -42,12 +42,11 @@ const PurchaseTicket = ({route, navigation}) => {
 
   async function sendData() {
     try {
-      const section = selectedSection?.id;
+      const sectionId = selectedSection?.id;
       const quantity = filledSection.quantity;
       const body = new URLSearchParams({
         reservationId,
-        eventTitle,
-        section,
+        sectionId,
         quantity,
       }).toString();
       const {data} = await http(token).post('/reservations/ticket', body);
