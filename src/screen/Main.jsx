@@ -183,7 +183,7 @@ const Main = () => {
                 drawerItemStyle: {display: 'none'},
               }}
             />
-            <Drawer.Screen
+            {/* <Drawer.Screen
               name="Settings"
               component={CreateEvent}
               options={{
@@ -194,7 +194,7 @@ const Main = () => {
                     color="gray"></FontAwesomeIcon>
                 ),
               }}
-            />
+            /> */}
           </Drawer.Navigator>
         )}
       </NavigationContainer>
