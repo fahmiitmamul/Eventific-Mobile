@@ -9,19 +9,22 @@ import HamburgerIcon from '../assets/images/hamburger.png';
 import http from '../helpers/http';
 import moment from 'moment';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
+import {useFocusEffect} from '@react-navigation/native';
 
 const ManageEvent = ({navigation}) => {
   const token = useSelector(state => state.auth.token);
   const [events, setEvents] = React.useState([]);
 
-  React.useEffect(() => {
-    async function getEvents() {
-      const {data} = await http(token).get('/events?limit=20');
-      setEvents(data.results);
-    }
+  useFocusEffect(
+    React.useCallback(() => {
+      async function getEvents() {
+        const {data} = await http(token).get('/events?limit=20');
+        setEvents(data.results);
+      }
 
-    getEvents();
-  }, []);
+      getEvents();
+    }, []),
+  );
 
   const handleDelete = async itemId => {
     try {
