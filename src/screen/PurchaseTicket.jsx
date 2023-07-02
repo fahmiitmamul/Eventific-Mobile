@@ -153,8 +153,6 @@ const PurchaseTicket = ({route, navigation}) => {
         style={{
           width: '100%',
           height: '100%',
-          borderWidth: 1,
-          borderRadius: 10,
           display: 'flex',
           flexDirection: 'row',
           justifyContent: 'space-between',
