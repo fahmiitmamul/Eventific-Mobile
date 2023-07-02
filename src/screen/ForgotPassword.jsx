@@ -62,7 +62,7 @@ const ForgotPassword = ({navigation}) => {
         </View>
         {successMsg && (
           <View style={styles.FormErrorViewStyle}>
-            <Text style={styles.FormErrorTextStyle}>{successMsg}</Text>
+            <Text style={styles.FormSuccessTextStyle}>{successMsg}</Text>
           </View>
         )}
         {errorMsg && (

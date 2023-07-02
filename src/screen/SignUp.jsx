@@ -100,7 +100,7 @@ const SignUp = ({navigation}) => {
         )}
         {successMsg && (
           <View style={styles.FormErrorViewStyle}>
-            <Text style={styles.FormErrorTextStyle}>{successMsg}</Text>
+            <Text style={styles.FormSuccessTextStyle}>{successMsg}</Text>
           </View>
         )}
         <View>

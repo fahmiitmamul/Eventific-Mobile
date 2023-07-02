@@ -76,6 +76,14 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     fontFamily: 'Poppins-Medium',
   },
+  FormSuccessTextStyle: {
+    backgroundColor: '#19a7ce',
+    padding: 10,
+    color: 'white',
+    borderRadius: 10,
+    marginBottom: 30,
+    fontFamily: 'Poppins-Medium',
+  },
   FormWrapperStyle: {
     display: 'flex',
     flexDirection: 'column',

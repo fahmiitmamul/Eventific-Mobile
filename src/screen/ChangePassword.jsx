@@ -29,6 +29,7 @@ const ChangePassword = ({navigation}) => {
   const [openOld, setOpenOld] = React.useState(false);
   const [successMsg, setSuccessMsg] = React.useState('');
   const [errorMsg, setErrorMsg] = React.useState('');
+  const token = useSelector(state => state.auth.token);
 
   function Passwords() {
     setOpenOld(!openOld);
@@ -42,8 +43,14 @@ const ChangePassword = ({navigation}) => {
     setOpenConfirm(!openConfirm);
   }
 
+  if (successMsg || errorMsg) {
+    setTimeout(() => {
+      setSuccessMsg(false);
+      setErrorMsg(false);
+    }, 3000);
+  }
+
   const doChange = async function (values) {
-    const token = useSelector(state => state.auth.token);
     const {oldPassword, newPassword, confirmPassword} = values;
     const form = new URLSearchParams({
       oldPassword,
@@ -75,17 +82,17 @@ const ChangePassword = ({navigation}) => {
         />
       </Appbar.Header>
       <ScrollView style={styles.ScrollViewStyle}>
-        {successMsg && (
-          <View style={styles.FormErrorViewStyle}>
-            <Text style={styles.FormErrorTextStyle}>{successMsg}</Text>
-          </View>
-        )}
-        {errorMsg && (
-          <View style={styles.FormErrorViewStyle}>
-            <Text style={styles.FormErrorTextStyle}>{errorMsg}</Text>
-          </View>
-        )}
         <View style={styles.ChangePassFormWrapper}>
+          {successMsg && (
+            <View style={styles.FormErrorViewStyle}>
+              <Text style={styles.FormSuccessTextStyle}>{successMsg}</Text>
+            </View>
+          )}
+          {errorMsg && (
+            <View style={styles.FormErrorViewStyle}>
+              <Text style={styles.FormSuccessTextStyle}>{errorMsg}</Text>
+            </View>
+          )}
           <Formik
             initialValues={{
               oldPassword: '',
