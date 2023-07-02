@@ -5,7 +5,11 @@ import styles from '../styles/global';
 import Heart from '../assets/images/heart.png';
 import HamburgerIcon from '../assets/images/hamburger.png';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faClock, faLocation} from '@fortawesome/free-solid-svg-icons';
+import {
+  faClock,
+  faLocation,
+  faLocationDot,
+} from '@fortawesome/free-solid-svg-icons';
 import moment from 'moment';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import http from '../helpers/http';
@@ -64,13 +68,7 @@ const EventDetails = ({route, navigation}) => {
   return (
     <ScrollView>
       <Appbar.Header style={styles.ScrollViewStyle}>
-        <Appbar.Action
-          color="black"
-          icon={HamburgerIcon}
-          onPress={() => {
-            navigation.openDrawer();
-          }}
-        />
+        <Appbar.BackAction onPress={this._goBack} />
         <Appbar.Content
           titleStyle={{fontFamily: 'Poppins-Medium', paddingLeft: 70}}
           title="Event Detail"
@@ -114,7 +112,7 @@ const EventDetails = ({route, navigation}) => {
                 alignItems: 'center',
                 gap: 10,
               }}>
-              <FontAwesomeIcon icon={faLocation} color="white" />
+              <FontAwesomeIcon icon={faLocationDot} color="white" />
               <Text
                 style={{
                   color: 'white',

@@ -26,7 +26,9 @@ import {
   faHeart,
   faHome,
   faListCheck,
+  faManatSign,
   faPerson,
+  faPlusSquare,
   faUser,
   faUserCircle,
 } from '@fortawesome/free-solid-svg-icons';
@@ -106,7 +108,12 @@ const Main = () => {
               name="Manage Event"
               component={ManageEvent}
               options={{
-                drawerItemStyle: {display: 'none'},
+                drawerIcon: ({color}) => (
+                  <FontAwesomeIcon
+                    icon={faPlusSquare}
+                    size={25}
+                    color="gray"></FontAwesomeIcon>
+                ),
               }}
             />
             <Drawer.Screen

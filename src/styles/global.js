@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   },
   //Sign In
   ScrollViewStyle: {
-    backgroundColor: 'white',
+    backgroundColor: 'transparent',
   },
   HomeHeaderStyle: {
     backgroundColor: '#19A7CE',
