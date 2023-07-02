@@ -23,6 +23,18 @@ const ManageEvent = ({navigation}) => {
     getEvents();
   }, []);
 
+  const handleDelete = async itemId => {
+    try {
+      await http(token).delete(`/events/manage/${itemId}`);
+      setEvents(events.filter(e => e.id !== itemId));
+    } catch (err) {
+      const message = err?.response?.data?.message;
+      if (message) {
+        console.warn(message);
+      }
+    }
+  };
+
   return (
     <View style={styles.AppWrapper}>
       <Appbar.Header style={styles.ScrollViewStyle}>
@@ -104,6 +116,7 @@ const ManageEvent = ({navigation}) => {
                       Update
                     </Text>
                     <Text
+                      onPress={() => handleDelete(e.id)}
                       style={{fontFamily: 'Poppins-Medium', color: '#3366ff'}}>
                       Delete
                     </Text>
