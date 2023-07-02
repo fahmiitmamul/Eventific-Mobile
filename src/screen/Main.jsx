@@ -32,6 +32,7 @@ import {
   faUser,
   faUserCircle,
 } from '@fortawesome/free-solid-svg-icons';
+import UpdateEvent from './UpdateEvent';
 
 const AuthStack = createNativeStackNavigator();
 const PaymentStack = createNativeStackNavigator();
@@ -171,6 +172,13 @@ const Main = () => {
             <Drawer.Screen
               name="Create Event"
               component={CreateEvent}
+              options={{
+                drawerItemStyle: {display: 'none'},
+              }}
+            />
+            <Drawer.Screen
+              name="Update Event"
+              component={UpdateEvent}
               options={{
                 drawerItemStyle: {display: 'none'},
               }}

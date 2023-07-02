@@ -1,8 +1,6 @@
 import React from 'react';
 import {Appbar} from 'react-native-paper';
 import {View, Text} from 'react-native';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faHeart} from '@fortawesome/free-solid-svg-icons';
 import {useSelector} from 'react-redux';
 import styles from '../styles/global';
 import HamburgerIcon from '../assets/images/hamburger.png';
@@ -90,12 +88,6 @@ const ManageEvent = ({navigation}) => {
                       {moment(e.date).format('ddd')}
                     </Text>
                   </View>
-                  <View style={styles.HeartWrapper}>
-                    <FontAwesomeIcon
-                      icon={faHeart}
-                      size={30}
-                      color="#3366ff"></FontAwesomeIcon>
-                  </View>
                 </View>
                 <View style={styles.TitleWrapper}>
                   <View>
@@ -118,6 +110,11 @@ const ManageEvent = ({navigation}) => {
                       Detail
                     </Text>
                     <Text
+                      onPress={() =>
+                        navigation.navigate('Update Event', {
+                          eventId: e.id,
+                        })
+                      }
                       style={{fontFamily: 'Poppins-Medium', color: '#3366ff'}}>
                       Update
                     </Text>
