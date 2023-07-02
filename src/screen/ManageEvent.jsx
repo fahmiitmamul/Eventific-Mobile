@@ -65,6 +65,9 @@ const ManageEvent = ({navigation}) => {
               color: 'white',
               paddingTop: 3,
               textAlign: 'center',
+            }}
+            onPress={() => {
+              navigation.navigate('Create Event');
             }}>
             Create
           </Text>
