@@ -87,32 +87,33 @@ const CustomDrawer = props => {
         </TouchableOpacity>
         <View style={{flex: 1, backgroundColor: '#fff', paddingTop: 10}}>
           <DrawerItemList {...props} />
+          <View>
+            <TouchableOpacity onPress={doLogout} style={{paddingVertical: 15}}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  gap: 28,
+                  marginLeft: 20,
+                }}>
+                <FontAwesomeIcon
+                  icon={faArrowRightFromBracket}
+                  size={25}
+                  color="red"></FontAwesomeIcon>
+                <Text
+                  style={{
+                    fontSize: 13,
+                    fontFamily: 'Poppins-Medium',
+                    marginLeft: 5,
+                    color: 'red',
+                  }}>
+                  Sign Out
+                </Text>
+              </View>
+            </TouchableOpacity>
+          </View>
         </View>
       </DrawerContentScrollView>
-      <View style={{padding: 10}}>
-        <TouchableOpacity onPress={doLogout} style={{paddingVertical: 15}}>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              gap: 10,
-              marginLeft: 20,
-            }}>
-            <FontAwesomeIcon
-              icon={faArrowRightFromBracket}
-              color="red"></FontAwesomeIcon>
-            <Text
-              style={{
-                fontSize: 15,
-                fontFamily: 'Poppins-Medium',
-                marginLeft: 5,
-                color: 'red',
-              }}>
-              Sign Out
-            </Text>
-          </View>
-        </TouchableOpacity>
-      </View>
     </View>
   );
 };

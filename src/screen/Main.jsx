@@ -20,6 +20,16 @@ import {useSelector} from 'react-redux';
 import EditProfile from './EditProfile';
 import CreateEvent from './CreateEvent';
 import CustomDrawer from '../components/CustomDrawer';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {
+  faGear,
+  faHeart,
+  faHome,
+  faListCheck,
+  faPerson,
+  faUser,
+  faUserCircle,
+} from '@fortawesome/free-solid-svg-icons';
 
 const AuthStack = createNativeStackNavigator();
 const PaymentStack = createNativeStackNavigator();
@@ -53,18 +63,123 @@ const Main = () => {
         {token && (
           <Drawer.Navigator
             drawerContent={props => <CustomDrawer {...props} />}
-            screenOptions={{headerShown: false}}>
-            <Drawer.Screen name="Home" component={Home} />
-            <Drawer.Screen name="Profile" component={Profile} />
-            <Drawer.Screen name="Edit Profile" component={EditProfile} />
-            <Drawer.Screen name="Manage Event" component={ManageEvent} />
-            <Drawer.Screen name="My Booking" component={MyBooking} />
-            <Drawer.Screen name="My Wishlists" component={MyWishlists} />
-            <Drawer.Screen name="Detail Event" component={EventDetails} />
-            <Drawer.Screen name="Change Password" component={ChangePassword} />
-            <Drawer.Screen name="Payment Method" component={PaymentMethod} />
-            <Drawer.Screen name="Purchase Ticket" component={PurchaseTicket} />
-            <Drawer.Screen name="Create Event" component={CreateEvent} />
+            screenOptions={{
+              headerShown: false,
+              drawerActiveBackgroundColor: '#19a7ce',
+              drawerActiveTintColor: '#fff',
+              drawerInactiveTintColor: '#333',
+              drawerLabelStyle: {
+                fontFamily: 'Poppins-Medium',
+                fontSize: 13,
+              },
+            }}>
+            <Drawer.Screen
+              name="Home"
+              component={Home}
+              options={{
+                drawerIcon: ({color}) => (
+                  <FontAwesomeIcon icon={faHome} color="gray"></FontAwesomeIcon>
+                ),
+                drawerItemStyle: {display: 'none'},
+              }}
+            />
+            <Drawer.Screen
+              name="Profile"
+              component={Profile}
+              options={{
+                drawerIcon: ({color}) => (
+                  <FontAwesomeIcon
+                    icon={faUserCircle}
+                    size={25}
+                    color="gray"></FontAwesomeIcon>
+                ),
+              }}
+            />
+            <Drawer.Screen
+              name="Edit Profile"
+              component={EditProfile}
+              options={{
+                drawerItemStyle: {display: 'none'},
+              }}
+            />
+            <Drawer.Screen
+              name="Manage Event"
+              component={ManageEvent}
+              options={{
+                drawerItemStyle: {display: 'none'},
+              }}
+            />
+            <Drawer.Screen
+              name="My Booking"
+              component={MyBooking}
+              options={{
+                drawerIcon: ({color}) => (
+                  <FontAwesomeIcon
+                    icon={faListCheck}
+                    size={25}
+                    color="gray"></FontAwesomeIcon>
+                ),
+              }}
+            />
+            <Drawer.Screen
+              name="My Wishlists"
+              component={MyWishlists}
+              options={{
+                drawerIcon: ({color}) => (
+                  <FontAwesomeIcon
+                    icon={faHeart}
+                    size={25}
+                    color="gray"></FontAwesomeIcon>
+                ),
+              }}
+            />
+            <Drawer.Screen
+              name="Detail Event"
+              component={EventDetails}
+              options={{
+                drawerItemStyle: {display: 'none'},
+              }}
+            />
+            <Drawer.Screen
+              name="Change Password"
+              component={ChangePassword}
+              options={{
+                drawerItemStyle: {display: 'none'},
+              }}
+            />
+            <Drawer.Screen
+              name="Payment Method"
+              component={PaymentMethod}
+              options={{
+                drawerItemStyle: {display: 'none'},
+              }}
+            />
+            <Drawer.Screen
+              name="Purchase Ticket"
+              component={PurchaseTicket}
+              options={{
+                drawerItemStyle: {display: 'none'},
+              }}
+            />
+            <Drawer.Screen
+              name="Create Event"
+              component={CreateEvent}
+              options={{
+                drawerItemStyle: {display: 'none'},
+              }}
+            />
+            <Drawer.Screen
+              name="Settings"
+              component={CreateEvent}
+              options={{
+                drawerIcon: ({color}) => (
+                  <FontAwesomeIcon
+                    icon={faGear}
+                    size={25}
+                    color="gray"></FontAwesomeIcon>
+                ),
+              }}
+            />
           </Drawer.Navigator>
         )}
       </NavigationContainer>
