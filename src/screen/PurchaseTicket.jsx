@@ -101,6 +101,8 @@ const PurchaseTicket = ({route, navigation}) => {
                     <Image
                       source={{
                         uri: `https://res.cloudinary.com/dxnewldiy/image/upload/f_auto,q_auto/v1/payment/${item.picture}`,
+                        width: 40,
+                        height: 40,
                       }}
                     />
                     <View style={styles.TicketSectionWrapper}>
