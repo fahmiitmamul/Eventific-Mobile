@@ -399,7 +399,7 @@ const styles = StyleSheet.create({
   TicketSectionWrapper: {
     display: 'flex',
     flexDirection: 'row',
-    gap: 20,
+    gap: 70,
   },
   TicketSectionTextStyle: {
     fontFamily: 'Poppins-Bold',
