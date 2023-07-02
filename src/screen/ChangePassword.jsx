@@ -75,6 +75,16 @@ const ChangePassword = ({navigation}) => {
         />
       </Appbar.Header>
       <ScrollView style={styles.ScrollViewStyle}>
+        {successMsg && (
+          <View style={styles.FormErrorViewStyle}>
+            <Text style={styles.FormErrorTextStyle}>{successMsg}</Text>
+          </View>
+        )}
+        {errorMsg && (
+          <View style={styles.FormErrorViewStyle}>
+            <Text style={styles.FormErrorTextStyle}>{errorMsg}</Text>
+          </View>
+        )}
         <View style={styles.ChangePassFormWrapper}>
           <Formik
             initialValues={{
