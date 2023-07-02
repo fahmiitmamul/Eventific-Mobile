@@ -31,9 +31,11 @@ const styles = StyleSheet.create({
   EventsTextStyle: {
     fontSize: 20,
     fontFamily: 'Poppins-Medium',
+    paddingTop: 15,
   },
   EventsWrapperStyle: {
-    margin: 20,
+    marginHorizontal: 30,
+    marginVertical: 10,
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',

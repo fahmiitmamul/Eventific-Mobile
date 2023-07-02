@@ -15,6 +15,7 @@ import {
   faFilter,
   faMessage,
   faSearch,
+  faSliders,
 } from '@fortawesome/free-solid-svg-icons';
 import http from '../helpers/http';
 import {useSelector} from 'react-redux';
@@ -115,7 +116,7 @@ const Home = ({navigation}) => {
           }}>
           <View style={styles.EventsWrapperStyle}>
             <Text style={styles.EventsTextStyle}>Events For You</Text>
-            <FontAwesomeIcon icon={faFilter} color="#19a7ce" />
+            <FontAwesomeIcon icon={faSliders} color="#19a7ce" size={25} />
           </View>
           <ScrollView
             style={{
