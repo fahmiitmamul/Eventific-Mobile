@@ -13,12 +13,14 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {
   faArrowRight,
   faFilter,
+  faMessage,
   faSearch,
 } from '@fortawesome/free-solid-svg-icons';
 import http from '../helpers/http';
 import {useSelector} from 'react-redux';
 import moment from 'moment';
 import {useFocusEffect} from '@react-navigation/native';
+import MessageRegular from '../assets/images/message-regular.png';
 
 const Home = ({navigation}) => {
   const token = useSelector(state => state.auth.token);
@@ -83,6 +85,10 @@ const Home = ({navigation}) => {
               navigation.openDrawer();
             }}
           />
+          <Appbar.Content
+            titleStyle={{fontFamily: 'Poppins-Medium', paddingLeft: 70}}
+          />
+          <Appbar.Action color="white" icon={MessageRegular} />
         </Appbar.Header>
         <View style={styles.TextInputWrapper}>
           <View style={styles.TextInputChildWrapper}>
