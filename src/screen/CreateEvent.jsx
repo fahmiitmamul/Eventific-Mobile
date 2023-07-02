@@ -90,7 +90,7 @@ const CreateEvent = ({navigation}) => {
     }
 
     if (selectedLocation == 0) {
-      form.append('cityId', selectedLocation);
+      form.append('cityId', 0);
     } else {
       form.append('cityId', selectedLocation);
     }
