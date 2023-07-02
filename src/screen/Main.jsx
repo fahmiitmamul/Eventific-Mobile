@@ -18,6 +18,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {useSelector} from 'react-redux';
 import EditProfile from './EditProfile';
+import CreateEvent from './CreateEvent';
 
 const AuthStack = createNativeStackNavigator();
 const PaymentStack = createNativeStackNavigator();
@@ -60,6 +61,7 @@ const Main = () => {
             <Drawer.Screen name="Change Password" component={ChangePassword} />
             <Drawer.Screen name="Payment Method" component={PaymentMethod} />
             <Drawer.Screen name="Purchase Ticket" component={PurchaseTicket} />
+            <Drawer.Screen name="Create Event" component={CreateEvent} />
           </Drawer.Navigator>
         )}
       </NavigationContainer>

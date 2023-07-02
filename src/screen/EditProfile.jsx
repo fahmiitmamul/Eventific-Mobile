@@ -18,12 +18,7 @@ import {Formik} from 'formik';
 import {useSelector} from 'react-redux';
 import http from '../helpers/http';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {
-  faArrowDown,
-  faArrowUp,
-  faChevronDown,
-  faChevronUp,
-} from '@fortawesome/free-solid-svg-icons';
+import {faChevronDown, faChevronUp} from '@fortawesome/free-solid-svg-icons';
 
 const EditProfile = ({navigation}) => {
   const token = useSelector(state => state.auth.token);

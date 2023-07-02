@@ -311,6 +311,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingLeft: 10,
     width: '100%',
+    fontFamily: 'Poppins-Medium',
+    paddingVertical: 13,
   },
   EditBtnStyle: {
     fontFamily: 'Poppins-Medium',
@@ -331,12 +333,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   SelectDropdownStyle: {
-    width: '80%',
+    width: '100%',
     height: 50,
     backgroundColor: '#FFF',
     borderRadius: 8,
     borderWidth: 1,
     borderColor: '#444',
+    fontFamily: 'Poppins-Medium',
   },
   BirthDateWrapper: {
     display: 'flex',
