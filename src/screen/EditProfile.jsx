@@ -128,7 +128,10 @@ const EditProfile = ({navigation}) => {
             navigation.openDrawer();
           }}
         />
-        <Appbar.Content titleStyle={styles.FontStyle} title="Profile" />
+        <Appbar.Content
+          titleStyle={{fontFamily: 'Poppins-Medium', paddingLeft: 115}}
+          title="Profile"
+        />
       </Appbar.Header>
       <Formik
         initialValues={{
