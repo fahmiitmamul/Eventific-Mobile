@@ -88,6 +88,7 @@ const Home = ({navigation}) => {
               placeholderTextColor="white"
               onChangeText={ev => setSearch(ev)}
               onSubmitEditing={() => getEventByName(search)}
+              onBlur={() => getEventByName()}
             />
             <FontAwesomeIcon
               icon={faSearch}
