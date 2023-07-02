@@ -1,15 +1,11 @@
 import {View, Text, Image} from 'react-native';
 import React from 'react';
-import {Appbar, Button} from 'react-native-paper';
+import {Appbar} from 'react-native-paper';
 import styles from '../styles/global';
+import Heart from '../assets/images/heart.png';
 import HamburgerIcon from '../assets/images/hamburger.png';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {
-  faArrowRight,
-  faClock,
-  faLocation,
-  faTimes,
-} from '@fortawesome/free-solid-svg-icons';
+import {faClock, faLocation} from '@fortawesome/free-solid-svg-icons';
 import moment from 'moment';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import http from '../helpers/http';
@@ -31,6 +27,21 @@ const EventDetails = ({route, navigation}) => {
       getEventDetails();
     }),
   );
+
+  async function addWishlists() {
+    try {
+      const eventId = id;
+      const body = new URLSearchParams({eventId}).toString();
+      const {data} = await http(token).post('/wishlist', body);
+      if (data.success == true) {
+        setTimeout(() => {
+          navigation.navigate('My Wishlists');
+        }, 3000);
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  }
 
   async function makePayments() {
     const eventId = id;
@@ -61,9 +72,10 @@ const EventDetails = ({route, navigation}) => {
           }}
         />
         <Appbar.Content
-          titleStyle={styles.ManageHeaderStyle}
+          titleStyle={{fontFamily: 'Poppins-Medium', paddingLeft: 70}}
           title="Event Detail"
         />
+        <Appbar.Action color="black" icon={Heart} onPress={addWishlists} />
       </Appbar.Header>
       <View>
         <View style={{position: 'relative'}}>
@@ -75,7 +87,7 @@ const EventDetails = ({route, navigation}) => {
               source={{
                 uri: `https://res.cloudinary.com/dxnewldiy/image/upload/v1683808473/${events?.picture}`,
               }}
-              style={{height: 400}}
+              style={{height: 450}}
             />
           </View>
           <View
@@ -124,7 +136,7 @@ const EventDetails = ({route, navigation}) => {
                   color: 'white',
                   fontFamily: 'Poppins-Regular',
                 }}>
-                {moment(events?.date).format('LLLL')}
+                {moment(events?.date).format('LLL')}
               </Text>
             </View>
             <Text
