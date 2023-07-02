@@ -30,20 +30,22 @@ const Home = ({navigation}) => {
   const [eventCategoriesData, setEventCategoriesData] = React.useState([]);
   const [search, setSearch] = React.useState('');
 
-  React.useEffect(() => {
-    SplashScreen.hide();
+  useFocusEffect(
+    React.useCallback(() => {
+      SplashScreen.hide();
 
-    async function getEvents() {
-      const {data} = await http(token).get('/events?limit=20');
-      setEvents(data.results);
-    }
+      async function getEvents() {
+        const {data} = await http(token).get('/events?limit=20');
+        setEvents(data.results);
+      }
 
-    getEvents();
-
-    if (search == '') {
       getEvents();
-    }
-  }, []);
+
+      if (search == '') {
+        getEvents();
+      }
+    }, []),
+  );
 
   async function getEventByCategory(name) {
     const {data} = await http(token).get('/events', {params: {category: name}});
