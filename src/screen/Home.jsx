@@ -36,6 +36,10 @@ const Home = ({navigation}) => {
     }
 
     getEvents();
+
+    if (search == '') {
+      getEvents();
+    }
   }, []);
 
   async function getEventByCategory(name) {
