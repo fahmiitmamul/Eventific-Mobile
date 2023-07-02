@@ -41,9 +41,9 @@ const Home = ({navigation}) => {
 
       getEvents();
 
-      if (search == '') {
-        getEvents();
-      }
+      // if (search == '') {
+      //   getEvents();
+      // }
     }, []),
   );
 
