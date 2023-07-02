@@ -99,7 +99,9 @@ const PurchaseTicket = ({route, navigation}) => {
                 <View>
                   <View style={styles.ProfileValueWrapper}>
                     <Image
-                      source={require('../assets/images/ticket-section.png')}
+                      source={{
+                        uri: `https://res.cloudinary.com/dxnewldiy/image/upload/f_auto,q_auto/v1/payment/${item.picture}`,
+                      }}
                     />
                     <View style={styles.TicketSectionWrapper}>
                       <View>
