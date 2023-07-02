@@ -10,6 +10,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {asyncLoginAction} from '../redux/actions/auth';
 import {clearMessage} from '../redux/reducers/auth';
 import styles from '../styles/global';
+import SplashScreen from 'react-native-splash-screen';
 
 const validationSchema = Yup.object().shape({
   username: Yup.string().required('Username is Required'),
@@ -45,6 +46,10 @@ const SignIn = ({navigation}) => {
       dispatch(clearMessage());
     }, 3000);
   }
+
+  React.useEffect(() => {
+    SplashScreen.hide();
+  }, []);
 
   return (
     <React.Fragment>
