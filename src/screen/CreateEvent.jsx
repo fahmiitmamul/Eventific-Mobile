@@ -17,6 +17,7 @@ import http from '../helpers/http';
 import DatePicker from 'react-native-date-picker';
 import moment from 'moment';
 import DocumentPicker from 'react-native-document-picker';
+import {useSelector} from 'react-redux';
 
 const CreateEvent = ({navigation}) => {
   const [category, setCategory] = React.useState([]);
@@ -28,6 +29,7 @@ const CreateEvent = ({navigation}) => {
   const [fileResponse, setFileResponse] = React.useState([]);
   const categoriesName = [];
   const locationName = [];
+  const token = useSelector(state => state.auth.token);
 
   category.map(c => {
     categoriesName.push(c.name);
@@ -81,12 +83,16 @@ const CreateEvent = ({navigation}) => {
       }
     });
 
-    if (selectedCategory) {
-      form.append('category', selectedCategory);
+    if (selectedCategory == 0) {
+      form.append('categoryId', 0);
+    } else {
+      form.append('categoryId', selectedCategory);
     }
 
-    if (selectedLocation) {
-      form.append('location', selectedLocation);
+    if (selectedLocation == 0) {
+      form.append('cityId', selectedLocation);
+    } else {
+      form.append('cityId', selectedLocation);
     }
 
     if (date) {
@@ -97,19 +103,19 @@ const CreateEvent = ({navigation}) => {
       form.append('picture', fileResponse);
     }
 
-    try {
-      // const {data} = await http(token).post('/events/manage', form, {
-      //   headers: {
-      //     'Content-Type': 'multipart/form-data',
-      //   },
-      // });
-      // if (data.success === true) {
-      //   navigation.navigate('Manage Event');
-      // }
-      console.log(form);
-    } catch (err) {
-      console.warn(err);
-    }
+    // try {
+    //   const {data} = await http(token).post('/events/manage', form, {
+    //     headers: {
+    //       'Content-Type': 'multipart/form-data',
+    //     },
+    //   });
+    //   if (data.success === true) {
+    //     navigation.navigate('Manage Event');
+    //   }
+    // } catch (err) {
+    //   console.warn(err);
+    // }
+    console.log(form);
   };
 
   return (
@@ -183,7 +189,6 @@ const CreateEvent = ({navigation}) => {
                     }}
                     onSelect={(selectedItem, index) => {
                       setSelectedCategory(index);
-                      console.log(index);
                     }}
                     buttonTextAfterSelection={(selectedItem, index) => {
                       return selectedItem;
@@ -229,7 +234,7 @@ const CreateEvent = ({navigation}) => {
                       );
                     }}
                     onSelect={(selectedItem, index) => {
-                      setSelectedLocation(selectedItem, index);
+                      setSelectedLocation(index);
                     }}
                     buttonTextAfterSelection={(selectedItem, index) => {
                       return selectedItem;
