@@ -18,10 +18,13 @@ import {
 import http from '../helpers/http';
 import {useSelector} from 'react-redux';
 import moment from 'moment';
+import {useFocusEffect} from '@react-navigation/native';
 
 const Home = ({navigation}) => {
   const token = useSelector(state => state.auth.token);
   const [events, setEvents] = React.useState([]);
+  const [eventCategories, setEventCategories] = React.useState([]);
+  const [eventCategoriesData, setEventCategoriesData] = React.useState([]);
 
   React.useEffect(() => {
     SplashScreen.hide();
@@ -33,6 +36,23 @@ const Home = ({navigation}) => {
 
     getEvents();
   }, []);
+
+  async function getEventByCategory(name) {
+    const {data} = await http(token).get('events', {params: {category: name}});
+    setEventCategoriesData(data.results);
+  }
+
+  useFocusEffect(
+    React.useCallback(() => {
+      async function getEventCategories() {
+        let {data} = await http(token).get('/categories?limit=7');
+        setEventCategories(data.results);
+      }
+
+      getEventCategories();
+      getEventByCategory();
+    }, []),
+  );
 
   return (
     <React.Fragment>
@@ -159,62 +179,29 @@ const Home = ({navigation}) => {
                   height: 60,
                   marginLeft: 10,
                 }}>
-                <View
-                  style={{
-                    width: 120,
-                    height: 50,
-                    borderRadius: 30,
-                    elevation: 5,
-                    shadowColor: '#52006A',
-                    backgroundColor: 'white',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                  <Text style={{fontFamily: 'Poppins-Medium'}}>Your Area</Text>
-                </View>
-                <View
-                  style={{
-                    width: 120,
-                    height: 50,
-                    borderRadius: 30,
-                    elevation: 5,
-                    shadowColor: '#52006A',
-                    backgroundColor: 'white',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                  <Text style={{fontFamily: 'Poppins-Medium'}}>Music</Text>
-                </View>
-                <View
-                  style={{
-                    width: 120,
-                    height: 50,
-                    borderRadius: 30,
-                    elevation: 5,
-                    shadowColor: '#52006A',
-                    backgroundColor: 'white',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                  <Text style={{fontFamily: 'Poppins-Medium'}}>Sports</Text>
-                </View>
-                <View
-                  style={{
-                    width: 120,
-                    height: 50,
-                    borderRadius: 30,
-                    elevation: 5,
-                    shadowColor: '#52006A',
-                    backgroundColor: 'white',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                  <Text style={{fontFamily: 'Poppins-Medium'}}>Arts</Text>
-                </View>
+                {eventCategories.map(ev => {
+                  return (
+                    <View key={ev.id}>
+                      <TouchableOpacity
+                        style={{
+                          width: 120,
+                          height: 50,
+                          borderRadius: 30,
+                          elevation: 5,
+                          shadowColor: '#52006A',
+                          backgroundColor: 'white',
+                          display: 'flex',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        }}
+                        onPress={() => getEventByCategory(ev.name)}>
+                        <Text style={{fontFamily: 'Poppins-Medium'}}>
+                          {ev.name}
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                  );
+                })}
               </View>
             </ScrollView>
           </View>
@@ -232,217 +219,128 @@ const Home = ({navigation}) => {
                 See All
               </Text>
             </View>
-            <View
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                marginRight: 55,
-                gap: 18,
-              }}>
-              <View
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
+            {eventCategoriesData.map(item => {
+              return (
                 <View
                   style={{
                     display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    padding: 5,
-                  }}>
-                  <Text
-                    style={{
-                      fontFamily: 'Poppins-Medium',
-                      color: '#FF8900',
-                      fontSize: 20,
-                    }}>
-                    15
-                  </Text>
-                  <Text style={{fontFamily: 'Poppins-Regular'}}>Wed</Text>
-                </View>
-                <View
-                  style={{
-                    height: 430,
-                    width: 5,
-                    borderRightColor: '#C1C5D080',
-                    borderLeftWidth: 0,
-                    borderTopWidth: 0,
-                    borderBottomWidth: 0,
-                    borderWidth: 3,
-                    borderStyle: 'dotted',
-                  }}></View>
-              </View>
-              <View style={{width: '100%'}}>
-                <View style={{position: 'relative'}}>
+                    flexDirection: 'row',
+                    marginRight: 55,
+                    gap: 18,
+                  }}
+                  key={item.id}>
                   <View
                     style={{
-                      overflow: 'hidden',
-                      borderRadius: 25,
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'center',
+                      alignItems: 'center',
                     }}>
-                    <Image
-                      source={require('../assets/images/jakarta.jpg')}
-                      style={{width: '100%', height: 450}}
-                    />
-                  </View>
-                  <View
-                    style={{
-                      position: 'absolute',
-                      backgroundColor: 'black',
-                      opacity: 0.5,
-                      borderRadius: 25,
-                      width: '100%',
-                      height: 451,
-                    }}></View>
-                  <View style={{position: 'absolute', top: 250, margin: 20}}>
-                    <Text
-                      style={{
-                        color: 'white',
-                        fontFamily: 'Poppins-Regular',
-                      }}>
-                      Wed, 15 Nov, 4:00 PM
-                    </Text>
-                    <Text
-                      style={{
-                        color: 'white',
-                        fontFamily: 'Poppins-Medium',
-                        fontSize: 25,
-                      }}>
-                      Sights & Sounds Exhibition
-                    </Text>
                     <View
                       style={{
-                        marginTop: 5,
-                        backgroundColor: 'red',
-                        width: 40,
-                        borderRadius: 10,
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
                         padding: 5,
                       }}>
-                      <FontAwesomeIcon
-                        icon={faArrowRight}
-                        color="white"
-                        size={25}
-                      />
+                      <Text
+                        style={{
+                          fontFamily: 'Poppins-Medium',
+                          color: '#FF8900',
+                          fontSize: 20,
+                        }}>
+                        {moment(item.date).format('DD')}
+                      </Text>
+                      <Text style={{fontFamily: 'Poppins-Regular'}}>
+                        {moment(item.date).format('ddd')}
+                      </Text>
                     </View>
-                  </View>
-                </View>
-                <Button
-                  style={{
-                    backgroundColor: '#19a7ce',
-                    borderRadius: 8,
-                    marginTop: 10,
-                  }}>
-                  <Text style={{fontFamily: 'Poppins-Regular', color: 'white'}}>
-                    Show All 5 Events
-                  </Text>
-                </Button>
-              </View>
-            </View>
-            <View
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                marginRight: 55,
-                gap: 18,
-                marginTop: 25,
-              }}>
-              <View>
-                <View
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    padding: 5,
-                  }}>
-                  <Text
-                    style={{
-                      fontFamily: 'Poppins-Medium',
-                      color: '#FF8900',
-                      fontSize: 20,
-                    }}>
-                    15
-                  </Text>
-                  <Text style={{fontFamily: 'Poppins-Regular'}}>Wed</Text>
-                  <View
-                    style={{
-                      height: 430,
-                      width: 5,
-                      borderRightColor: '#C1C5D080',
-                      borderLeftWidth: 0,
-                      borderTopWidth: 0,
-                      borderBottomWidth: 0,
-                      borderWidth: 3,
-                      borderStyle: 'dotted',
-                    }}></View>
-                </View>
-              </View>
-              <View style={{width: '100%'}}>
-                <View style={{position: 'relative'}}>
-                  <View
-                    style={{
-                      overflow: 'hidden',
-                      borderRadius: 25,
-                    }}>
-                    <Image
-                      source={require('../assets/images/jakarta.jpg')}
-                      style={{width: '100%', height: 450}}
-                    />
-                  </View>
-                  <View
-                    style={{
-                      position: 'absolute',
-                      backgroundColor: 'black',
-                      opacity: 0.5,
-                      borderRadius: 25,
-                      width: '100%',
-                      height: 451,
-                    }}></View>
-                  <View style={{position: 'absolute', top: 250, margin: 20}}>
-                    <Text
-                      style={{
-                        color: 'white',
-                        fontFamily: 'Poppins-Regular',
-                      }}>
-                      Wed, 15 Nov, 4:00 PM
-                    </Text>
-                    <Text
-                      style={{
-                        color: 'white',
-                        fontFamily: 'Poppins-Medium',
-                        fontSize: 25,
-                      }}>
-                      Sights & Sounds Exhibition
-                    </Text>
                     <View
                       style={{
-                        marginTop: 5,
-                        backgroundColor: 'red',
-                        width: 40,
-                        borderRadius: 10,
-                        padding: 5,
-                      }}>
-                      <FontAwesomeIcon
-                        icon={faArrowRight}
-                        color="white"
-                        size={25}
-                      />
+                        height: 430,
+                        width: 5,
+                        borderRightColor: '#C1C5D080',
+                        borderLeftWidth: 0,
+                        borderTopWidth: 0,
+                        borderBottomWidth: 0,
+                        borderWidth: 3,
+                        borderStyle: 'dotted',
+                      }}></View>
+                  </View>
+                  <View style={{width: '100%'}}>
+                    <View style={{position: 'relative'}}>
+                      <View
+                        style={{
+                          overflow: 'hidden',
+                          borderRadius: 25,
+                        }}>
+                        <Image
+                          source={{
+                            uri: `https://res.cloudinary.com/dxnewldiy/image/upload/v1683808473/${item.picture}`,
+                          }}
+                          style={{width: '100%', height: 450}}
+                        />
+                      </View>
+                      <View
+                        style={{
+                          position: 'absolute',
+                          backgroundColor: 'black',
+                          opacity: 0.5,
+                          borderRadius: 25,
+                          width: '100%',
+                          height: 451,
+                        }}></View>
+                      <View
+                        style={{position: 'absolute', top: 250, margin: 20}}>
+                        <Text
+                          style={{
+                            color: 'white',
+                            fontFamily: 'Poppins-Regular',
+                          }}>
+                          {moment(item.date).format('LLL')}
+                        </Text>
+                        <Text
+                          style={{
+                            color: 'white',
+                            fontFamily: 'Poppins-Medium',
+                            fontSize: 25,
+                          }}>
+                          {item.title}
+                        </Text>
+                        <View
+                          style={{
+                            marginTop: 5,
+                            backgroundColor: 'red',
+                            width: 40,
+                            borderRadius: 10,
+                            padding: 5,
+                          }}>
+                          <FontAwesomeIcon
+                            icon={faArrowRight}
+                            color="white"
+                            size={25}
+                          />
+                        </View>
+                      </View>
                     </View>
+                    <Button
+                      style={{
+                        backgroundColor: '#19a7ce',
+                        borderRadius: 8,
+                        marginTop: 10,
+                      }}>
+                      <Text
+                        style={{
+                          fontFamily: 'Poppins-Regular',
+                          color: 'white',
+                        }}>
+                        Show All 5 Events
+                      </Text>
+                    </Button>
                   </View>
                 </View>
-                <Button
-                  style={{
-                    backgroundColor: '#19a7ce',
-                    borderRadius: 8,
-                    marginTop: 10,
-                  }}>
-                  <Text style={{fontFamily: 'Poppins-Regular', color: 'white'}}>
-                    Show All 5 Events
-                  </Text>
-                </Button>
-              </View>
-            </View>
+              );
+            })}
           </View>
         </ScrollView>
       </View>
