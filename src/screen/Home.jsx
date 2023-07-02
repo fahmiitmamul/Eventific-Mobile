@@ -25,7 +25,7 @@ const Home = ({navigation}) => {
   const [events, setEvents] = React.useState([]);
   const [eventCategories, setEventCategories] = React.useState([]);
   const [eventCategoriesData, setEventCategoriesData] = React.useState([]);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = React.useState('');
 
   React.useEffect(() => {
     SplashScreen.hide();
@@ -43,11 +43,16 @@ const Home = ({navigation}) => {
     setEventCategoriesData(data.results);
   }
 
-  async function getEventByName(eventname) {
+  async function getEventByName(search) {
+    const eventdata = await http(token).get('/events?limit=20');
     const {data} = await http(token).get('/events', {
-      params: {search: eventname},
+      params: {search: search},
     });
-    setEvents(data.results);
+    if (search === '') {
+      setEvents(eventdata.data.results);
+    } else {
+      setEvents(data.results);
+    }
   }
 
   useFocusEffect(
@@ -81,7 +86,8 @@ const Home = ({navigation}) => {
               style={styles.SearchInput}
               placeholder="Search Event"
               placeholderTextColor="white"
-              onSubmitEditing={text => getEventByName(text)}
+              onChangeText={ev => setSearch(ev)}
+              onSubmitEditing={() => getEventByName(search)}
             />
             <FontAwesomeIcon
               icon={faSearch}
