@@ -13,6 +13,8 @@ import {
 import {useFocusEffect} from '@react-navigation/native';
 import http from '../helpers/http';
 import {useSelector} from 'react-redux';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {faChevronRight} from '@fortawesome/free-solid-svg-icons';
 
 const CustomDrawer = props => {
   const [profile, setProfile] = React.useState([]);
@@ -35,36 +37,43 @@ const CustomDrawer = props => {
 
   return (
     <View style={{flex: 1}}>
-      <DrawerContentScrollView
-        {...props}
-        contentContainerStyle={{backgroundColor: '#8200d6'}}>
-        <ImageBackground
-          source={require('../assets/images/menu-bg.jpeg')}
-          style={{padding: 20}}>
+      <DrawerContentScrollView {...props}>
+        <View
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            gap: 20,
+            marginHorizontal: 10,
+            marginVertical: 50,
+          }}>
           <Image
-            source={require('../assets/images/user-profile.jpg')}
+            source={{
+              uri: `https://res.cloudinary.com/dxnewldiy/image/upload/v1683808473/${profile?.picture}`,
+            }}
             style={{height: 80, width: 80, borderRadius: 40, marginBottom: 10}}
           />
-          <Text
-            style={{
-              color: '#fff',
-              fontSize: 18,
-              fontFamily: 'Roboto-Medium',
-              marginBottom: 5,
-            }}>
-            John Doe
-          </Text>
-          <View style={{flexDirection: 'row'}}>
+          <View>
             <Text
               style={{
-                color: '#fff',
-                fontFamily: 'Roboto-Regular',
-                marginRight: 5,
+                fontSize: 18,
+                fontFamily: 'Poppins-Medium',
+                marginBottom: 5,
               }}>
-              280 Coins
+              {profile?.fullName}
             </Text>
+            <View style={{flexDirection: 'row'}}>
+              <Text
+                style={{
+                  fontFamily: 'Poppins-Regular',
+                  marginRight: 5,
+                }}>
+                {profile?.profession}
+              </Text>
+            </View>
           </View>
-        </ImageBackground>
+          <FontAwesomeIcon icon={faChevronRight}></FontAwesomeIcon>
+        </View>
         <View style={{flex: 1, backgroundColor: '#fff', paddingTop: 10}}>
           <DrawerItemList {...props} />
         </View>
