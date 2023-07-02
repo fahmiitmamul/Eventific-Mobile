@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Appbar, Button} from 'react-native-paper';
 import styles from '../styles/global';
 import SplashScreen from 'react-native-splash-screen';
@@ -25,6 +25,7 @@ const Home = ({navigation}) => {
   const [events, setEvents] = React.useState([]);
   const [eventCategories, setEventCategories] = React.useState([]);
   const [eventCategoriesData, setEventCategoriesData] = React.useState([]);
+  const [search, setSearch] = useState('');
 
   React.useEffect(() => {
     SplashScreen.hide();
@@ -38,8 +39,15 @@ const Home = ({navigation}) => {
   }, []);
 
   async function getEventByCategory(name) {
-    const {data} = await http(token).get('events', {params: {category: name}});
+    const {data} = await http(token).get('/events', {params: {category: name}});
     setEventCategoriesData(data.results);
+  }
+
+  async function getEventByName(eventname) {
+    const {data} = await http(token).get('/events', {
+      params: {search: eventname},
+    });
+    setEvents(data.results);
   }
 
   useFocusEffect(
@@ -73,6 +81,7 @@ const Home = ({navigation}) => {
               style={styles.SearchInput}
               placeholder="Search Event"
               placeholderTextColor="white"
+              onSubmitEditing={text => getEventByName(text)}
             />
             <FontAwesomeIcon
               icon={faSearch}
