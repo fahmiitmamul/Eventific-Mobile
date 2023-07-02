@@ -10,15 +10,21 @@ import {
   DrawerContentScrollView,
   DrawerItemList,
 } from '@react-navigation/drawer';
-import {useFocusEffect} from '@react-navigation/native';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import http from '../helpers/http';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faChevronRight} from '@fortawesome/free-solid-svg-icons';
+import {
+  faArrowRightFromBracket,
+  faChevronRight,
+} from '@fortawesome/free-solid-svg-icons';
+import {logout} from '../redux/reducers/auth';
 
 const CustomDrawer = props => {
   const [profile, setProfile] = React.useState([]);
   const token = useSelector(state => state.auth.token);
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
 
   useFocusEffect(
     React.useCallback(() => {
@@ -34,6 +40,10 @@ const CustomDrawer = props => {
       getProfile();
     }, []),
   );
+
+  const doLogout = () => {
+    dispatch(logout());
+  };
 
   return (
     <View style={{flex: 1}}>
@@ -79,13 +89,23 @@ const CustomDrawer = props => {
         </View>
       </DrawerContentScrollView>
       <View style={{padding: 10}}>
-        <TouchableOpacity onPress={() => {}} style={{paddingVertical: 15}}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <TouchableOpacity onPress={doLogout} style={{paddingVertical: 15}}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              gap: 10,
+              marginLeft: 20,
+            }}>
+            <FontAwesomeIcon
+              icon={faArrowRightFromBracket}
+              color="red"></FontAwesomeIcon>
             <Text
               style={{
                 fontSize: 15,
                 fontFamily: 'Poppins-Medium',
                 marginLeft: 5,
+                color: 'red',
               }}>
               Sign Out
             </Text>

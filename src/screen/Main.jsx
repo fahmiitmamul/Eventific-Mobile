@@ -41,8 +41,8 @@ const Main = () => {
       <NavigationContainer>
         {!token && (
           <AuthStack.Navigator screenOptions={{headerShown: false}}>
-            <AuthStack.Screen name="SignUp" component={SignUp} />
             <AuthStack.Screen name="SignIn" component={SignIn} />
+            <AuthStack.Screen name="SignUp" component={SignUp} />
             <AuthStack.Screen
               name="ForgotPassword"
               component={ForgotPassword}
