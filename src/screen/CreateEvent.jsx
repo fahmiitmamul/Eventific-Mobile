@@ -84,13 +84,13 @@ const CreateEvent = ({navigation}) => {
     });
 
     if (selectedCategory == 0) {
-      form.append('categoryId', 0);
+      form.append('categoryId', 1);
     } else {
       form.append('categoryId', selectedCategory);
     }
 
     if (selectedLocation == 0) {
-      form.append('cityId', 0);
+      form.append('cityId', 1);
     } else {
       form.append('cityId', selectedLocation);
     }
@@ -103,19 +103,18 @@ const CreateEvent = ({navigation}) => {
       form.append('picture', fileResponse);
     }
 
-    // try {
-    //   const {data} = await http(token).post('/events/manage', form, {
-    //     headers: {
-    //       'Content-Type': 'multipart/form-data',
-    //     },
-    //   });
-    //   if (data.success === true) {
-    //     navigation.navigate('Manage Event');
-    //   }
-    // } catch (err) {
-    //   console.warn(err);
-    // }
-    console.log(form);
+    try {
+      const {data} = await http(token).post('/events/manage', form, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      if (data.success === true) {
+        navigation.navigate('Manage Event');
+      }
+    } catch (err) {
+      console.warn(err);
+    }
   };
 
   return (
