@@ -48,7 +48,7 @@ const CustomDrawer = props => {
   return (
     <View style={{flex: 1}}>
       <DrawerContentScrollView {...props}>
-        <View
+        <TouchableOpacity
           style={{
             display: 'flex',
             flexDirection: 'row',
@@ -56,7 +56,8 @@ const CustomDrawer = props => {
             gap: 20,
             marginHorizontal: 10,
             marginVertical: 50,
-          }}>
+          }}
+          onPress={() => navigation.navigate('Profile')}>
           <Image
             source={{
               uri: `https://res.cloudinary.com/dxnewldiy/image/upload/v1683808473/${profile?.picture}`,
@@ -83,7 +84,7 @@ const CustomDrawer = props => {
             </View>
           </View>
           <FontAwesomeIcon icon={faChevronRight}></FontAwesomeIcon>
-        </View>
+        </TouchableOpacity>
         <View style={{flex: 1, backgroundColor: '#fff', paddingTop: 10}}>
           <DrawerItemList {...props} />
         </View>
