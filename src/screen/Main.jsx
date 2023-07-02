@@ -19,6 +19,7 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 import {useSelector} from 'react-redux';
 import EditProfile from './EditProfile';
 import CreateEvent from './CreateEvent';
+import CustomDrawer from '../components/CustomDrawer';
 
 const AuthStack = createNativeStackNavigator();
 const PaymentStack = createNativeStackNavigator();
@@ -50,7 +51,9 @@ const Main = () => {
           </AuthStack.Navigator>
         )}
         {token && (
-          <Drawer.Navigator screenOptions={{headerShown: false}}>
+          <Drawer.Navigator
+            drawerContent={props => <CustomDrawer {...props} />}
+            screenOptions={{headerShown: false}}>
             <Drawer.Screen name="Home" component={Home} />
             <Drawer.Screen name="Profile" component={Profile} />
             <Drawer.Screen name="Edit Profile" component={EditProfile} />
