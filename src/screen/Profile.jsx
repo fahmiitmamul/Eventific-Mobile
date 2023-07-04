@@ -7,23 +7,14 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import React from 'react';
-import {Appbar, RadioButton} from 'react-native-paper';
-import SelectDropdown from 'react-native-select-dropdown';
-import DatePicker from 'react-native-date-picker';
-import moment from 'moment';
+import {Appbar} from 'react-native-paper';
 import styles from '../styles/global';
 import HamburgerIcon from '../assets/images/hamburger.png';
-import DocumentPicker from 'react-native-document-picker';
-import {Formik} from 'formik';
 import {useSelector} from 'react-redux';
 import http from '../helpers/http';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {
-  faArrowDown,
-  faArrowUp,
-  faChevronDown,
   faChevronRight,
-  faChevronUp,
   faLock,
   faPencil,
   faPlus,
@@ -31,18 +22,7 @@ import {
 
 const Profile = ({navigation}) => {
   const token = useSelector(state => state.auth.token);
-  const [checked1, setChecked1] = React.useState(false);
-  const [checked2, setChecked2] = React.useState(false);
-  const [open, setOpen] = React.useState(false);
-  const [date, setDate] = React.useState(new Date());
-  const [editEmail, setEditEmail] = React.useState(false);
-  const [editUsername, setEditUsername] = React.useState(false);
-  const [editPhoneNumber, setEditPhoneNumber] = React.useState(false);
-  const [editName, setEditName] = React.useState(false);
-  const [editGender, setEditGender] = React.useState(false);
   const [profile, setProfile] = React.useState([]);
-  const [prof, setProf] = React.useState('');
-  const [nation, setNation] = React.useState('');
 
   React.useEffect(() => {
     const getProfile = async () => {
