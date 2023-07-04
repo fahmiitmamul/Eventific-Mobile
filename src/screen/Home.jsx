@@ -4,6 +4,7 @@ import styles from '../styles/global';
 import SplashScreen from 'react-native-splash-screen';
 import HamburgerIcon from '../assets/images/hamburger.png';
 import {View, StatusBar, Text, Image} from 'react-native';
+import {Alert} from 'react-native';
 import {
   ScrollView,
   TextInput,
@@ -22,6 +23,7 @@ import {useSelector} from 'react-redux';
 import moment from 'moment';
 import {useFocusEffect} from '@react-navigation/native';
 import MessageRegular from '../assets/images/message-regular.png';
+import messaging from '@react-native-firebase/messaging';
 
 const Home = ({navigation}) => {
   const token = useSelector(state => state.auth.token);
@@ -29,6 +31,14 @@ const Home = ({navigation}) => {
   const [eventCategories, setEventCategories] = React.useState([]);
   const [eventCategoriesData, setEventCategoriesData] = React.useState([]);
   const [search, setSearch] = React.useState('');
+
+  React.useEffect(() => {
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+    });
+
+    return unsubscribe;
+  }, []);
 
   useFocusEffect(
     React.useCallback(() => {
