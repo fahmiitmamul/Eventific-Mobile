@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "897311386822",
-    "project_id": "eventpraga-e9899",
-    "storage_bucket": "eventpraga-e9899.appspot.com"
+    "project_number": "981481539430",
+    "project_id": "eventpraga-f4b4d",
+    "storage_bucket": "eventpraga-f4b4d.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:897311386822:android:a3816728b6482acf843bc7",
+        "mobilesdk_app_id": "1:981481539430:android:e82447f737f892ad0ceaa7",
         "android_client_info": {
           "package_name": "com.eventpraga"
         }
       },
       "oauth_client": [
         {
-          "client_id": "897311386822-qvmf0bf18ocdqqeg7cf42ru4llqckusg.apps.googleusercontent.com",
+          "client_id": "981481539430-ih6qiktoo5o8qrh8015e6tqt2hu5c490.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBHCv7xhGtBR-LQu2zCbD0IQp9ABbVkCt0"
+          "current_key": "AIzaSyDaN3nSchw-2jcKkULtePC3BCT4TLXzx90"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "897311386822-qvmf0bf18ocdqqeg7cf42ru4llqckusg.apps.googleusercontent.com",
+              "client_id": "981481539430-ih6qiktoo5o8qrh8015e6tqt2hu5c490.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
