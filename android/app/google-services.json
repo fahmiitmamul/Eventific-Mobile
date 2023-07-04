@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "705584895704",
+    "project_id": "eventpraga-232cf",
+    "storage_bucket": "eventpraga-232cf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:705584895704:android:b55f82a966ca6821dda9ad",
+        "android_client_info": {
+          "package_name": "com.eventpraga"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "705584895704-cu15l3pajcp2hnu2jsp2s0gsio1bto99.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlI65fq1cVfP8g76VucR1j8lLpcGv7tYU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "705584895704-cu15l3pajcp2hnu2jsp2s0gsio1bto99.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
