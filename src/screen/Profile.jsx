@@ -80,7 +80,11 @@ const Profile = ({navigation}) => {
             fontSize: 13,
             textAlign: 'center',
           }}>
-          {profile?.profession}
+          {profile?.profession === null ? (
+            <Text>Profession Not set</Text>
+          ) : (
+            profile?.profession
+          )}
         </Text>
       </View>
       <View>

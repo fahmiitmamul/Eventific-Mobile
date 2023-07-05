@@ -89,7 +89,11 @@ const CustomDrawer = props => {
                   fontFamily: 'Poppins-Regular',
                   marginRight: 5,
                 }}>
-                {profile?.profession}
+                {profile?.profession === null ? (
+                  <Text>Not Set</Text>
+                ) : (
+                  profile?.profession
+                )}
               </Text>
             </View>
           </View>
