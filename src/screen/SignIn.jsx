@@ -62,7 +62,14 @@ const SignIn = ({navigation}) => {
             <Text style={styles.TextLoginStyle}>Log In</Text>
           </View>
           <View style={styles.SubtitleWrapper}>
-            <Text style={styles.FontStyle}>Hi, Welcome Back to EventPraga</Text>
+            <Text style={styles.FontStyle}>Don't have an account ?</Text>
+            <Text
+              style={{fontFamily: 'Poppins-Medium', color: '#3366ff'}}
+              onPress={() => {
+                navigation.navigate('SignUp');
+              }}>
+              Sign Up
+            </Text>
           </View>
         </View>
         {formError && (
