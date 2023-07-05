@@ -68,7 +68,11 @@ const EventDetails = ({route, navigation}) => {
   return (
     <ScrollView>
       <Appbar.Header style={styles.ScrollViewStyle}>
-        <Appbar.BackAction onPress={this._goBack} />
+        <Appbar.BackAction
+          onPress={() => {
+            navigation.navigate('Home');
+          }}
+        />
         <Appbar.Content
           titleStyle={{fontFamily: 'Poppins-Medium', paddingLeft: 70}}
           title="Event Detail"

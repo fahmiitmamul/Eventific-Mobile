@@ -8,10 +8,8 @@ import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import http from '../helpers/http';
 import {useDispatch, useSelector} from 'react-redux';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {
-  faArrowRightFromBracket,
-  faChevronRight,
-} from '@fortawesome/free-solid-svg-icons';
+import {faArrowRightFromBracket} from '@fortawesome/free-solid-svg-icons';
+import DefaultImg from '../assets/images/images.png';
 import {logout} from '../redux/reducers/auth';
 
 const CustomDrawer = props => {
@@ -52,12 +50,30 @@ const CustomDrawer = props => {
             marginVertical: 50,
           }}
           onPress={() => navigation.navigate('Profile')}>
-          <Image
-            source={{
-              uri: `https://res.cloudinary.com/dxnewldiy/image/upload/v1683808473/${profile?.picture}`,
-            }}
-            style={{height: 80, width: 80, borderRadius: 40, marginBottom: 10}}
-          />
+          {profile?.picture === null && (
+            <Image
+              source={require('../assets/images/images.png')}
+              style={{
+                height: 80,
+                width: 80,
+                borderRadius: 40,
+                marginBottom: 10,
+              }}
+            />
+          )}
+          {profile?.picture !== null && (
+            <Image
+              source={{
+                uri: `https://res.cloudinary.com/dxnewldiy/image/upload/v1683808473/${profile?.picture}`,
+              }}
+              style={{
+                height: 80,
+                width: 80,
+                borderRadius: 40,
+                marginBottom: 10,
+              }}
+            />
+          )}
           <View>
             <Text
               style={{
@@ -77,7 +93,6 @@ const CustomDrawer = props => {
               </Text>
             </View>
           </View>
-          <FontAwesomeIcon icon={faChevronRight}></FontAwesomeIcon>
         </TouchableOpacity>
         <View style={{flex: 1, backgroundColor: '#fff', paddingTop: 10}}>
           <DrawerItemList {...props} />

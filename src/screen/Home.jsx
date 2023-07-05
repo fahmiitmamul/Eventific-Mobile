@@ -20,13 +20,24 @@ import {useSelector} from 'react-redux';
 import moment from 'moment';
 import {useFocusEffect} from '@react-navigation/native';
 import MessageRegular from '../assets/images/message-regular.png';
+import deviceToken from '../redux/reducers/deviceToken';
 
 const Home = ({navigation}) => {
   const token = useSelector(state => state.auth.token);
+  const fcmToken = useSelector(state => state.deviceToken.data);
   const [events, setEvents] = React.useState([]);
   const [eventCategories, setEventCategories] = React.useState([]);
   const [eventCategoriesData, setEventCategoriesData] = React.useState([]);
   const [search, setSearch] = React.useState('');
+
+  const saveToken = React.useCallback(async () => {
+    const form = new URLSearchParams({token: fcmToken}).toString();
+    await http(token).post('/device-token', form);
+  }, []);
+
+  React.useEffect(() => {
+    saveToken();
+  }, []);
 
   useFocusEffect(
     React.useCallback(() => {

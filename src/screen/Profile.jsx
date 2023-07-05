@@ -49,12 +49,20 @@ const Profile = ({navigation}) => {
       </Appbar.Header>
       <View style={styles.PictureWrapper}>
         <View style={styles.PictureChildWrapper}>
-          <Image
-            style={styles.ImageStyle}
-            source={{
-              uri: `https://res.cloudinary.com/dxnewldiy/image/upload/v1683808473/${profile?.picture}`,
-            }}
-          />
+          {profile?.picture === null && (
+            <Image
+              source={require('../assets/images/images.png')}
+              style={styles.ImageStyle}
+            />
+          )}
+          {profile?.picture !== null && (
+            <Image
+              source={{
+                uri: `https://res.cloudinary.com/dxnewldiy/image/upload/v1683808473/${profile?.picture}`,
+              }}
+              style={styles.ImageStyle}
+            />
+          )}
         </View>
       </View>
       <View>

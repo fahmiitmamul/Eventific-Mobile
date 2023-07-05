@@ -183,18 +183,6 @@ const Main = () => {
                 drawerItemStyle: {display: 'none'},
               }}
             />
-            <Drawer.Screen
-              name="Settings"
-              component={CreateEvent}
-              options={{
-                drawerIcon: ({color}) => (
-                  <FontAwesomeIcon
-                    icon={faGear}
-                    size={25}
-                    color="gray"></FontAwesomeIcon>
-                ),
-              }}
-            />
           </Drawer.Navigator>
         )}
       </NavigationContainer>
