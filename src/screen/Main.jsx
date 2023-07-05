@@ -146,6 +146,7 @@ const Main = () => {
               component={EventDetails}
               options={{
                 drawerItemStyle: {display: 'none'},
+                unmountOnBlur: true,
               }}
             />
             <Drawer.Screen

@@ -18,6 +18,7 @@ import DatePicker from 'react-native-date-picker';
 import moment from 'moment';
 import DocumentPicker from 'react-native-document-picker';
 import {useSelector} from 'react-redux';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const CreateEvent = ({navigation}) => {
   const [category, setCategory] = React.useState([]);
@@ -118,8 +119,9 @@ const CreateEvent = ({navigation}) => {
   };
 
   return (
-    <ScrollView
-      style={{width: '100%', height: '100%', backgroundColor: 'white'}}>
+    <KeyboardAwareScrollView
+      style={{width: '100%', height: '100%', backgroundColor: 'white'}}
+      enableOnAndroid>
       <Appbar.Header style={styles.ScrollViewStyle}>
         <Appbar.Action
           color="black"
@@ -331,7 +333,7 @@ const CreateEvent = ({navigation}) => {
           }}
         </Formik>
       </View>
-    </ScrollView>
+    </KeyboardAwareScrollView>
   );
 };
 
