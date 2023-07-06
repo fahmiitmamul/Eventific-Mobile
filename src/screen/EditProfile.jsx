@@ -19,6 +19,7 @@ import {useSelector} from 'react-redux';
 import http from '../helpers/http';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faChevronDown, faChevronUp} from '@fortawesome/free-solid-svg-icons';
+import {Modal} from 'react-native';
 
 const EditProfile = ({navigation}) => {
   const token = useSelector(state => state.auth.token);
@@ -35,6 +36,7 @@ const EditProfile = ({navigation}) => {
   const [profile, setProfile] = React.useState([]);
   const [prof, setProf] = React.useState('');
   const [nation, setNation] = React.useState('');
+  const [modalVisible, setModalVisible] = React.useState(false);
 
   React.useEffect(() => {
     const getProfile = async () => {
@@ -45,6 +47,7 @@ const EditProfile = ({navigation}) => {
   }, []);
 
   const editProfile = async values => {
+    setModalVisible(true);
     const form = new FormData();
 
     Object.keys(values).forEach(key => {
@@ -97,6 +100,7 @@ const EditProfile = ({navigation}) => {
     setEditName(false);
     setEditGender(false);
     getProfile();
+    setModalVisible(false);
   };
 
   const profession = [
@@ -457,6 +461,48 @@ const EditProfile = ({navigation}) => {
           );
         }}
       </Formik>
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}>
+        <View
+          style={{
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: 25,
+            backgroundColor: 'white',
+          }}>
+          <View
+            style={{
+              width: '50%',
+              height: '5%',
+              padding: 10,
+              backgroundColor: '#19a7ce',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              gap: 20,
+              borderRadius: 20,
+              opacity: 1,
+              elevation: 20,
+            }}>
+            <Text
+              style={{
+                fontFamily: 'Poppins-Medium',
+                color: 'white',
+                textAlign: 'center',
+              }}>
+              Please wait...
+            </Text>
+          </View>
+        </View>
+      </Modal>
     </ScrollView>
   );
 };

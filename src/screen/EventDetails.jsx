@@ -15,11 +15,13 @@ import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import http from '../helpers/http';
 import {useFocusEffect} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
+import {Modal} from 'react-native';
 
 const EventDetails = ({route, navigation}) => {
   const {id} = route.params;
   const [events, setEvents] = React.useState([]);
   const token = useSelector(state => state.auth.token);
+  const [modalVisible, setModalVisible] = React.useState(false);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -33,18 +35,18 @@ const EventDetails = ({route, navigation}) => {
   );
 
   async function addWishlists() {
+    setModalVisible(true);
     try {
       const eventId = id;
       const body = new URLSearchParams({eventId}).toString();
       const {data} = await http(token).post('/wishlist', body);
       if (data.success == true) {
-        setTimeout(() => {
-          navigation.navigate('My Wishlists');
-        }, 3000);
+        navigation.navigate('My Wishlists');
       }
     } catch (err) {
       console.warn(err);
     }
+    setModalVisible(false);
   }
 
   async function makePayments() {
@@ -255,6 +257,48 @@ const EventDetails = ({route, navigation}) => {
           </View>
         </View>
       </View>
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}>
+        <View
+          style={{
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: 25,
+            backgroundColor: 'white',
+          }}>
+          <View
+            style={{
+              width: '50%',
+              height: '5%',
+              padding: 10,
+              backgroundColor: '#19a7ce',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              gap: 20,
+              borderRadius: 20,
+              opacity: 1,
+              elevation: 20,
+            }}>
+            <Text
+              style={{
+                fontFamily: 'Poppins-Medium',
+                color: 'white',
+                textAlign: 'center',
+              }}>
+              Please wait...
+            </Text>
+          </View>
+        </View>
+      </Modal>
     </ScrollView>
   );
 };
