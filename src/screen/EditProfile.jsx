@@ -13,12 +13,16 @@ import DatePicker from 'react-native-date-picker';
 import moment from 'moment';
 import styles from '../styles/global';
 import HamburgerIcon from '../assets/images/hamburger.png';
-import {launchImageLibrary} from 'react-native-image-picker';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import {Formik} from 'formik';
 import {useSelector} from 'react-redux';
 import http from '../helpers/http';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faChevronDown, faChevronUp} from '@fortawesome/free-solid-svg-icons';
+import {
+  faCamera,
+  faChevronDown,
+  faChevronUp,
+} from '@fortawesome/free-solid-svg-icons';
 import {Modal} from 'react-native';
 
 const EditProfile = ({navigation}) => {
@@ -56,9 +60,16 @@ const EditProfile = ({navigation}) => {
       }
     });
 
+    const fileImage = {
+      uri: fileResponse,
+      type: 'image/jpeg',
+      name: 'image' + '-' + Date.now() + '.jpg',
+    };
+
     if (fileResponse) {
-      form.append('picture', fileResponse);
+      form.append('picture', fileImage);
     }
+
     if (prof) {
       form.append('profession', prof);
     }
@@ -115,6 +126,20 @@ const EditProfile = ({navigation}) => {
       const response = await launchImageLibrary({
         presentationStyle: 'fullScreen',
       });
+
+      setFileResponse(response.assets[0].uri);
+    } catch (err) {
+      console.warn(err);
+    }
+  }, []);
+
+  const handleCameraSelection = React.useCallback(async () => {
+    try {
+      const response = await launchCamera({
+        presentationStyle: 'fullScreen',
+      });
+
+      setFileResponse(response.assets[0].uri);
     } catch (err) {
       console.warn(err);
     }
@@ -145,15 +170,7 @@ const EditProfile = ({navigation}) => {
           birthDate: profile?.birthDate,
         }}
         onSubmit={editProfile}>
-        {({
-          values,
-          errors,
-          touched,
-          handleBlur,
-          handleChange,
-          handleSubmit,
-          isSubmitting,
-        }) => {
+        {({values, handleBlur, handleChange, handleSubmit}) => {
           return (
             <>
               <View style={styles.PictureWrapper}>
@@ -172,25 +189,50 @@ const EditProfile = ({navigation}) => {
                       style={styles.ImageStyle}
                     />
                   )}
-                  <TouchableOpacity
+                  <View
                     style={{
-                      backgroundColor: '#19a7ce',
                       display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      borderRadius: 8,
-                      marginTop: 5,
-                    }}
-                    onPress={handleDocumentSelection}>
-                    <Text
+                      flexDirection: 'row',
+                      gap: 20,
+                    }}>
+                    <TouchableOpacity
                       style={{
-                        fontFamily: 'Poppins-Regular',
-                        color: 'white',
-                        paddingTop: 5,
-                      }}>
-                      Select Picture
-                    </Text>
-                  </TouchableOpacity>
+                        backgroundColor: '#19a7ce',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderRadius: 8,
+                        marginTop: 5,
+                        marginBottom: 50,
+                      }}
+                      onPress={handleDocumentSelection}>
+                      <Text
+                        style={{
+                          fontFamily: 'Poppins-Regular',
+                          color: 'white',
+                          paddingTop: 5,
+                          paddingHorizontal: 8,
+                        }}>
+                        Select Picture
+                      </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={{
+                        backgroundColor: '#19a7ce',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderRadius: 8,
+                        marginTop: 5,
+                        marginBottom: 50,
+                        paddingHorizontal: 20,
+                      }}
+                      onPress={handleCameraSelection}>
+                      <FontAwesomeIcon
+                        icon={faCamera}
+                        color="white"></FontAwesomeIcon>
+                    </TouchableOpacity>
+                  </View>
                 </View>
               </View>
               <View style={styles.ProfileContentWrapper}>
