@@ -13,7 +13,7 @@ import DatePicker from 'react-native-date-picker';
 import moment from 'moment';
 import styles from '../styles/global';
 import HamburgerIcon from '../assets/images/hamburger.png';
-import DocumentPicker from 'react-native-document-picker';
+import {launchImageLibrary} from 'react-native-image-picker';
 import {Formik} from 'formik';
 import {useSelector} from 'react-redux';
 import http from '../helpers/http';
@@ -108,11 +108,9 @@ const EditProfile = ({navigation}) => {
 
   const handleDocumentSelection = React.useCallback(async () => {
     try {
-      const response = await DocumentPicker.pick({
+      const response = await launchImageLibrary({
         presentationStyle: 'fullScreen',
       });
-      const file = response[0];
-      setFileResponse(file);
     } catch (err) {
       console.warn(err);
     }

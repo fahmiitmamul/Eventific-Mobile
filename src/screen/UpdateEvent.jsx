@@ -16,7 +16,7 @@ import SelectDropdown from 'react-native-select-dropdown';
 import http from '../helpers/http';
 import DatePicker from 'react-native-date-picker';
 import moment from 'moment';
-import DocumentPicker from 'react-native-document-picker';
+import {launchImageLibrary} from 'react-native-image-picker';
 import {useSelector} from 'react-redux';
 
 const UpdateEvent = ({route, navigation}) => {
@@ -65,11 +65,9 @@ const UpdateEvent = ({route, navigation}) => {
 
   const handleDocumentSelection = React.useCallback(async () => {
     try {
-      const response = await DocumentPicker.pick({
+      const response = await launchImageLibrary({
         presentationStyle: 'fullScreen',
       });
-      const file = response[0];
-      setFileResponse(file);
     } catch (err) {
       console.warn(err);
     }
