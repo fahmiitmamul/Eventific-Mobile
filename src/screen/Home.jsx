@@ -31,8 +31,12 @@ const Home = ({navigation}) => {
   const [search, setSearch] = React.useState('');
 
   const saveToken = React.useCallback(async () => {
-    const form = new URLSearchParams({token: fcmToken}).toString();
-    await http(token).post('/device-token', form);
+    try {
+      const form = new URLSearchParams({token: fcmToken}).toString();
+      await http(token).post('/device-token', form);
+    } catch (err) {
+      console.log('Token already exist');
+    }
   }, []);
 
   React.useEffect(() => {
