@@ -8,10 +8,19 @@ import http from '../helpers/http';
 import moment from 'moment';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {useFocusEffect} from '@react-navigation/native';
+import {Modal} from 'react-native';
 
 const ManageEvent = ({navigation}) => {
   const token = useSelector(state => state.auth.token);
   const [events, setEvents] = React.useState([]);
+  const [modalVisible, setModalVisible] = React.useState(false);
+  const [deleteWishlist, setDeleteWishlist] = React.useState([]);
+
+  function openModal(itemId) {
+    const wishlistId = itemId;
+    setModalVisible(!modalVisible);
+    setDeleteWishlist(wishlistId);
+  }
 
   useFocusEffect(
     React.useCallback(() => {
@@ -119,7 +128,7 @@ const ManageEvent = ({navigation}) => {
                       Update
                     </Text>
                     <Text
-                      onPress={() => handleDelete(e.id)}
+                      onPress={() => openModal(e.id)}
                       style={{fontFamily: 'Poppins-Medium', color: '#3366ff'}}>
                       Delete
                     </Text>
@@ -130,6 +139,91 @@ const ManageEvent = ({navigation}) => {
           );
         })}
       </ScrollView>
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}>
+        <View
+          style={{
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: 25,
+            backgroundColor: 'white',
+          }}>
+          <View
+            style={{
+              width: '80%',
+              height: '20%',
+              padding: 10,
+              backgroundColor: '#19a7ce',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              gap: 20,
+              borderRadius: 20,
+              opacity: 1,
+              elevation: 20,
+            }}>
+            <Text
+              style={{
+                fontFamily: 'Poppins-Medium',
+                color: 'white',
+                textAlign: 'center',
+              }}>
+              Are you sure want to delete this event ?
+            </Text>
+            <View style={{display: 'flex', flexDirection: 'row', gap: 20}}>
+              <TouchableOpacity
+                style={{
+                  backgroundColor: '#F24C3D',
+                  width: 80,
+                  height: 50,
+                  borderRadius: 12,
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Text
+                  style={{
+                    fontFamily: 'Poppins-Medium',
+                    color: 'white',
+                  }}
+                  onPress={() => {
+                    handleDelete(deleteWishlist);
+                    setModalVisible(!modalVisible);
+                  }}>
+                  Yes
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={{
+                  backgroundColor: 'green',
+                  width: 80,
+                  height: 50,
+                  borderRadius: 12,
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Text
+                  style={{
+                    fontFamily: 'Poppins-Medium',
+                    color: 'white',
+                  }}
+                  onPress={() => setModalVisible(!modalVisible)}>
+                  No
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
