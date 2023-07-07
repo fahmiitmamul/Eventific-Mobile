@@ -129,7 +129,7 @@ const UpdateEvent = ({route, navigation}) => {
       form.append('date', moment(date).format('YYYY-MM-DD'));
     }
 
-    if (fileResponse) {
+    if (fileResponse.length > 1) {
       form.append('picture', fileImage);
     }
 
@@ -150,6 +150,12 @@ const UpdateEvent = ({route, navigation}) => {
       console.warn(err);
     }
     setModalVisible(false);
+    setEditTitle(false);
+    setEditCategory(false);
+    setEditLocation(false);
+    setEditDate(false);
+    setEditPicture(false);
+    setEditDescription(false);
   };
 
   return (
@@ -198,7 +204,7 @@ const UpdateEvent = ({route, navigation}) => {
                         style={styles.ProfileNameInput}
                         onChangeText={handleChange('title')}
                         onBlur={handleBlur('title')}
-                        value={events.title}></TextInput>
+                        value={values.title}></TextInput>
                     )}
                   </View>
                 </View>
