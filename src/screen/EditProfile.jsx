@@ -112,6 +112,7 @@ const EditProfile = ({navigation}) => {
     setEditName(false);
     setEditGender(false);
     getProfile();
+    setFileResponse([]);
     setModalVisible(false);
   };
 
@@ -399,12 +400,20 @@ const EditProfile = ({navigation}) => {
                     defaultButtonText={profile?.profession}
                     dropdownStyle={{backgroundColor: '#EFEFEF'}}
                     buttonStyle={styles.SelectDropdownStyle}
-                    buttonTextStyle={{color: '#444', textAlign: 'left'}}
+                    buttonTextStyle={{
+                      color: '#444',
+                      textAlign: 'left',
+                      fontFamily: 'Poppins-Regular',
+                    }}
                     rowStyle={{
                       backgroundColor: '#EFEFEF',
                       borderBottomColor: '#C5C5C5',
                     }}
-                    rowTextStyle={{color: '#444', textAlign: 'left'}}
+                    rowTextStyle={{
+                      color: '#444',
+                      textAlign: 'left',
+                      fontFamily: 'Poppins-Regular',
+                    }}
                     renderDropdownIcon={isOpened => {
                       return (
                         <FontAwesomeIcon
@@ -433,12 +442,20 @@ const EditProfile = ({navigation}) => {
                     data={nationality}
                     defaultButtonText={profile?.nationality}
                     dropdownStyle={{backgroundColor: '#EFEFEF'}}
-                    buttonTextStyle={{color: '#444', textAlign: 'left'}}
+                    buttonTextStyle={{
+                      color: '#444',
+                      textAlign: 'left',
+                      fontFamily: 'Poppins-Regular',
+                    }}
                     rowStyle={{
                       backgroundColor: '#EFEFEF',
                       borderBottomColor: '#C5C5C5',
                     }}
-                    rowTextStyle={{color: '#444', textAlign: 'left'}}
+                    rowTextStyle={{
+                      color: '#444',
+                      textAlign: 'left',
+                      fontFamily: 'Poppins-Regular',
+                    }}
                     renderDropdownIcon={isOpened => {
                       return (
                         <FontAwesomeIcon
