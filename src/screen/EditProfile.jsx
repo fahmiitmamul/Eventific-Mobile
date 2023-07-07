@@ -67,7 +67,7 @@ const EditProfile = ({navigation}) => {
       name: 'image' + '-' + Date.now() + '.jpg',
     };
 
-    if (fileResponse) {
+    if (fileResponse.length > 1) {
       form.append('picture', fileImage);
     }
 
