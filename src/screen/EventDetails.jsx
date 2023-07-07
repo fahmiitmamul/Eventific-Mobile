@@ -16,6 +16,7 @@ import http from '../helpers/http';
 import {useFocusEffect} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
 import {Modal} from 'react-native';
+import SimpleLottie from '../components/LottieAnimation';
 
 const EventDetails = ({route, navigation}) => {
   const {id} = route.params;
@@ -258,8 +259,6 @@ const EventDetails = ({route, navigation}) => {
         </View>
       </View>
       <Modal
-        animationType="fade"
-        transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
           setModalVisible(!modalVisible);
@@ -274,29 +273,7 @@ const EventDetails = ({route, navigation}) => {
             gap: 25,
             backgroundColor: 'white',
           }}>
-          <View
-            style={{
-              width: '50%',
-              height: '5%',
-              padding: 10,
-              backgroundColor: '#19a7ce',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              gap: 20,
-              borderRadius: 20,
-              opacity: 1,
-              elevation: 20,
-            }}>
-            <Text
-              style={{
-                fontFamily: 'Poppins-Medium',
-                color: 'white',
-                textAlign: 'center',
-              }}>
-              Please wait...
-            </Text>
-          </View>
+          <SimpleLottie />
         </View>
       </Modal>
     </ScrollView>

@@ -11,6 +11,8 @@ import {asyncLoginAction} from '../redux/actions/auth';
 import {clearMessage} from '../redux/reducers/auth';
 import styles from '../styles/global';
 import SplashScreen from 'react-native-splash-screen';
+import {Modal} from 'react-native';
+import SimpleLottie from '../components/LottieAnimation';
 
 const validationSchema = Yup.object().shape({
   username: Yup.string().required('Username is Required'),
@@ -29,16 +31,19 @@ const SignIn = ({navigation}) => {
   const formError = useSelector(state => state.auth.formError[0]?.msg);
   const errorMsg = useSelector(state => state.auth.errorMessage);
   const warningMsg = useSelector(state => state.auth.warningMessage);
+  const [modalVisible, setModalVisible] = React.useState(false);
 
   function Password() {
     setOpenPassword(!openPassword);
   }
 
   const doLogin = function (values) {
+    setModalVisible(true);
     dispatch(asyncLoginAction(values));
     if (token) {
       navigation.navigate('Home');
     }
+    setModalVisible(false);
   };
 
   if (formError || warningMsg || errorMsg) {
@@ -217,6 +222,24 @@ const SignIn = ({navigation}) => {
           </View>
         </View>
       </ScrollView>
+      <Modal
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}>
+        <View
+          style={{
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: 25,
+            backgroundColor: 'white',
+          }}>
+          <SimpleLottie />
+        </View>
+      </Modal>
     </React.Fragment>
   );
 };

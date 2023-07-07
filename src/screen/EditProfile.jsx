@@ -24,6 +24,7 @@ import {
   faChevronUp,
 } from '@fortawesome/free-solid-svg-icons';
 import {Modal} from 'react-native';
+import SimpleLottie from '../components/LottieAnimation';
 
 const EditProfile = ({navigation}) => {
   const token = useSelector(state => state.auth.token);
@@ -504,8 +505,6 @@ const EditProfile = ({navigation}) => {
         }}
       </Formik>
       <Modal
-        animationType="fade"
-        transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
           setModalVisible(!modalVisible);
@@ -520,29 +519,7 @@ const EditProfile = ({navigation}) => {
             gap: 25,
             backgroundColor: 'white',
           }}>
-          <View
-            style={{
-              width: '50%',
-              height: '5%',
-              padding: 10,
-              backgroundColor: '#19a7ce',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              gap: 20,
-              borderRadius: 20,
-              opacity: 1,
-              elevation: 20,
-            }}>
-            <Text
-              style={{
-                fontFamily: 'Poppins-Medium',
-                color: 'white',
-                textAlign: 'center',
-              }}>
-              Please wait...
-            </Text>
-          </View>
+          <SimpleLottie />
         </View>
       </Modal>
     </ScrollView>
