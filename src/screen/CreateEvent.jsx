@@ -19,6 +19,8 @@ import moment from 'moment';
 import {launchImageLibrary} from 'react-native-image-picker';
 import {useSelector} from 'react-redux';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {Modal} from 'react-native';
+import SimpleLottie from '../components/LottieAnimation';
 
 const CreateEvent = ({navigation}) => {
   const [category, setCategory] = React.useState([]);
@@ -27,6 +29,7 @@ const CreateEvent = ({navigation}) => {
   const [selectedLocation, setSelectedLocation] = React.useState('');
   const [date, setDate] = React.useState(new Date());
   const [open, setOpen] = React.useState(false);
+  const [modalVisible, setModalVisible] = React.useState(false);
   const [fileResponse, setFileResponse] = React.useState([]);
   const categoriesName = [];
   const locationName = [];
@@ -68,12 +71,14 @@ const CreateEvent = ({navigation}) => {
       const response = await launchImageLibrary({
         presentationStyle: 'fullScreen',
       });
+      setFileResponse(response.assets[0].uri);
     } catch (err) {
       console.warn(err);
     }
   }, []);
 
   const doCreate = async values => {
+    setModalVisible(true);
     const form = new FormData();
 
     Object.keys(values).forEach(key => {
@@ -81,6 +86,12 @@ const CreateEvent = ({navigation}) => {
         form.append(key, values[key]);
       }
     });
+
+    const fileImage = {
+      uri: fileResponse,
+      type: 'image/jpeg',
+      name: 'image' + '-' + Date.now() + '.jpg',
+    };
 
     if (selectedCategory == 0) {
       form.append('categoryId', 1);
@@ -99,7 +110,7 @@ const CreateEvent = ({navigation}) => {
     }
 
     if (fileResponse) {
-      form.append('picture', fileResponse);
+      form.append('picture', fileImage);
     }
 
     try {
@@ -114,6 +125,7 @@ const CreateEvent = ({navigation}) => {
     } catch (err) {
       console.warn(err);
     }
+    setModalVisible(false);
   };
 
   return (
@@ -176,7 +188,11 @@ const CreateEvent = ({navigation}) => {
                       backgroundColor: '#EFEFEF',
                       borderBottomColor: '#C5C5C5',
                     }}
-                    rowTextStyle={{color: '#444', textAlign: 'left'}}
+                    rowTextStyle={{
+                      color: '#444',
+                      textAlign: 'left',
+                      fontFamily: 'Poppins-Regular',
+                    }}
                     renderDropdownIcon={isOpened => {
                       return (
                         <FontAwesomeIcon
@@ -222,7 +238,11 @@ const CreateEvent = ({navigation}) => {
                       backgroundColor: '#EFEFEF',
                       borderBottomColor: '#C5C5C5',
                     }}
-                    rowTextStyle={{color: '#444', textAlign: 'left'}}
+                    rowTextStyle={{
+                      color: '#444',
+                      textAlign: 'left',
+                      fontFamily: 'Poppins-Regular',
+                    }}
                     renderDropdownIcon={isOpened => {
                       return (
                         <FontAwesomeIcon
@@ -331,6 +351,24 @@ const CreateEvent = ({navigation}) => {
           }}
         </Formik>
       </View>
+      <Modal
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}>
+        <View
+          style={{
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: 25,
+            backgroundColor: 'white',
+          }}>
+          <SimpleLottie />
+        </View>
+      </Modal>
     </KeyboardAwareScrollView>
   );
 };
