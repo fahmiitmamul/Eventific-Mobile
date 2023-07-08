@@ -207,6 +207,22 @@ const Home = ({navigation}) => {
                 </TouchableOpacity>
               );
             })}
+            {events.length <= 0 && (
+              <View
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Text
+                  style={{
+                    fontFamily: 'Poppins-Medium',
+                    fontSize: 20,
+                    marginLeft: 110,
+                  }}>
+                  No Events Found
+                </Text>
+              </View>
+            )}
           </ScrollView>
           <View style={{margin: 20}}>
             <Text style={{fontFamily: 'Poppins-Medium', fontSize: 20}}>
