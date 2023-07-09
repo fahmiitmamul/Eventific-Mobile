@@ -90,7 +90,7 @@ const ChangePassword = ({navigation}) => {
           )}
           {errorMsg && (
             <View style={styles.FormErrorViewStyle}>
-              <Text style={styles.FormSuccessTextStyle}>{errorMsg}</Text>
+              <Text style={styles.FormErrorTextStyle}>{errorMsg}</Text>
             </View>
           )}
           <Formik
