@@ -20,7 +20,8 @@ import {useSelector} from 'react-redux';
 import moment from 'moment';
 import {useFocusEffect} from '@react-navigation/native';
 import MessageRegular from '../assets/images/message-regular.png';
-import deviceToken from '../redux/reducers/deviceToken';
+import NotificationController from '../helpers/notification';
+import messaging from '@react-native-firebase/messaging';
 
 const Home = ({navigation}) => {
   const token = useSelector(state => state.auth.token);
@@ -41,6 +42,13 @@ const Home = ({navigation}) => {
 
   React.useEffect(() => {
     saveToken();
+    messaging().setBackgroundMessageHandler(async remoteMessage => {
+      console.log('Message handled in background', remoteMessage);
+    });
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      console.log(remoteMessage);
+    });
+    return unsubscribe;
   }, []);
 
   useFocusEffect(
@@ -91,6 +99,7 @@ const Home = ({navigation}) => {
 
   return (
     <React.Fragment>
+      <NotificationController />
       <StatusBar animated={true} backgroundColor="#19A7CE" />
       <View style={{width: '100%', height: '100%', backgroundColor: '#19A7CE'}}>
         <Appbar.Header style={styles.HomeHeaderStyle}>
