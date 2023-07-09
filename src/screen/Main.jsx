@@ -22,17 +22,14 @@ import CreateEvent from './CreateEvent';
 import CustomDrawer from '../components/CustomDrawer';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {
-  faGear,
   faHeart,
   faHome,
   faListCheck,
-  faManatSign,
-  faPerson,
   faPlusSquare,
-  faUser,
   faUserCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import UpdateEvent from './UpdateEvent';
+import SearchResults from './SearchResults';
 
 const AuthStack = createNativeStackNavigator();
 const PaymentStack = createNativeStackNavigator();
@@ -159,6 +156,13 @@ const Main = () => {
             <Drawer.Screen
               name="Payment Method"
               component={PaymentMethod}
+              options={{
+                drawerItemStyle: {display: 'none'},
+              }}
+            />
+            <Drawer.Screen
+              name="Search Results"
+              component={SearchResults}
               options={{
                 drawerItemStyle: {display: 'none'},
               }}

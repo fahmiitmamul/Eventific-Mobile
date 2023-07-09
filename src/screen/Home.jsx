@@ -29,7 +29,8 @@ const Home = ({navigation}) => {
   const [events, setEvents] = React.useState([]);
   const [eventCategories, setEventCategories] = React.useState([]);
   const [eventCategoriesData, setEventCategoriesData] = React.useState([]);
-  const [search, setSearch] = React.useState('');
+  const [searchResult, setSearchResult] = React.useState('');
+  const src = searchResult;
 
   const saveToken = React.useCallback(async () => {
     try {
@@ -121,9 +122,7 @@ const Home = ({navigation}) => {
               style={styles.SearchInput}
               placeholder="Search Event"
               placeholderTextColor="white"
-              onChangeText={ev => setSearch(ev)}
-              onSubmitEditing={() => getEventByName(search)}
-              onBlur={() => getEventByName()}
+              onPressIn={() => navigation.navigate('Search Results')}
             />
             <FontAwesomeIcon
               icon={faSearch}
