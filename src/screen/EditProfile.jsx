@@ -309,7 +309,11 @@ const EditProfile = ({navigation}) => {
                   <View style={styles.ProfileValueWrapper}>
                     {!editPhoneNumber && (
                       <Text style={styles.FontStyle}>
-                        {profile?.phoneNumber}
+                        {profile?.phoneNumber === null ? (
+                          <Text>Not Set</Text>
+                        ) : (
+                          profile?.phoneNumber
+                        )}
                       </Text>
                     )}
                     {!editPhoneNumber && (
@@ -483,7 +487,11 @@ const EditProfile = ({navigation}) => {
                     <View style={styles.BirthDateWrapper}>
                       <View style={styles.DateWrapper}>
                         <Text style={styles.FontStyle}>
-                          {moment(profile?.birthDate).format('DD/MM/YYYY')}
+                          {profile?.birthDate === null ? (
+                            <Text style={styles.FontStyle}>Not Set</Text>
+                          ) : (
+                            moment(profile?.birthDate).format('DD/MM/YYYY')
+                          )}
                         </Text>
                       </View>
                       <View>

@@ -298,7 +298,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   ImageStyle: {
-    objectFit: 'contain',
+    objectFit: 'cover',
     width: '80%',
     height: '80%',
     borderRadius: 100,
