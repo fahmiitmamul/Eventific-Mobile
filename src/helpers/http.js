@@ -7,7 +7,6 @@ const http = token => {
     headers.Authorization = `Bearer ${token}`;
   }
   const URL = BACKEND_URL;
-  console.log(BACKEND_URL);
   return axios.create({
     headers,
     baseURL: URL,
