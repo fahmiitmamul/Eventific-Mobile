@@ -40,6 +40,14 @@ const SearchResults = ({route, navigation}) => {
     setEvents(data.results);
   }
 
+  async function getEventsSort(sort) {
+    const {data} = await http(token).get('/events', {
+      params: {sortBy: sort},
+    });
+
+    setEvents(data.results);
+  }
+
   useFocusEffect(
     React.useCallback(() => {
       getEvents(results);
@@ -64,6 +72,7 @@ const SearchResults = ({route, navigation}) => {
   }
 
   const profession = ['1', '2', '3', '4', '5'];
+  const sorts = ['ASC', 'DESC'];
 
   useFocusEffect(
     React.useCallback(() => {
@@ -151,6 +160,48 @@ const SearchResults = ({route, navigation}) => {
               }}
               onSelect={selectedItem => {
                 getEventsLimit(selectedItem);
+                return selectedItem;
+              }}
+              buttonTextAfterSelection={selectedItem => {
+                return selectedItem;
+              }}
+              rowTextForSelection={item => {
+                return item;
+              }}
+            />
+          </View>
+          <View style={styles.EventsWrapperStyle}>
+            <Text style={styles.EventsTextStyle}>Sort By :</Text>
+            <SelectDropdown
+              data={sorts}
+              defaultButtonText="ASC"
+              dropdownStyle={{backgroundColor: '#EFEFEF'}}
+              buttonStyle={{
+                width: '20%',
+                height: 40,
+                backgroundColor: '#FFF',
+                borderRadius: 8,
+                borderWidth: 1,
+                borderColor: '#19a7ce',
+                fontFamily: 'Poppins-Medium',
+              }}
+              buttonTextStyle={{
+                color: '#444',
+                textAlign: 'left',
+                fontFamily: 'Poppins-Medium',
+                padding: 6,
+              }}
+              rowStyle={{
+                backgroundColor: '#EFEFEF',
+                borderBottomColor: '#C5C5C5',
+              }}
+              rowTextStyle={{
+                color: '#444',
+                textAlign: 'left',
+                fontFamily: 'Poppins-Regular',
+              }}
+              onSelect={selectedItem => {
+                getEventsSort(selectedItem);
                 return selectedItem;
               }}
               buttonTextAfterSelection={selectedItem => {
