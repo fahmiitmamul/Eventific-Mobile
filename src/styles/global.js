@@ -383,7 +383,7 @@ const styles = StyleSheet.create({
     paddingTop: 30,
   },
   TicketWrapper: {
-    margin: 30,
+    marginHorizontal: 30,
     borderRadius: 10,
   },
   TitleWrapperStyle: {

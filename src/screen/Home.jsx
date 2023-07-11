@@ -125,6 +125,9 @@ const Home = ({navigation}) => {
                 top: 7,
                 left: 50,
                 fontSize: 20,
+              }}
+              onPress={() => {
+                navigation.navigate('Search Results');
               }}>
               Search Event
             </Text>
