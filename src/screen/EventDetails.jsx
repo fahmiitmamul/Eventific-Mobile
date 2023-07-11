@@ -1,7 +1,13 @@
 import {View, Text, Image} from 'react-native';
 import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faClock, faLocationDot} from '@fortawesome/free-solid-svg-icons';
+import {
+  faArrowLeft,
+  faClock,
+  faHeadSideCough,
+  faHeart,
+  faLocationDot,
+} from '@fortawesome/free-solid-svg-icons';
 import moment from 'moment';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import http from '../helpers/http';
@@ -11,7 +17,6 @@ import {Modal} from 'react-native';
 import SimpleLottie from '../components/LottieAnimation';
 import {StatusBar} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {Button} from 'react-native-paper';
 
 const EventDetails = ({route, navigation}) => {
   const {id} = route.params;
@@ -74,7 +79,7 @@ const EventDetails = ({route, navigation}) => {
         translucent={true}
         backgroundColor="#ffffff00"
       />
-      <View style={{width: '100%', height: '0%', backgroundColor: 'orange'}}>
+      <View style={{width: '100%', height: '0%', position: 'relative'}}>
         <View style={{position: 'relative'}}>
           <Image
             source={{
@@ -94,6 +99,10 @@ const EventDetails = ({route, navigation}) => {
               height: 450,
               width: '100%',
             }}></LinearGradient>
+          <View style={{position: 'absolute', top: 50, left: 20}}>
+            <FontAwesomeIcon icon={faArrowLeft} color="white" size={25} />
+            <FontAwesomeIcon icon={faHeart} />
+          </View>
         </View>
         <View style={{position: 'absolute', top: 200, margin: 20}}>
           <Text

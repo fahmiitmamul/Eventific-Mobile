@@ -105,17 +105,15 @@ const SearchResults = ({route, navigation}) => {
       <StatusBar animated={true} backgroundColor="#19A7CE" />
       <View style={{width: '100%', height: '100%', backgroundColor: '#19A7CE'}}>
         <Appbar.Header style={styles.HomeHeaderStyle}>
-          <Appbar.Action
-            color="white"
-            icon={HamburgerIcon}
+          <Appbar.BackAction
             onPress={() => {
-              navigation.openDrawer();
+              navigation.navigate('Home');
             }}
+            color="white"
           />
           <Appbar.Content
             titleStyle={{fontFamily: 'Poppins-Medium', paddingLeft: 70}}
           />
-          <Appbar.Action color="white" icon={MessageRegular} />
         </Appbar.Header>
         <View style={styles.TextInputWrapper}>
           <View style={styles.TextInputChildWrapper}>

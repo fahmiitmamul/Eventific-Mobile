@@ -27,10 +27,15 @@ const MyBooking = ({navigation}) => {
   return (
     <View style={styles.AppWrapper}>
       <Appbar.Header style={styles.ScrollViewStyle}>
-        <Appbar.BackAction onPress={() => {}} color="white" />
+        <Appbar.BackAction
+          onPress={() => {
+            navigation.navigate('Home');
+          }}
+          color="white"
+        />
         <Appbar.Content
           titleStyle={styles.ManageHeaderStyle}
-          title="MyBooking"
+          title="My Booking"
         />
       </Appbar.Header>
       <ScrollView

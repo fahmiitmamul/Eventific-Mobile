@@ -48,12 +48,11 @@ const ManageEvent = ({navigation}) => {
   return (
     <View style={styles.AppWrapper}>
       <Appbar.Header style={styles.ScrollViewStyle}>
-        <Appbar.Action
-          color="black"
-          icon={HamburgerIcon}
+        <Appbar.BackAction
           onPress={() => {
-            navigation.openDrawer();
+            navigation.navigate('Home');
           }}
+          color="white"
         />
         <Appbar.Content
           titleStyle={styles.ManageHeaderStyle}

@@ -45,7 +45,6 @@ const styles = StyleSheet.create({
   //Sign In
   ScrollViewStyle: {
     backgroundColor: '#19a7ce',
-    height: 100,
   },
   HomeHeaderStyle: {
     backgroundColor: '#19A7CE',
@@ -207,7 +206,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Medium',
     color: 'white',
     backgroundColor: '#19a7ce',
-    height: 80,
     marginRight: 40,
   },
   ManageWrapperStyle: {

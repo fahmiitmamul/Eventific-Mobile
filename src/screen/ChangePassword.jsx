@@ -67,153 +67,164 @@ const ChangePassword = ({navigation}) => {
   };
 
   return (
-    <React.Fragment>
+    <View style={{width: '100%', height: '100%', backgroundColor: 'orange'}}>
       <Appbar.Header style={styles.ScrollViewStyle}>
-        <Appbar.Action
-          color="black"
-          icon={HamburgerIcon}
-          onPress={() => {
-            navigation.openDrawer();
-          }}
-        />
+        <Appbar.BackAction onPress={() => {}} color="white" />
         <Appbar.Content
           titleStyle={styles.ManageHeaderStyle}
           title="Change Password"
         />
       </Appbar.Header>
-      <ScrollView style={styles.ScrollViewStyle}>
-        <View style={styles.ChangePassFormWrapper}>
-          {successMsg && (
-            <View style={styles.FormErrorViewStyle}>
-              <Text style={styles.FormSuccessTextStyle}>{successMsg}</Text>
-            </View>
-          )}
-          {errorMsg && (
-            <View style={styles.FormErrorViewStyle}>
-              <Text style={styles.FormErrorTextStyle}>{errorMsg}</Text>
-            </View>
-          )}
-          <Formik
-            initialValues={{
-              oldPassword: '',
-              newPassword: '',
-              confirmPassword: '',
-            }}
-            validationSchema={validationSchema}
-            onSubmit={doChange}>
-            {({
-              values,
-              errors,
-              handleBlur,
-              handleChange,
-              touched,
-              handleSubmit,
-            }) => {
-              return (
-                <View>
-                  <View style={styles.FormWrapperStyle}>
-                    <View style={{position: 'relative'}}>
-                      {errors.oldPassword && touched.oldPassword ? (
-                        <TextInput
-                          placeholder="Old Password"
-                          onChangeText={handleChange('oldPassword')}
-                          onBlur={handleBlur('oldPassword')}
-                          value={values.oldPassword}
-                          style={styles.FormTextInputErrorStyle}></TextInput>
-                      ) : (
-                        <TextInput
-                          placeholder="Old Password"
-                          onChangeText={handleChange('oldPassword')}
-                          onBlur={handleBlur('oldPassword')}
-                          value={values.oldPassword}
-                          style={styles.FormTextInputNormalStyle}></TextInput>
-                      )}
-                      {errors.oldPassword && touched.oldPassword && (
-                        <Text style={styles.FormTextErrorStyle}>
-                          {errors.oldPassword}
+      <View style={styles.ScrollViewStyle}>
+        <View
+          style={{
+            backgroundColor: 'white',
+            borderRadius: 40,
+            width: '100%',
+            height: '100%',
+          }}>
+          <View style={styles.ChangePassFormWrapper}>
+            {successMsg && (
+              <View style={styles.FormErrorViewStyle}>
+                <Text style={styles.FormSuccessTextStyle}>{successMsg}</Text>
+              </View>
+            )}
+            {errorMsg && (
+              <View style={styles.FormErrorViewStyle}>
+                <Text style={styles.FormErrorTextStyle}>{errorMsg}</Text>
+              </View>
+            )}
+            <Formik
+              initialValues={{
+                oldPassword: '',
+                newPassword: '',
+                confirmPassword: '',
+              }}
+              validationSchema={validationSchema}
+              onSubmit={doChange}>
+              {({
+                values,
+                errors,
+                handleBlur,
+                handleChange,
+                touched,
+                handleSubmit,
+              }) => {
+                return (
+                  <View>
+                    <View style={styles.FormWrapperStyle}>
+                      <View style={{position: 'relative'}}>
+                        {errors.oldPassword && touched.oldPassword ? (
+                          <TextInput
+                            placeholder="Old Password"
+                            onChangeText={handleChange('oldPassword')}
+                            onBlur={handleBlur('oldPassword')}
+                            value={values.oldPassword}
+                            style={styles.FormTextInputErrorStyle}></TextInput>
+                        ) : (
+                          <TextInput
+                            placeholder="Old Password"
+                            onChangeText={handleChange('oldPassword')}
+                            onBlur={handleBlur('oldPassword')}
+                            value={values.oldPassword}
+                            style={styles.FormTextInputNormalStyle}></TextInput>
+                        )}
+                        {errors.oldPassword && touched.oldPassword && (
+                          <Text style={styles.FormTextErrorStyle}>
+                            {errors.oldPassword}
+                          </Text>
+                        )}
+                        <Text style={styles.EyeButtonStyle} onPress={Passwords}>
+                          <FontAwesomeIcon
+                            icon={openOld ? faEyeSlash : faEye}
+                            size={30}></FontAwesomeIcon>
                         </Text>
-                      )}
-                      <Text style={styles.EyeButtonStyle} onPress={Passwords}>
-                        <FontAwesomeIcon
-                          icon={openOld ? faEyeSlash : faEye}
-                          size={30}></FontAwesomeIcon>
-                      </Text>
-                    </View>
-                    <View style={styles.PasswordWrapperStyle}>
-                      <View>
-                        {errors.newPassword && touched.newPassword ? (
-                          <TextInput
-                            placeholder="New Password"
-                            onChangeText={handleChange('newPassword')}
-                            onBlur={handleBlur('newPassword')}
-                            value={values.newPassword}
-                            secureTextEntry={openPassword ? true : false}
-                            style={styles.FormTextInputErrorStyle}></TextInput>
-                        ) : (
-                          <TextInput
-                            placeholder="New Password"
-                            onChangeText={handleChange('newPassword')}
-                            onBlur={handleBlur('newPassword')}
-                            value={values.newPassword}
-                            secureTextEntry={openPassword ? true : false}
-                            style={styles.FormTextInputNormalStyle}></TextInput>
-                        )}
-                        {errors.newPassword && touched.newPassword && (
-                          <Text style={styles.FormTextErrorStyle}>
-                            {errors.newPassword}
-                          </Text>
-                        )}
                       </View>
-                      <Text style={styles.EyeButtonStyle} onPress={Password}>
-                        <FontAwesomeIcon
-                          icon={openPassword ? faEyeSlash : faEye}
-                          size={30}></FontAwesomeIcon>
-                      </Text>
-                    </View>
-                    <View style={styles.PasswordWrapperStyle}>
-                      <View>
-                        {errors.confirmPassword && touched.confirmPassword ? (
-                          <TextInput
-                            placeholder="Confirm Password"
-                            onChangeText={handleChange('confirmPassword')}
-                            onBlur={handleBlur('confirmPassword')}
-                            value={values.confirmPassword}
-                            secureTextEntry={openConfirm ? true : false}
-                            style={styles.FormTextInputErrorStyle}></TextInput>
-                        ) : (
-                          <TextInput
-                            placeholder="Confirm Password"
-                            onChangeText={handleChange('confirmPassword')}
-                            onBlur={handleBlur('confirmPassword')}
-                            value={values.confirmPassword}
-                            secureTextEntry={openConfirm ? true : false}
-                            style={styles.FormTextInputNormalStyle}></TextInput>
-                        )}
-                        {errors.confirmPassword && touched.confirmPassword && (
-                          <Text style={styles.FormTextErrorStyle}>
-                            {errors.confirmPassword}
-                          </Text>
-                        )}
+                      <View style={styles.PasswordWrapperStyle}>
+                        <View>
+                          {errors.newPassword && touched.newPassword ? (
+                            <TextInput
+                              placeholder="New Password"
+                              onChangeText={handleChange('newPassword')}
+                              onBlur={handleBlur('newPassword')}
+                              value={values.newPassword}
+                              secureTextEntry={openPassword ? true : false}
+                              style={
+                                styles.FormTextInputErrorStyle
+                              }></TextInput>
+                          ) : (
+                            <TextInput
+                              placeholder="New Password"
+                              onChangeText={handleChange('newPassword')}
+                              onBlur={handleBlur('newPassword')}
+                              value={values.newPassword}
+                              secureTextEntry={openPassword ? true : false}
+                              style={
+                                styles.FormTextInputNormalStyle
+                              }></TextInput>
+                          )}
+                          {errors.newPassword && touched.newPassword && (
+                            <Text style={styles.FormTextErrorStyle}>
+                              {errors.newPassword}
+                            </Text>
+                          )}
+                        </View>
+                        <Text style={styles.EyeButtonStyle} onPress={Password}>
+                          <FontAwesomeIcon
+                            icon={openPassword ? faEyeSlash : faEye}
+                            size={30}></FontAwesomeIcon>
+                        </Text>
                       </View>
-                      <Text style={styles.EyeButtonStyle} onPress={Confirm}>
-                        <FontAwesomeIcon
-                          icon={openConfirm ? faEyeSlash : faEye}
-                          size={30}></FontAwesomeIcon>
-                      </Text>
+                      <View style={styles.PasswordWrapperStyle}>
+                        <View>
+                          {errors.confirmPassword && touched.confirmPassword ? (
+                            <TextInput
+                              placeholder="Confirm Password"
+                              onChangeText={handleChange('confirmPassword')}
+                              onBlur={handleBlur('confirmPassword')}
+                              value={values.confirmPassword}
+                              secureTextEntry={openConfirm ? true : false}
+                              style={
+                                styles.FormTextInputErrorStyle
+                              }></TextInput>
+                          ) : (
+                            <TextInput
+                              placeholder="Confirm Password"
+                              onChangeText={handleChange('confirmPassword')}
+                              onBlur={handleBlur('confirmPassword')}
+                              value={values.confirmPassword}
+                              secureTextEntry={openConfirm ? true : false}
+                              style={
+                                styles.FormTextInputNormalStyle
+                              }></TextInput>
+                          )}
+                          {errors.confirmPassword &&
+                            touched.confirmPassword && (
+                              <Text style={styles.FormTextErrorStyle}>
+                                {errors.confirmPassword}
+                              </Text>
+                            )}
+                        </View>
+                        <Text style={styles.EyeButtonStyle} onPress={Confirm}>
+                          <FontAwesomeIcon
+                            icon={openConfirm ? faEyeSlash : faEye}
+                            size={30}></FontAwesomeIcon>
+                        </Text>
+                      </View>
+                    </View>
+                    <View style={styles.BtnWrapperStyle}>
+                      <Button mode="contained" onPress={handleSubmit}>
+                        <Text style={styles.FontStyle}>Update</Text>
+                      </Button>
                     </View>
                   </View>
-                  <View style={styles.BtnWrapperStyle}>
-                    <Button mode="contained" onPress={handleSubmit}>
-                      <Text style={styles.FontStyle}>Update</Text>
-                    </Button>
-                  </View>
-                </View>
-              );
-            }}
-          </Formik>
+                );
+              }}
+            </Formik>
+          </View>
         </View>
-      </ScrollView>
-    </React.Fragment>
+      </View>
+    </View>
   );
 };
 
