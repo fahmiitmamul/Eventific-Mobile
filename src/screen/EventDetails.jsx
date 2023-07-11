@@ -97,8 +97,8 @@ const EventDetails = ({route, navigation}) => {
             style={{height: 450, width: '100%'}}
           />
           <LinearGradient
-            start={{x: 0, y: 0}}
-            end={{x: 0, y: 1}}
+            start={{x: 0, y: 1}}
+            end={{x: 0, y: 0}}
             colors={['#ffffff00', '#000000']}
             style={{
               position: 'absolute',
@@ -119,18 +119,18 @@ const EventDetails = ({route, navigation}) => {
               paddingHorizontal: 25,
             }}>
             <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-              <FontAwesomeIcon icon={faArrowLeft} color="white" size={25} />
+              <FontAwesomeIcon icon={faArrowLeft} color="white" size={30} />
             </TouchableOpacity>
             <TouchableOpacity onPress={addWishlists}>
               <FontAwesomeIcon
                 icon={added ? FaHeartSolid : faHeart}
                 color="#19a7ce"
-                size={25}
+                size={30}
               />
             </TouchableOpacity>
           </View>
         </View>
-        <View style={{position: 'absolute', top: 200, margin: 20}}>
+        <View style={{position: 'absolute', top: 180, margin: 20}}>
           <Text
             style={{
               color: 'white',
@@ -236,7 +236,7 @@ const EventDetails = ({route, navigation}) => {
           borderTopLeftRadius: 40,
           borderTopRightRadius: 40,
           backgroundColor: 'white',
-          top: 400,
+          top: 420,
         }}>
         <View>
           <Text
