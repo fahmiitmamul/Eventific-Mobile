@@ -8,6 +8,7 @@ import {useSelector} from 'react-redux';
 import http from '../helpers/http';
 import HamburgerIcon from '../assets/images/hamburger.png';
 import styles from '../styles/global';
+import {ScrollView} from 'react-native-gesture-handler';
 
 const PurchaseTicket = ({route, navigation}) => {
   const {reservationId, eventTitle} = route.params;
@@ -65,92 +66,96 @@ const PurchaseTicket = ({route, navigation}) => {
   }
 
   return (
-    <View style={styles.ContentWrapper}>
+    <ScrollView style={styles.ContentWrapper}>
       <Appbar.Header style={styles.ScrollViewStyle}>
-        <Appbar.Action
-          color="black"
-          icon={HamburgerIcon}
-          onPress={() => {
-            navigation.openDrawer();
-          }}
-        />
+        <Appbar.BackAction onPress={() => {}} color="white" />
         <Appbar.Content
           titleStyle={styles.ManageHeaderStyle}
           title="Checkout"
         />
       </Appbar.Header>
-      <View style={styles.TicketImgWrapper}>
-        <Image source={require('../assets/images/tickets.png')} />
-      </View>
-      <View style={styles.TicketWrapper}>
-        <View style={styles.TitleWrapperStyle}>
-          <View>
-            <Text style={styles.TicketTitleStyle}>Tickets</Text>
-          </View>
-          <View style={styles.FilterWrapperStyle}>
-            <Text style={styles.FilterTextStyle}>BY PRICE</Text>
-            <Image source={require('../assets/images/filter.png')} />
-          </View>
+      <View
+        style={{
+          borderTopLeftRadius: 40,
+          borderTopRightRadius: 40,
+          backgroundColor: 'white',
+        }}>
+        <View style={styles.TicketImgWrapper}>
+          <Image source={require('../assets/images/tickets.png')} />
         </View>
-        <View style={{display: 'flex', flexDirection: 'column', gap: 20}}>
-          {sections.map(item => {
-            return (
-              <View style={styles.TicketContentWrapper} key={item.id}>
-                <View>
-                  <View style={styles.ProfileValueWrapper}>
-                    <Image
-                      source={{
-                        uri: `https://res.cloudinary.com/dxnewldiy/image/upload/f_auto,q_auto/v1/payment/${item.picture}`,
-                        width: 40,
-                        height: 40,
-                      }}
-                    />
-                    <View style={styles.TicketSectionWrapper}>
+        <View style={styles.TicketWrapper}>
+          <View style={styles.TitleWrapperStyle}>
+            <View>
+              <Text style={styles.TicketTitleStyle}>Tickets</Text>
+            </View>
+            <View style={styles.FilterWrapperStyle}>
+              <Text style={styles.FilterTextStyle}>BY PRICE</Text>
+              <Image source={require('../assets/images/filter.png')} />
+            </View>
+          </View>
+          <View style={{display: 'flex', flexDirection: 'column', gap: 20}}>
+            {sections.map(item => {
+              return (
+                <View style={styles.TicketContentWrapper} key={item.id}>
+                  <View>
+                    <View style={styles.ProfileValueWrapper}>
+                      <Image
+                        source={{
+                          uri: `https://res.cloudinary.com/dxnewldiy/image/upload/f_auto,q_auto/v1/payment/${item.picture}`,
+                          width: 40,
+                          height: 40,
+                        }}
+                      />
+                      <View style={styles.TicketSectionWrapper}>
+                        <View>
+                          <Text style={styles.TicketSectionTextStyle}>
+                            {item.name}
+                          </Text>
+                          <Text
+                            style={{
+                              fontFamily: 'Poppins-Regular',
+                              fontSize: 10,
+                            }}>
+                            12 Seats Available
+                          </Text>
+                        </View>
+                        <View style={{display: 'flex', flexDirection: 'row'}}>
+                          <Text style={styles.TicketSectionTextStyle}>
+                            {item.price}
+                          </Text>
+                          <Text style={{fontFamily: 'Poppins-Regular'}}>
+                            /person
+                          </Text>
+                        </View>
+                      </View>
+                    </View>
+                    <View style={styles.QuantityWrapper}>
                       <View>
-                        <Text style={styles.TicketSectionTextStyle}>
-                          {item.name}
-                        </Text>
-                        <Text
-                          style={{fontFamily: 'Poppins-Regular', fontSize: 10}}>
-                          12 Seats Available
-                        </Text>
+                        <Text style={styles.QuantityTextStyle}>Quantity</Text>
                       </View>
-                      <View style={{display: 'flex', flexDirection: 'row'}}>
-                        <Text style={styles.TicketSectionTextStyle}>
-                          {item.price}
+                      <View style={styles.QuantityBtnWrapper}>
+                        <TouchableOpacity
+                          onPress={() => decrement(item.id)}
+                          style={styles.QuantityBtn}>
+                          <FontAwesomeIcon icon={faMinus}></FontAwesomeIcon>
+                        </TouchableOpacity>
+                        <Text style={{fontFamily: 'Poppins-Bold'}}>
+                          {item.id === filledSection.id
+                            ? filledSection.quantity
+                            : 0}
                         </Text>
-                        <Text style={{fontFamily: 'Poppins-Regular'}}>
-                          /person
-                        </Text>
+                        <TouchableOpacity
+                          onPress={() => increment(item.id)}
+                          style={styles.QuantityBtn}>
+                          <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon>
+                        </TouchableOpacity>
                       </View>
-                    </View>
-                  </View>
-                  <View style={styles.QuantityWrapper}>
-                    <View>
-                      <Text style={styles.QuantityTextStyle}>Quantity</Text>
-                    </View>
-                    <View style={styles.QuantityBtnWrapper}>
-                      <TouchableOpacity
-                        onPress={() => decrement(item.id)}
-                        style={styles.QuantityBtn}>
-                        <FontAwesomeIcon icon={faMinus}></FontAwesomeIcon>
-                      </TouchableOpacity>
-                      <Text style={{fontFamily: 'Poppins-Bold'}}>
-                        {item.id === filledSection.id
-                          ? filledSection.quantity
-                          : 0}
-                      </Text>
-                      <TouchableOpacity
-                        onPress={() => increment(item.id)}
-                        style={styles.QuantityBtn}>
-                        <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon>
-                      </TouchableOpacity>
                     </View>
                   </View>
                 </View>
-              </View>
-            );
-          })}
+              );
+            })}
+          </View>
         </View>
       </View>
       <View
@@ -160,6 +165,7 @@ const PurchaseTicket = ({route, navigation}) => {
           display: 'flex',
           flexDirection: 'row',
           justifyContent: 'space-between',
+          backgroundColor: 'white',
         }}>
         <View
           style={{
@@ -214,7 +220,7 @@ const PurchaseTicket = ({route, navigation}) => {
           </Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

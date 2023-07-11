@@ -55,19 +55,18 @@ const MyWishlists = ({navigation}) => {
   return (
     <View style={styles.AppWrapper}>
       <Appbar.Header style={styles.ScrollViewStyle}>
-        <Appbar.Action
-          color="black"
-          icon={HamburgerIcon}
-          onPress={() => {
-            navigation.openDrawer();
-          }}
-        />
+        <Appbar.BackAction onPress={() => {}} color="white" />
         <Appbar.Content
           titleStyle={styles.ManageHeaderStyle}
           title="My Wishlists"
         />
       </Appbar.Header>
-      <ScrollView>
+      <ScrollView
+        style={{
+          backgroundColor: 'white',
+          borderTopLeftRadius: 40,
+          borderTopRightRadius: 40,
+        }}>
         {wishlist.map(w => {
           return (
             <View style={styles.ManageWrapperStyle} key={w.id}>

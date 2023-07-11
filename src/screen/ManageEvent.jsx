@@ -25,7 +25,7 @@ const ManageEvent = ({navigation}) => {
   useFocusEffect(
     React.useCallback(() => {
       async function getEvents() {
-        const {data} = await http(token).get('/events?limit=20');
+        const {data} = await http(token).get('/events/manage?limit=20');
         setEvents(data.results);
       }
 
@@ -60,85 +60,104 @@ const ManageEvent = ({navigation}) => {
           title="Manage Event"
         />
       </Appbar.Header>
-      <View>
-        <TouchableOpacity
-          style={{
-            backgroundColor: '#19a7ce',
-            width: 100,
-            margin: 20,
-            padding: 10,
-            borderRadius: 10,
-          }}>
-          <Text
+      <View
+        style={{
+          backgroundColor: 'white',
+          borderTopLeftRadius: 40,
+          borderTopRightRadius: 40,
+          width: '100%',
+          height: '100%',
+          paddingTop: 20,
+        }}>
+        <View>
+          <TouchableOpacity
             style={{
-              fontFamily: 'Poppins-Medium',
-              color: 'white',
-              paddingTop: 3,
-              textAlign: 'center',
-            }}
-            onPress={() => {
-              navigation.navigate('Create Event');
+              backgroundColor: '#19a7ce',
+              width: 100,
+              margin: 20,
+              padding: 10,
+              borderRadius: 10,
             }}>
-            Create
-          </Text>
-        </TouchableOpacity>
-      </View>
-      <ScrollView>
-        {events.map(e => {
-          return (
-            <View key={e.id}>
-              <View style={styles.ManageWrapperStyle}>
-                <View style={styles.ManageWrapperChildStyle}>
-                  <View style={styles.DateWrapper}>
-                    <Text style={styles.TextDate}>
-                      {moment(e.date).format('DD')}
-                    </Text>
-                    <Text style={styles.FontStyle}>
-                      {moment(e.date).format('ddd')}
-                    </Text>
-                  </View>
-                </View>
-                <View style={styles.TitleWrapper}>
-                  <View>
-                    <Text style={styles.TitleStyles}>{e.title}</Text>
-                  </View>
-                  <View>
-                    <View>
-                      <Text style={styles.FontStyle}>{e.location}</Text>
-                    </View>
-                    <View>
+            <Text
+              style={{
+                fontFamily: 'Poppins-Medium',
+                color: 'white',
+                paddingTop: 3,
+                textAlign: 'center',
+              }}
+              onPress={() => {
+                navigation.navigate('Create Event');
+              }}>
+              Create
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <ScrollView>
+          {events.map(e => {
+            return (
+              <View key={e.id}>
+                <View style={styles.ManageWrapperStyle}>
+                  <View style={styles.ManageWrapperChildStyle}>
+                    <View style={styles.DateWrapper}>
+                      <Text style={styles.TextDate}>
+                        {moment(e.date).format('DD')}
+                      </Text>
                       <Text style={styles.FontStyle}>
-                        {moment(e.date).format('LLLL')}
+                        {moment(e.date).format('ddd')}
                       </Text>
                     </View>
                   </View>
-                  <View
-                    style={{display: 'flex', flexDirection: 'row', gap: 10}}>
-                    <Text
-                      style={{fontFamily: 'Poppins-Medium', color: '#3366ff'}}>
-                      Detail
-                    </Text>
-                    <Text
-                      onPress={() =>
-                        navigation.navigate('Update Event', {
-                          eventId: e.id,
-                        })
-                      }
-                      style={{fontFamily: 'Poppins-Medium', color: '#3366ff'}}>
-                      Update
-                    </Text>
-                    <Text
-                      onPress={() => openModal(e.id)}
-                      style={{fontFamily: 'Poppins-Medium', color: '#3366ff'}}>
-                      Delete
-                    </Text>
+                  <View style={styles.TitleWrapper}>
+                    <View>
+                      <Text style={styles.TitleStyles}>{e.title}</Text>
+                    </View>
+                    <View>
+                      <View>
+                        <Text style={styles.FontStyle}>{e.location}</Text>
+                      </View>
+                      <View>
+                        <Text style={styles.FontStyle}>
+                          {moment(e.date).format('LLLL')}
+                        </Text>
+                      </View>
+                    </View>
+                    <View
+                      style={{display: 'flex', flexDirection: 'row', gap: 10}}>
+                      <Text
+                        style={{
+                          fontFamily: 'Poppins-Medium',
+                          color: '#3366ff',
+                        }}>
+                        Detail
+                      </Text>
+                      <Text
+                        onPress={() =>
+                          navigation.navigate('Update Event', {
+                            eventId: e.id,
+                          })
+                        }
+                        style={{
+                          fontFamily: 'Poppins-Medium',
+                          color: '#3366ff',
+                        }}>
+                        Update
+                      </Text>
+                      <Text
+                        onPress={() => openModal(e.id)}
+                        style={{
+                          fontFamily: 'Poppins-Medium',
+                          color: '#3366ff',
+                        }}>
+                        Delete
+                      </Text>
+                    </View>
                   </View>
                 </View>
               </View>
-            </View>
-          );
-        })}
-      </ScrollView>
+            );
+          })}
+        </ScrollView>
+      </View>
       <Modal
         animationType="fade"
         transparent={true}

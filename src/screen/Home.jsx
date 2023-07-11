@@ -118,19 +118,16 @@ const Home = ({navigation}) => {
           <Appbar.Action color="white" icon={MessageRegular} />
         </Appbar.Header>
         <View style={styles.TextInputWrapper}>
-          <View style={styles.TextInputChildWrapper}>
-            <TextInput
-              style={styles.SearchInput}
-              placeholder="Search Event"
-              placeholderTextColor="white"
-              onPressIn={() => navigation.navigate('Search Results')}
-            />
+          <TouchableOpacity
+            style={styles.TextInputChildWrapper}
+            onPress={() => navigation.navigate('Search Results')}>
+            <View style={styles.SearchInput} />
             <FontAwesomeIcon
               icon={faSearch}
               size={25}
               style={styles.IconSearchStyle}
             />
-          </View>
+          </TouchableOpacity>
         </View>
         <ScrollView
           style={{

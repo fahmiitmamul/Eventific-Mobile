@@ -44,7 +44,8 @@ const styles = StyleSheet.create({
   },
   //Sign In
   ScrollViewStyle: {
-    backgroundColor: 'transparent',
+    backgroundColor: '#19a7ce',
+    height: 100,
   },
   HomeHeaderStyle: {
     backgroundColor: '#19A7CE',
@@ -197,13 +198,16 @@ const styles = StyleSheet.create({
   },
   //Manage Event
   AppWrapper: {
-    backgroundColor: 'white',
+    backgroundColor: '#19a7ce',
     width: '100%',
     height: '100%',
   },
   ManageHeaderStyle: {
     textAlign: 'center',
     fontFamily: 'Poppins-Medium',
+    color: 'white',
+    backgroundColor: '#19a7ce',
+    height: 80,
     marginRight: 40,
   },
   ManageWrapperStyle: {
@@ -254,10 +258,12 @@ const styles = StyleSheet.create({
   //Payment Method
   PaymentWrapper: {
     width: '100%',
-    height: '80%',
+    height: '46%',
     backgroundColor: 'white',
     paddingLeft: 30,
     paddingTop: 30,
+    borderTopLeftRadius: 40,
+    borderTopRightRadius: 40,
   },
   TextPayment: {
     fontFamily: 'Poppins-Bold',
@@ -286,7 +292,7 @@ const styles = StyleSheet.create({
   ContentWrapper: {
     width: '100%',
     height: '100%',
-    backgroundColor: 'white',
+    backgroundColor: '#19a7ce',
   },
   PictureWrapper: {
     alignItems: 'center',
@@ -378,6 +384,7 @@ const styles = StyleSheet.create({
   },
   TicketWrapper: {
     margin: 30,
+    borderRadius: 10,
   },
   TitleWrapperStyle: {
     display: 'flex',

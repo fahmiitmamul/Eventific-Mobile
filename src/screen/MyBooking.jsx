@@ -27,19 +27,19 @@ const MyBooking = ({navigation}) => {
   return (
     <View style={styles.AppWrapper}>
       <Appbar.Header style={styles.ScrollViewStyle}>
-        <Appbar.Action
-          color="black"
-          icon={HamburgerIcon}
-          onPress={() => {
-            navigation.openDrawer();
-          }}
-        />
+        <Appbar.BackAction onPress={() => {}} color="white" />
         <Appbar.Content
           titleStyle={styles.ManageHeaderStyle}
           title="MyBooking"
         />
       </Appbar.Header>
-      <ScrollView>
+      <ScrollView
+        style={{
+          backgroundColor: 'white',
+          borderTopLeftRadius: 40,
+          borderTopRightRadius: 40,
+          paddingTop: 20,
+        }}>
         <TouchableOpacity
           style={{
             backgroundColor: '#19a7ce',

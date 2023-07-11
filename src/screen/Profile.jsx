@@ -36,131 +36,146 @@ const Profile = ({navigation}) => {
     <ScrollView style={styles.ContentWrapper}>
       <Appbar.Header style={styles.ManageHeaderStyle}>
         <Appbar.Action
-          color="black"
+          color="white"
           icon={HamburgerIcon}
           onPress={() => {
             navigation.openDrawer();
           }}
         />
         <Appbar.Content
-          titleStyle={{fontFamily: 'Poppins-Medium', paddingLeft: 115}}
+          titleStyle={{
+            fontFamily: 'Poppins-Medium',
+            paddingLeft: 115,
+            color: 'white',
+          }}
           title="Profile"
         />
       </Appbar.Header>
-      <View style={styles.PictureWrapper}>
-        <View style={styles.PictureChildWrapper}>
-          {profile?.picture === null && (
-            <Image
-              source={require('../assets/images/images.png')}
-              style={styles.ImageStyle}
-            />
-          )}
-          {profile?.picture !== null && (
-            <Image
-              source={{
-                uri: `https://res.cloudinary.com/dxnewldiy/image/upload/v1683808473/${profile?.picture}`,
-              }}
-              style={styles.ImageStyle}
-            />
-          )}
-        </View>
-      </View>
-      <View>
-        <Text
-          style={{
-            fontFamily: 'Poppins-Medium',
-            fontSize: 20,
-            textAlign: 'center',
-          }}>
-          {profile?.fullName}
-        </Text>
-        <Text
-          style={{
-            fontFamily: 'Poppins-Medium',
-            fontSize: 13,
-            textAlign: 'center',
-          }}>
-          {profile?.profession === null ? (
-            <Text>Profession Not set</Text>
-          ) : (
-            profile?.profession
-          )}
-        </Text>
-      </View>
-      <View>
-        <View
-          style={{
-            margin: 20,
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}>
-          <Text style={{fontFamily: 'Poppins-Medium', fontSize: 20}}>Card</Text>
-          <View
-            style={{
-              borderWidth: 3,
-              padding: 10,
-              borderRadius: 5,
-              borderStyle: 'dotted',
-            }}>
-            <FontAwesomeIcon icon={faPlus} />
+      <View
+        style={{
+          backgroundColor: 'white',
+          borderTopLeftRadius: 40,
+          borderTopRightRadius: 40,
+        }}>
+        <View style={styles.PictureWrapper}>
+          <View style={styles.PictureChildWrapper}>
+            {profile?.picture === null && (
+              <Image
+                source={require('../assets/images/images.png')}
+                style={styles.ImageStyle}
+              />
+            )}
+            {profile?.picture !== null && (
+              <Image
+                source={{
+                  uri: `https://res.cloudinary.com/dxnewldiy/image/upload/v1683808473/${profile?.picture}`,
+                }}
+                style={styles.ImageStyle}
+              />
+            )}
           </View>
         </View>
-        <View
-          style={{
-            margin: 20,
-          }}>
-          <Image source={require('../assets/images/card.png')} />
+        <View>
+          <Text
+            style={{
+              fontFamily: 'Poppins-Medium',
+              fontSize: 20,
+              textAlign: 'center',
+            }}>
+            {profile?.fullName}
+          </Text>
+          <Text
+            style={{
+              fontFamily: 'Poppins-Medium',
+              fontSize: 13,
+              textAlign: 'center',
+            }}>
+            {profile?.profession === null ? (
+              <Text>Profession Not set</Text>
+            ) : (
+              profile?.profession
+            )}
+          </Text>
         </View>
-        <TouchableOpacity
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            marginRight: 30,
-          }}
-          onPress={() => navigation.navigate('Edit Profile')}>
+        <View>
           <View
             style={{
               margin: 20,
               display: 'flex',
               flexDirection: 'row',
-              gap: 10,
+              justifyContent: 'space-between',
               alignItems: 'center',
             }}>
-            <FontAwesomeIcon icon={faPencil}></FontAwesomeIcon>
-            <Text style={{fontFamily: 'Poppins-Medium'}}>Edit Profile</Text>
+            <Text style={{fontFamily: 'Poppins-Medium', fontSize: 20}}>
+              Card
+            </Text>
+            <View
+              style={{
+                borderWidth: 3,
+                padding: 10,
+                borderRadius: 5,
+                borderStyle: 'dotted',
+              }}>
+              <FontAwesomeIcon icon={faPlus} />
+            </View>
           </View>
-          <View>
-            <FontAwesomeIcon icon={faChevronRight}></FontAwesomeIcon>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            marginRight: 30,
-          }}
-          onPress={() => navigation.navigate('Change Password')}>
           <View
             style={{
               margin: 20,
+            }}>
+            <Image source={require('../assets/images/card.png')} />
+          </View>
+          <TouchableOpacity
+            style={{
               display: 'flex',
               flexDirection: 'row',
-              gap: 10,
               alignItems: 'center',
-            }}>
-            <FontAwesomeIcon icon={faLock}></FontAwesomeIcon>
-            <Text style={{fontFamily: 'Poppins-Medium'}}>Change Password</Text>
-          </View>
-          <View>
-            <FontAwesomeIcon icon={faChevronRight}></FontAwesomeIcon>
-          </View>
-        </TouchableOpacity>
+              justifyContent: 'space-between',
+              marginRight: 30,
+            }}
+            onPress={() => navigation.navigate('Edit Profile')}>
+            <View
+              style={{
+                margin: 20,
+                display: 'flex',
+                flexDirection: 'row',
+                gap: 10,
+                alignItems: 'center',
+              }}>
+              <FontAwesomeIcon icon={faPencil}></FontAwesomeIcon>
+              <Text style={{fontFamily: 'Poppins-Medium'}}>Edit Profile</Text>
+            </View>
+            <View>
+              <FontAwesomeIcon icon={faChevronRight}></FontAwesomeIcon>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginRight: 30,
+            }}
+            onPress={() => navigation.navigate('Change Password')}>
+            <View
+              style={{
+                margin: 20,
+                display: 'flex',
+                flexDirection: 'row',
+                gap: 10,
+                alignItems: 'center',
+              }}>
+              <FontAwesomeIcon icon={faLock}></FontAwesomeIcon>
+              <Text style={{fontFamily: 'Poppins-Medium'}}>
+                Change Password
+              </Text>
+            </View>
+            <View>
+              <FontAwesomeIcon icon={faChevronRight}></FontAwesomeIcon>
+            </View>
+          </TouchableOpacity>
+        </View>
       </View>
     </ScrollView>
   );

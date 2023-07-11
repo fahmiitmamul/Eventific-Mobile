@@ -6,6 +6,7 @@ import styles from '../styles/global';
 import {useFocusEffect} from '@react-navigation/native';
 import http from '../helpers/http';
 import {useSelector} from 'react-redux';
+import {ScrollView} from 'react-native-gesture-handler';
 
 const PaymentMethod = ({route, navigation}) => {
   const {reservationId, totalPayment} = route.params;
@@ -41,9 +42,9 @@ const PaymentMethod = ({route, navigation}) => {
   }
 
   return (
-    <React.Fragment>
+    <View style={{backgroundColor: '#19a7ce'}}>
       <Appbar.Header style={styles.ScrollViewStyle}>
-        <Appbar.BackAction onPress={() => {}} />
+        <Appbar.BackAction onPress={() => {}} color="white" />
         <Appbar.Content titleStyle={styles.ManageHeaderStyle} title="Payment" />
       </Appbar.Header>
       <View style={styles.PaymentWrapper}>
@@ -84,8 +85,7 @@ const PaymentMethod = ({route, navigation}) => {
       <View
         style={{
           width: '100%',
-          height: '10%',
-          borderRadius: 10,
+          height: '100%',
           display: 'flex',
           flexDirection: 'row',
           justifyContent: 'space-between',
@@ -128,7 +128,7 @@ const PaymentMethod = ({route, navigation}) => {
           </Text>
         </TouchableOpacity>
       </View>
-    </React.Fragment>
+    </View>
   );
 };
 

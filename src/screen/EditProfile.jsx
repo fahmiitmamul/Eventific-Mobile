@@ -151,384 +151,401 @@ const EditProfile = ({navigation}) => {
     <ScrollView style={styles.ContentWrapper}>
       <Appbar.Header style={styles.ManageHeaderStyle}>
         <Appbar.Action
-          color="black"
+          color="white"
           icon={HamburgerIcon}
           onPress={() => {
             navigation.openDrawer();
           }}
         />
         <Appbar.Content
-          titleStyle={{fontFamily: 'Poppins-Medium', paddingLeft: 115}}
+          titleStyle={{
+            fontFamily: 'Poppins-Medium',
+            paddingLeft: 115,
+            color: 'white',
+          }}
           title="Profile"
         />
       </Appbar.Header>
-      <Formik
-        initialValues={{
-          fullName: profile?.fullName,
-          email: profile?.email,
-          phoneNumber: profile?.phoneNumber,
-          profession: profile?.profession,
-          nationality: profile?.nationality,
-          birthDate: profile?.birthDate,
-        }}
-        onSubmit={editProfile}>
-        {({values, handleBlur, handleChange, handleSubmit}) => {
-          return (
-            <>
-              <View style={styles.PictureWrapper}>
-                <View style={styles.PictureChildWrapper}>
-                  {profile?.picture === null && (
-                    <Image
-                      source={require('../assets/images/images.png')}
-                      style={styles.ImageStyle}
-                    />
-                  )}
-                  {profile?.picture !== null && (
-                    <Image
-                      source={{
-                        uri: `https://res.cloudinary.com/dxnewldiy/image/upload/v1683808473/${profile?.picture}`,
-                      }}
-                      style={styles.ImageStyle}
-                    />
-                  )}
-                  <View
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'row',
-                      gap: 20,
-                    }}>
-                    <TouchableOpacity
+      <View
+        style={{
+          backgroundColor: 'white',
+          borderTopLeftRadius: 40,
+          borderTopRightRadius: 40,
+        }}>
+        <Formik
+          initialValues={{
+            fullName: profile?.fullName,
+            email: profile?.email,
+            phoneNumber: profile?.phoneNumber,
+            profession: profile?.profession,
+            nationality: profile?.nationality,
+            birthDate: profile?.birthDate,
+          }}
+          onSubmit={editProfile}>
+          {({values, handleBlur, handleChange, handleSubmit}) => {
+            return (
+              <>
+                <View style={styles.PictureWrapper}>
+                  <View style={styles.PictureChildWrapper}>
+                    {profile?.picture === null && (
+                      <Image
+                        source={require('../assets/images/images.png')}
+                        style={styles.ImageStyle}
+                      />
+                    )}
+                    {profile?.picture !== null && (
+                      <Image
+                        source={{
+                          uri: `https://res.cloudinary.com/dxnewldiy/image/upload/v1683808473/${profile?.picture}`,
+                        }}
+                        style={styles.ImageStyle}
+                      />
+                    )}
+                    <View
                       style={{
-                        backgroundColor: '#19a7ce',
                         display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        borderRadius: 8,
-                        marginTop: 5,
-                        marginBottom: 50,
-                      }}
-                      onPress={handleDocumentSelection}>
-                      <Text
-                        style={{
-                          fontFamily: 'Poppins-Regular',
-                          color: 'white',
-                          paddingTop: 5,
-                          paddingHorizontal: 8,
-                        }}>
-                        Select Picture
-                      </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      style={{
-                        backgroundColor: '#19a7ce',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        borderRadius: 8,
-                        marginTop: 5,
-                        marginBottom: 50,
-                        paddingHorizontal: 20,
-                      }}
-                      onPress={handleCameraSelection}>
-                      <FontAwesomeIcon
-                        icon={faCamera}
-                        color="white"></FontAwesomeIcon>
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              </View>
-              <View style={styles.ProfileContentWrapper}>
-                <View>
-                  <Text style={styles.ProfileContentHeader}>Name</Text>
-                  <View style={styles.ProfileValueWrapper}>
-                    {!editName && (
-                      <Text style={styles.FontStyle}>{profile?.fullName}</Text>
-                    )}
-                    {!editName && (
-                      <Text
-                        onPress={() => setEditName(true)}
-                        style={styles.EditBtnStyle}>
-                        Edit
-                      </Text>
-                    )}
-                    {editName && (
-                      <TextInput
-                        style={styles.ProfileNameInput}
-                        onChangeText={handleChange('fullName')}
-                        onBlur={handleBlur('fullName')}
-                        value={values.fullName}></TextInput>
-                    )}
-                  </View>
-                </View>
-                <View>
-                  <Text style={styles.ProfileContentHeader}>Username</Text>
-                  <View style={styles.ProfileValueWrapper}>
-                    {!editUsername && (
-                      <Text style={styles.FontStyle}>{profile?.username}</Text>
-                    )}
-                    {!editUsername && (
-                      <Text
-                        onPress={() => setEditUsername(true)}
-                        style={styles.EditBtnStyle}>
-                        Edit
-                      </Text>
-                    )}
-                    {editUsername && (
-                      <TextInput
-                        style={styles.ProfileNameInput}
-                        onChangeText={handleChange('username')}
-                        onBlur={handleBlur('username')}
-                        value={values.username}></TextInput>
-                    )}
-                  </View>
-                </View>
-                <View>
-                  <Text style={styles.ProfileContentHeader}>Email</Text>
-                  <View style={styles.ProfileValueWrapper}>
-                    {!editEmail && (
-                      <Text style={styles.FontStyle}>{profile?.email}</Text>
-                    )}
-                    {!editEmail && (
-                      <Text
-                        onPress={() => setEditEmail(true)}
-                        style={styles.EditBtnStyle}>
-                        Edit
-                      </Text>
-                    )}
-                    {editEmail && (
-                      <TextInput
-                        style={styles.ProfileNameInput}
-                        onChangeText={handleChange('email')}
-                        onBlur={handleBlur('email')}
-                        value={values.email}></TextInput>
-                    )}
-                  </View>
-                </View>
-                <View>
-                  <Text style={styles.ProfileContentHeader}>Phone Number</Text>
-                  <View style={styles.ProfileValueWrapper}>
-                    {!editPhoneNumber && (
-                      <Text style={styles.FontStyle}>
-                        {profile?.phoneNumber === null ? (
-                          <Text>Not Set</Text>
-                        ) : (
-                          profile?.phoneNumber
-                        )}
-                      </Text>
-                    )}
-                    {!editPhoneNumber && (
-                      <Text
-                        onPress={() => setEditPhoneNumber(true)}
-                        style={styles.EditBtnStyle}>
-                        Edit
-                      </Text>
-                    )}
-                    {editPhoneNumber && (
-                      <TextInput
-                        style={styles.ProfileNameInput}
-                        onChangeText={handleChange('phoneNumber')}
-                        onBlur={handleBlur('phoneNumber')}
-                        value={values.phoneNumber}></TextInput>
-                    )}
-                  </View>
-                </View>
-                <View>
-                  <Text style={styles.ProfileContentHeader}>Gender</Text>
-                  <View style={styles.GenderWrapperStyle}>
-                    {editGender && (
-                      <>
-                        <View style={styles.RadioWrapperStyle}>
-                          <RadioButton
-                            value="1"
-                            status={checked1 ? 'checked' : 'unchecked'}
-                            onPress={function () {
-                              setChecked1(!checked1);
-                              setChecked2(false);
-                            }}
-                          />
-                          <Text
-                            onPress={function () {
-                              setChecked1(!checked1);
-                              setChecked2(false);
-                            }}
-                            style={styles.FontStyle}>
-                            Male
-                          </Text>
-                        </View>
-                        <View style={styles.RadioWrapperStyle}>
-                          <RadioButton
-                            value="0"
-                            status={checked2 ? 'checked' : 'unchecked'}
-                            onPress={function () {
-                              setChecked2(!checked2);
-                              setChecked1(false);
-                            }}
-                          />
-                          <Text
-                            onPress={function () {
-                              setChecked2(!checked2);
-                              setChecked1(false);
-                            }}
-                            style={styles.FontStyle}>
-                            Female
-                          </Text>
-                        </View>
-                      </>
-                    )}
-                    {!editGender && (
-                      <>
-                        <View style={styles.RadioWrapperStyle}>
-                          <Text style={styles.FontStyle}>
-                            {profile?.gender === true ? 'Male' : 'Female'}
-                          </Text>
-                        </View>
-                      </>
-                    )}
-                    <Text
-                      onPress={() => setEditGender(true)}
-                      style={{
-                        fontFamily: 'Poppins-Medium',
-                        color: '#3366ff',
-                        marginLeft: 10,
+                        flexDirection: 'row',
+                        gap: 20,
                       }}>
-                      Edit
-                    </Text>
+                      <TouchableOpacity
+                        style={{
+                          backgroundColor: '#19a7ce',
+                          display: 'flex',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          borderRadius: 8,
+                          marginTop: 5,
+                          marginBottom: 50,
+                        }}
+                        onPress={handleDocumentSelection}>
+                        <Text
+                          style={{
+                            fontFamily: 'Poppins-Regular',
+                            color: 'white',
+                            paddingTop: 5,
+                            paddingHorizontal: 8,
+                          }}>
+                          Select Picture
+                        </Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        style={{
+                          backgroundColor: '#19a7ce',
+                          display: 'flex',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          borderRadius: 8,
+                          marginTop: 5,
+                          marginBottom: 50,
+                          paddingHorizontal: 20,
+                        }}
+                        onPress={handleCameraSelection}>
+                        <FontAwesomeIcon
+                          icon={faCamera}
+                          color="white"></FontAwesomeIcon>
+                      </TouchableOpacity>
+                    </View>
                   </View>
                 </View>
-                <View>
-                  <Text style={styles.ProfileContentHeader}>
-                    Select Profession
-                  </Text>
-                  <SelectDropdown
-                    data={profession}
-                    defaultButtonText={profile?.profession}
-                    dropdownStyle={{backgroundColor: '#EFEFEF'}}
-                    buttonStyle={styles.SelectDropdownStyle}
-                    buttonTextStyle={{
-                      color: '#444',
-                      textAlign: 'left',
-                      fontFamily: 'Poppins-Regular',
-                    }}
-                    rowStyle={{
-                      backgroundColor: '#EFEFEF',
-                      borderBottomColor: '#C5C5C5',
-                    }}
-                    rowTextStyle={{
-                      color: '#444',
-                      textAlign: 'left',
-                      fontFamily: 'Poppins-Regular',
-                    }}
-                    renderDropdownIcon={isOpened => {
-                      return (
-                        <FontAwesomeIcon
-                          icon={isOpened ? faChevronUp : faChevronDown}
-                          color={'#444'}
-                          size={18}
-                        />
-                      );
-                    }}
-                    onSelect={selectedItem => {
-                      setProf(selectedItem);
-                    }}
-                    buttonTextAfterSelection={selectedItem => {
-                      return selectedItem;
-                    }}
-                    rowTextForSelection={item => {
-                      return item;
-                    }}
-                  />
-                </View>
-                <View>
-                  <Text style={styles.ProfileContentHeader}>
-                    Select Nationality
-                  </Text>
-                  <SelectDropdown
-                    data={nationality}
-                    defaultButtonText={profile?.nationality}
-                    dropdownStyle={{backgroundColor: '#EFEFEF'}}
-                    buttonTextStyle={{
-                      color: '#444',
-                      textAlign: 'left',
-                      fontFamily: 'Poppins-Regular',
-                    }}
-                    rowStyle={{
-                      backgroundColor: '#EFEFEF',
-                      borderBottomColor: '#C5C5C5',
-                    }}
-                    rowTextStyle={{
-                      color: '#444',
-                      textAlign: 'left',
-                      fontFamily: 'Poppins-Regular',
-                    }}
-                    renderDropdownIcon={isOpened => {
-                      return (
-                        <FontAwesomeIcon
-                          icon={isOpened ? faChevronUp : faChevronDown}
-                          color={'#444'}
-                          size={18}
-                        />
-                      );
-                    }}
-                    buttonStyle={styles.SelectDropdownStyle}
-                    onSelect={selectedItem => {
-                      setNation(selectedItem);
-                    }}
-                    buttonTextAfterSelection={selectedItem => {
-                      return selectedItem;
-                    }}
-                    rowTextForSelection={item => {
-                      return item;
-                    }}
-                  />
-                </View>
-                <View>
-                  <Text style={styles.ProfileContentHeader}>Date</Text>
+                <View style={styles.ProfileContentWrapper}>
                   <View>
-                    <View style={styles.BirthDateWrapper}>
-                      <View style={styles.DateWrapper}>
+                    <Text style={styles.ProfileContentHeader}>Name</Text>
+                    <View style={styles.ProfileValueWrapper}>
+                      {!editName && (
                         <Text style={styles.FontStyle}>
-                          {profile?.birthDate === null ? (
-                            <Text style={styles.FontStyle}>Not Set</Text>
-                          ) : (
-                            moment(profile?.birthDate).format('DD/MM/YYYY')
-                          )}
+                          {profile?.fullName}
                         </Text>
-                      </View>
-                      <View>
+                      )}
+                      {!editName && (
                         <Text
-                          style={styles.EditBtnStyle}
-                          onPress={() => setOpen(true)}>
+                          onPress={() => setEditName(true)}
+                          style={styles.EditBtnStyle}>
                           Edit
                         </Text>
-                      </View>
+                      )}
+                      {editName && (
+                        <TextInput
+                          style={styles.ProfileNameInput}
+                          onChangeText={handleChange('fullName')}
+                          onBlur={handleBlur('fullName')}
+                          value={values.fullName}></TextInput>
+                      )}
                     </View>
-                    <DatePicker
-                      modal
-                      open={open}
-                      mode="date"
-                      date={date}
-                      onConfirm={date => {
-                        setOpen(false);
-                        setDate(date);
+                  </View>
+                  <View>
+                    <Text style={styles.ProfileContentHeader}>Username</Text>
+                    <View style={styles.ProfileValueWrapper}>
+                      {!editUsername && (
+                        <Text style={styles.FontStyle}>
+                          {profile?.username}
+                        </Text>
+                      )}
+                      {!editUsername && (
+                        <Text
+                          onPress={() => setEditUsername(true)}
+                          style={styles.EditBtnStyle}>
+                          Edit
+                        </Text>
+                      )}
+                      {editUsername && (
+                        <TextInput
+                          style={styles.ProfileNameInput}
+                          onChangeText={handleChange('username')}
+                          onBlur={handleBlur('username')}
+                          value={values.username}></TextInput>
+                      )}
+                    </View>
+                  </View>
+                  <View>
+                    <Text style={styles.ProfileContentHeader}>Email</Text>
+                    <View style={styles.ProfileValueWrapper}>
+                      {!editEmail && (
+                        <Text style={styles.FontStyle}>{profile?.email}</Text>
+                      )}
+                      {!editEmail && (
+                        <Text
+                          onPress={() => setEditEmail(true)}
+                          style={styles.EditBtnStyle}>
+                          Edit
+                        </Text>
+                      )}
+                      {editEmail && (
+                        <TextInput
+                          style={styles.ProfileNameInput}
+                          onChangeText={handleChange('email')}
+                          onBlur={handleBlur('email')}
+                          value={values.email}></TextInput>
+                      )}
+                    </View>
+                  </View>
+                  <View>
+                    <Text style={styles.ProfileContentHeader}>
+                      Phone Number
+                    </Text>
+                    <View style={styles.ProfileValueWrapper}>
+                      {!editPhoneNumber && (
+                        <Text style={styles.FontStyle}>
+                          {profile?.phoneNumber === null ? (
+                            <Text>Not Set</Text>
+                          ) : (
+                            profile?.phoneNumber
+                          )}
+                        </Text>
+                      )}
+                      {!editPhoneNumber && (
+                        <Text
+                          onPress={() => setEditPhoneNumber(true)}
+                          style={styles.EditBtnStyle}>
+                          Edit
+                        </Text>
+                      )}
+                      {editPhoneNumber && (
+                        <TextInput
+                          style={styles.ProfileNameInput}
+                          onChangeText={handleChange('phoneNumber')}
+                          onBlur={handleBlur('phoneNumber')}
+                          value={values.phoneNumber}></TextInput>
+                      )}
+                    </View>
+                  </View>
+                  <View>
+                    <Text style={styles.ProfileContentHeader}>Gender</Text>
+                    <View style={styles.GenderWrapperStyle}>
+                      {editGender && (
+                        <>
+                          <View style={styles.RadioWrapperStyle}>
+                            <RadioButton
+                              value="1"
+                              status={checked1 ? 'checked' : 'unchecked'}
+                              onPress={function () {
+                                setChecked1(!checked1);
+                                setChecked2(false);
+                              }}
+                            />
+                            <Text
+                              onPress={function () {
+                                setChecked1(!checked1);
+                                setChecked2(false);
+                              }}
+                              style={styles.FontStyle}>
+                              Male
+                            </Text>
+                          </View>
+                          <View style={styles.RadioWrapperStyle}>
+                            <RadioButton
+                              value="0"
+                              status={checked2 ? 'checked' : 'unchecked'}
+                              onPress={function () {
+                                setChecked2(!checked2);
+                                setChecked1(false);
+                              }}
+                            />
+                            <Text
+                              onPress={function () {
+                                setChecked2(!checked2);
+                                setChecked1(false);
+                              }}
+                              style={styles.FontStyle}>
+                              Female
+                            </Text>
+                          </View>
+                        </>
+                      )}
+                      {!editGender && (
+                        <>
+                          <View style={styles.RadioWrapperStyle}>
+                            <Text style={styles.FontStyle}>
+                              {profile?.gender === true ? 'Male' : 'Female'}
+                            </Text>
+                          </View>
+                        </>
+                      )}
+                      <Text
+                        onPress={() => setEditGender(true)}
+                        style={{
+                          fontFamily: 'Poppins-Medium',
+                          color: '#3366ff',
+                          marginLeft: 10,
+                        }}>
+                        Edit
+                      </Text>
+                    </View>
+                  </View>
+                  <View>
+                    <Text style={styles.ProfileContentHeader}>
+                      Select Profession
+                    </Text>
+                    <SelectDropdown
+                      data={profession}
+                      defaultButtonText={profile?.profession}
+                      dropdownStyle={{backgroundColor: '#EFEFEF'}}
+                      buttonStyle={styles.SelectDropdownStyle}
+                      buttonTextStyle={{
+                        color: '#444',
+                        textAlign: 'left',
+                        fontFamily: 'Poppins-Regular',
                       }}
-                      onCancel={() => {
-                        setOpen(false);
+                      rowStyle={{
+                        backgroundColor: '#EFEFEF',
+                        borderBottomColor: '#C5C5C5',
+                      }}
+                      rowTextStyle={{
+                        color: '#444',
+                        textAlign: 'left',
+                        fontFamily: 'Poppins-Regular',
+                      }}
+                      renderDropdownIcon={isOpened => {
+                        return (
+                          <FontAwesomeIcon
+                            icon={isOpened ? faChevronUp : faChevronDown}
+                            color={'#444'}
+                            size={18}
+                          />
+                        );
+                      }}
+                      onSelect={selectedItem => {
+                        setProf(selectedItem);
+                      }}
+                      buttonTextAfterSelection={selectedItem => {
+                        return selectedItem;
+                      }}
+                      rowTextForSelection={item => {
+                        return item;
                       }}
                     />
                   </View>
-                </View>
-                <View>
-                  <TouchableOpacity style={styles.SaveBtnStyle}>
-                    <Text onPress={handleSubmit} style={styles.SaveTextStyle}>
-                      Save
+                  <View>
+                    <Text style={styles.ProfileContentHeader}>
+                      Select Nationality
                     </Text>
-                  </TouchableOpacity>
+                    <SelectDropdown
+                      data={nationality}
+                      defaultButtonText={profile?.nationality}
+                      dropdownStyle={{backgroundColor: '#EFEFEF'}}
+                      buttonTextStyle={{
+                        color: '#444',
+                        textAlign: 'left',
+                        fontFamily: 'Poppins-Regular',
+                      }}
+                      rowStyle={{
+                        backgroundColor: '#EFEFEF',
+                        borderBottomColor: '#C5C5C5',
+                      }}
+                      rowTextStyle={{
+                        color: '#444',
+                        textAlign: 'left',
+                        fontFamily: 'Poppins-Regular',
+                      }}
+                      renderDropdownIcon={isOpened => {
+                        return (
+                          <FontAwesomeIcon
+                            icon={isOpened ? faChevronUp : faChevronDown}
+                            color={'#444'}
+                            size={18}
+                          />
+                        );
+                      }}
+                      buttonStyle={styles.SelectDropdownStyle}
+                      onSelect={selectedItem => {
+                        setNation(selectedItem);
+                      }}
+                      buttonTextAfterSelection={selectedItem => {
+                        return selectedItem;
+                      }}
+                      rowTextForSelection={item => {
+                        return item;
+                      }}
+                    />
+                  </View>
+                  <View>
+                    <Text style={styles.ProfileContentHeader}>Date</Text>
+                    <View>
+                      <View style={styles.BirthDateWrapper}>
+                        <View style={styles.DateWrapper}>
+                          <Text style={styles.FontStyle}>
+                            {profile?.birthDate === null ? (
+                              <Text style={styles.FontStyle}>Not Set</Text>
+                            ) : (
+                              moment(profile?.birthDate).format('DD/MM/YYYY')
+                            )}
+                          </Text>
+                        </View>
+                        <View>
+                          <Text
+                            style={styles.EditBtnStyle}
+                            onPress={() => setOpen(true)}>
+                            Edit
+                          </Text>
+                        </View>
+                      </View>
+                      <DatePicker
+                        modal
+                        open={open}
+                        mode="date"
+                        date={date}
+                        onConfirm={date => {
+                          setOpen(false);
+                          setDate(date);
+                        }}
+                        onCancel={() => {
+                          setOpen(false);
+                        }}
+                      />
+                    </View>
+                  </View>
+                  <View>
+                    <TouchableOpacity style={styles.SaveBtnStyle}>
+                      <Text onPress={handleSubmit} style={styles.SaveTextStyle}>
+                        Save
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
                 </View>
-              </View>
-            </>
-          );
-        }}
-      </Formik>
+              </>
+            );
+          }}
+        </Formik>
+      </View>
       <Modal
         visible={modalVisible}
         onRequestClose={() => {
