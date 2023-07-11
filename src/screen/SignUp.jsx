@@ -12,6 +12,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import {clearMessage} from '../redux/reducers/auth';
 import SplashScreen from 'react-native-splash-screen';
 import styles from '../styles/global';
+import SimpleLottie from '../components/LottieAnimation';
+import {Modal} from 'react-native';
 
 const validationSchema = Yup.object().shape({
   fullName: Yup.string().required('Full Name Address is Required'),
@@ -30,8 +32,8 @@ const SignUp = ({navigation}) => {
   const [checked, setChecked] = React.useState(true);
   const [openPassword, setOpenPassword] = React.useState(false);
   const [openConfirm, setOpenConfirm] = React.useState(false);
+  const [modalVisible, setModalVisible] = React.useState(false);
   const dispatch = useDispatch();
-  const token = useSelector(state => state.auth.token);
   const formError = useSelector(state => state.auth.formError[0]?.msg);
   const errorMsg = useSelector(state => state.auth.errorMessage);
   const warningMsg = useSelector(state => state.auth.warningMessage);
@@ -45,13 +47,11 @@ const SignUp = ({navigation}) => {
     setOpenConfirm(!openConfirm);
   }
 
-  const doRegister = function (values) {
-    dispatch(asyncRegisterAction(values));
-    if (token) {
-      setTimeout(() => {
-        navigation.navigate('SignIn');
-      }, 3000);
-    }
+  const doRegister = async function (values) {
+    setModalVisible(true);
+    await dispatch(asyncRegisterAction(values));
+    navigation.navigate('SignIn');
+    setModalVisible(false);
   };
 
   if (formError || warningMsg || errorMsg || successMsg) {
@@ -96,11 +96,6 @@ const SignUp = ({navigation}) => {
         {warningMsg && (
           <View style={styles.FormErrorViewStyle}>
             <Text style={styles.FormErrorTextStyle}>{warningMsg}</Text>
-          </View>
-        )}
-        {successMsg && (
-          <View style={styles.FormErrorViewStyle}>
-            <Text style={styles.FormSuccessTextStyle}>{successMsg}</Text>
           </View>
         )}
         <View>
@@ -265,6 +260,24 @@ const SignUp = ({navigation}) => {
           </Formik>
         </View>
       </ScrollView>
+      <Modal
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}>
+        <View
+          style={{
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: 25,
+            backgroundColor: 'white',
+          }}>
+          <SimpleLottie />
+        </View>
+      </Modal>
     </React.Fragment>
   );
 };

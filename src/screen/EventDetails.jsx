@@ -1,15 +1,7 @@
 import {View, Text, Image} from 'react-native';
 import React from 'react';
-import {Appbar} from 'react-native-paper';
-import styles from '../styles/global';
-import Heart from '../assets/images/heart.png';
-import HamburgerIcon from '../assets/images/hamburger.png';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {
-  faClock,
-  faLocation,
-  faLocationDot,
-} from '@fortawesome/free-solid-svg-icons';
+import {faClock, faLocationDot} from '@fortawesome/free-solid-svg-icons';
 import moment from 'moment';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import http from '../helpers/http';
@@ -17,6 +9,9 @@ import {useFocusEffect} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
 import {Modal} from 'react-native';
 import SimpleLottie from '../components/LottieAnimation';
+import {StatusBar} from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
+import {Button} from 'react-native-paper';
 
 const EventDetails = ({route, navigation}) => {
   const {id} = route.params;
@@ -69,193 +64,196 @@ const EventDetails = ({route, navigation}) => {
   }
 
   return (
-    <ScrollView>
-      <Appbar.Header style={styles.ScrollViewStyle}>
-        <Appbar.BackAction
-          onPress={() => {
-            navigation.navigate('Home');
-          }}
-        />
-        <Appbar.Content
-          titleStyle={{fontFamily: 'Poppins-Medium', paddingLeft: 70}}
-          title="Event Detail"
-        />
-        <Appbar.Action color="black" icon={Heart} onPress={addWishlists} />
-      </Appbar.Header>
-      <View>
+    <ScrollView
+      style={{
+        position: 'relative',
+        backgroundColor: 'white',
+      }}>
+      <StatusBar
+        animated={true}
+        translucent={true}
+        backgroundColor="#ffffff00"
+      />
+      <View style={{width: '100%', height: '0%', backgroundColor: 'orange'}}>
         <View style={{position: 'relative'}}>
+          <Image
+            source={{
+              uri: `https://res.cloudinary.com/dxnewldiy/image/upload/v1683808473/${events?.picture}`,
+            }}
+            style={{height: 450, width: '100%'}}
+          />
+          <LinearGradient
+            start={{x: 0, y: 0}}
+            end={{x: 0, y: 1}}
+            colors={['#ffffff00', '#000000']}
+            style={{
+              position: 'absolute',
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderRadius: 5,
+              height: 450,
+              width: '100%',
+            }}></LinearGradient>
+        </View>
+        <View style={{position: 'absolute', top: 200, margin: 20}}>
+          <Text
+            style={{
+              color: 'white',
+              fontFamily: 'Poppins-Medium',
+              fontSize: 25,
+            }}>
+            {events?.title}
+          </Text>
           <View
             style={{
-              overflow: 'hidden',
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              gap: 10,
             }}>
-            <Image
-              source={{
-                uri: `https://res.cloudinary.com/dxnewldiy/image/upload/v1683808473/${events?.picture}`,
-              }}
-              style={{height: 450}}
-            />
+            <FontAwesomeIcon icon={faLocationDot} color="white" />
+            <Text
+              style={{
+                color: 'white',
+                fontFamily: 'Poppins-Regular',
+              }}>
+              {events?.location}
+            </Text>
           </View>
           <View
             style={{
-              position: 'absolute',
-              backgroundColor: 'black',
-              opacity: 0.5,
-              width: '100%',
-              height: '100%',
-            }}></View>
-          <View style={{position: 'absolute', top: 200, margin: 20}}>
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              gap: 10,
+            }}>
+            <FontAwesomeIcon icon={faClock} color="white" />
             <Text
               style={{
                 color: 'white',
-                fontFamily: 'Poppins-Medium',
-                fontSize: 25,
-              }}>
-              {events?.title}
-            </Text>
-            <View
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
-                gap: 10,
-              }}>
-              <FontAwesomeIcon icon={faLocationDot} color="white" />
-              <Text
-                style={{
-                  color: 'white',
-                  fontFamily: 'Poppins-Regular',
-                }}>
-                {events?.location}
-              </Text>
-            </View>
-            <View
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
-                gap: 10,
-              }}>
-              <FontAwesomeIcon icon={faClock} color="white" />
-              <Text
-                style={{
-                  color: 'white',
-                  fontFamily: 'Poppins-Regular',
-                }}>
-                {moment(events?.date).format('LLL')}
-              </Text>
-            </View>
-            <Text
-              style={{
                 fontFamily: 'Poppins-Regular',
-                color: 'white',
-                fontSize: 20,
               }}>
-              Attendees
+              {moment(events?.date).format('LLL')}
             </Text>
-            <View style={{display: 'flex', flexDirection: 'row'}}>
-              <View
-                style={{
-                  overflow: 'hidden',
-                  borderRadius: 100,
-                  width: 40,
-                }}>
-                <Image
-                  source={require('../assets/images/attendes-1.jpg')}
-                  style={{width: 40, height: 40}}
-                />
-              </View>
-              <View
-                style={{
-                  overflow: 'hidden',
-                  borderRadius: 100,
-                  width: 40,
-                  marginLeft: -13,
-                }}>
-                <Image
-                  source={require('../assets/images/attendes-2.jpg')}
-                  style={{width: 40, height: 40}}
-                />
-              </View>
-              <View
-                style={{
-                  overflow: 'hidden',
-                  borderRadius: 100,
-                  width: 40,
-                  marginLeft: -13,
-                }}>
-                <Image
-                  source={require('../assets/images/attendes-3.jpg')}
-                  style={{width: 40, height: 40}}
-                />
-              </View>
-              <View
-                style={{
-                  overflow: 'hidden',
-                  borderRadius: 100,
-                  width: 40,
-                  marginLeft: -13,
-                }}>
-                <Image
-                  source={require('../assets/images/attendes-4.jpg')}
-                  style={{width: 40, height: 40}}
-                />
-              </View>
+          </View>
+          <Text
+            style={{
+              fontFamily: 'Poppins-Regular',
+              color: 'white',
+              fontSize: 20,
+            }}>
+            Attendees
+          </Text>
+          <View style={{display: 'flex', flexDirection: 'row'}}>
+            <View
+              style={{
+                overflow: 'hidden',
+                borderRadius: 100,
+                width: 40,
+              }}>
+              <Image
+                source={require('../assets/images/attendes-1.jpg')}
+                style={{width: 40, height: 40}}
+              />
+            </View>
+            <View
+              style={{
+                overflow: 'hidden',
+                borderRadius: 100,
+                width: 40,
+                marginLeft: -13,
+              }}>
+              <Image
+                source={require('../assets/images/attendes-2.jpg')}
+                style={{width: 40, height: 40}}
+              />
+            </View>
+            <View
+              style={{
+                overflow: 'hidden',
+                borderRadius: 100,
+                width: 40,
+                marginLeft: -13,
+              }}>
+              <Image
+                source={require('../assets/images/attendes-3.jpg')}
+                style={{width: 40, height: 40}}
+              />
+            </View>
+            <View
+              style={{
+                overflow: 'hidden',
+                borderRadius: 100,
+                width: 40,
+                marginLeft: -13,
+              }}>
+              <Image
+                source={require('../assets/images/attendes-4.jpg')}
+                style={{width: 40, height: 40}}
+              />
             </View>
           </View>
         </View>
-        <View style={{margin: 20}}>
-          <View>
+      </View>
+      <View
+        style={{
+          padding: 30,
+          borderTopLeftRadius: 40,
+          borderTopRightRadius: 40,
+          backgroundColor: 'white',
+          top: 400,
+        }}>
+        <View>
+          <Text
+            style={{
+              fontFamily: 'Poppins-Medium',
+              fontSize: 20,
+              color: 'black',
+            }}>
+            Event Detail
+          </Text>
+          <Text style={{fontFamily: 'Poppins-Regular'}}>
+            {events?.description}
+          </Text>
+          <Text
+            style={{
+              fontFamily: 'Poppins-Regular',
+              color: '#3366ff',
+              fontSize: 13,
+            }}>
+            Read More
+          </Text>
+        </View>
+        <View>
+          <Text
+            style={{
+              fontFamily: 'Poppins-Medium',
+              fontSize: 20,
+              color: 'black',
+              marginTop: 10,
+            }}>
+            Location
+          </Text>
+          <Image source={require('../assets/images/maps.png')} />
+        </View>
+        <View style={{marginTop: 30}}>
+          <TouchableOpacity
+            onPress={makePayments}
+            style={{
+              backgroundColor: '#19a7ce',
+              borderRadius: 8,
+              padding: 8,
+            }}>
             <Text
               style={{
+                color: 'white',
                 fontFamily: 'Poppins-Medium',
-                fontSize: 20,
-                color: 'black',
+                textAlign: 'center',
+                padding: 5,
               }}>
-              Event Detail
+              Buy Tickets
             </Text>
-            <Text style={{fontFamily: 'Poppins-Regular'}}>
-              {events?.description}
-            </Text>
-            <Text
-              style={{
-                fontFamily: 'Poppins-Regular',
-                color: '#3366ff',
-                fontSize: 13,
-              }}>
-              Read More
-            </Text>
-          </View>
-          <View>
-            <Text
-              style={{
-                fontFamily: 'Poppins-Medium',
-                fontSize: 20,
-                color: 'black',
-                marginTop: 10,
-              }}>
-              Location
-            </Text>
-            <Image source={require('../assets/images/maps.png')} />
-          </View>
-          <View style={{marginTop: 30}}>
-            <TouchableOpacity
-              onPress={makePayments}
-              style={{
-                backgroundColor: '#19a7ce',
-                borderRadius: 8,
-                padding: 8,
-              }}>
-              <Text
-                style={{
-                  color: 'white',
-                  fontFamily: 'Poppins-Medium',
-                  textAlign: 'center',
-                  padding: 5,
-                }}>
-                Buy Tickets
-              </Text>
-            </TouchableOpacity>
-          </View>
+          </TouchableOpacity>
         </View>
       </View>
       <Modal

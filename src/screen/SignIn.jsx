@@ -30,6 +30,7 @@ const SignIn = ({navigation}) => {
   const token = useSelector(state => state.auth.token);
   const formError = useSelector(state => state.auth.formError[0]?.msg);
   const errorMsg = useSelector(state => state.auth.errorMessage);
+  const successMsg = useSelector(state => state.auth.successMessage);
   const warningMsg = useSelector(state => state.auth.warningMessage);
   const [modalVisible, setModalVisible] = React.useState(false);
 
@@ -37,16 +38,13 @@ const SignIn = ({navigation}) => {
     setOpenPassword(!openPassword);
   }
 
-  const doLogin = function (values) {
+  const doLogin = async function (values) {
     setModalVisible(true);
-    dispatch(asyncLoginAction(values));
-    if (token) {
-      navigation.navigate('Home');
-    }
+    await dispatch(asyncLoginAction(values));
     setModalVisible(false);
   };
 
-  if (formError || warningMsg || errorMsg) {
+  if (formError || warningMsg || errorMsg || successMsg) {
     setTimeout(() => {
       dispatch(clearMessage());
     }, 3000);
@@ -85,6 +83,11 @@ const SignIn = ({navigation}) => {
         {errorMsg && (
           <View style={styles.FormErrorViewStyle}>
             <Text style={styles.FormErrorTextStyle}>{errorMsg}</Text>
+          </View>
+        )}
+        {successMsg && (
+          <View style={styles.FormErrorViewStyle}>
+            <Text style={styles.FormSuccessTextStyle}>{successMsg}</Text>
           </View>
         )}
         {warningMsg && (

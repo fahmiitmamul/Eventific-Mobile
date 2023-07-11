@@ -22,6 +22,7 @@ import {useFocusEffect} from '@react-navigation/native';
 import MessageRegular from '../assets/images/message-regular.png';
 import NotificationController from '../helpers/notification';
 import messaging from '@react-native-firebase/messaging';
+import LinearGradient from 'react-native-linear-gradient';
 
 const Home = ({navigation}) => {
   const token = useSelector(state => state.auth.token);
@@ -134,8 +135,8 @@ const Home = ({navigation}) => {
         <ScrollView
           style={{
             backgroundColor: 'white',
-            borderTopLeftRadius: 35,
-            borderTopRightRadius: 35,
+            borderTopLeftRadius: 40,
+            borderTopRightRadius: 40,
           }}>
           <View style={styles.EventsWrapperStyle}>
             <Text style={styles.EventsTextStyle}>Events For You</Text>
@@ -161,8 +162,9 @@ const Home = ({navigation}) => {
                     style={{margin: 20, position: 'relative', height: '100%'}}>
                     <View
                       style={{
+                        position: 'relative',
                         overflow: 'hidden',
-                        borderRadius: 25,
+                        borderRadius: 40,
                       }}>
                       <Image
                         source={{
@@ -170,16 +172,19 @@ const Home = ({navigation}) => {
                         }}
                         style={{width: 300, height: 450}}
                       />
+                      <LinearGradient
+                        start={{x: 0, y: 0}}
+                        end={{x: 0, y: 1}}
+                        colors={['#ffffff00', '#000000']}
+                        style={{
+                          position: 'absolute',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          borderRadius: 5,
+                          height: 450,
+                          width: '100%',
+                        }}></LinearGradient>
                     </View>
-                    <View
-                      style={{
-                        position: 'absolute',
-                        backgroundColor: 'black',
-                        opacity: 0.5,
-                        borderRadius: 25,
-                        width: 300,
-                        height: 451,
-                      }}></View>
                     <View style={{position: 'absolute', top: 250, margin: 20}}>
                       <Text
                         style={{

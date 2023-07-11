@@ -1,5 +1,5 @@
 import React from 'react';
-import {Appbar, Button} from 'react-native-paper';
+import {Appbar} from 'react-native-paper';
 import styles from '../styles/global';
 import HamburgerIcon from '../assets/images/hamburger.png';
 import {View, StatusBar, Text, Image} from 'react-native';
@@ -9,7 +9,13 @@ import {
   TouchableOpacity,
 } from 'react-native-gesture-handler';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faArrowRight, faSearch} from '@fortawesome/free-solid-svg-icons';
+import {
+  faArrowLeft,
+  faArrowRight,
+  faChevronDown,
+  faChevronUp,
+  faSearch,
+} from '@fortawesome/free-solid-svg-icons';
 import http from '../helpers/http';
 import {useSelector} from 'react-redux';
 import moment from 'moment';
@@ -21,9 +27,8 @@ import SelectDropdown from 'react-native-select-dropdown';
 const SearchResults = ({route, navigation}) => {
   const token = useSelector(state => state.auth.token);
   const [events, setEvents] = React.useState([]);
-  const [eventCategories, setEventCategories] = React.useState([]);
-  const [eventCategoriesData, setEventCategoriesData] = React.useState([]);
   const [results, setResults] = React.useState('');
+  const [page, setPage] = React.useState(2);
 
   async function getEvents(results) {
     const {data} = await http(token).get('/events?limit=20', {
@@ -40,6 +45,31 @@ const SearchResults = ({route, navigation}) => {
     setEvents(data.results);
   }
 
+  const getPaginatedEvents = React.useCallback(async () => {
+    const {data} = await http(token).get('/events', {
+      params: {
+        page,
+      },
+    });
+    setEvents(data.results);
+  }, []);
+
+  function incrementPage() {
+    setPage(page + 1);
+    if (page === 10) {
+      setPage(10);
+    }
+    console.log(page);
+  }
+
+  function decrementPage() {
+    setPage(page - 1);
+    if (page === 1) {
+      setPage(1);
+    }
+    console.log(page);
+  }
+
   async function getEventsSort(sort) {
     const {data} = await http(token).get('/events', {
       params: {sortBy: sort},
@@ -53,11 +83,6 @@ const SearchResults = ({route, navigation}) => {
       getEvents(results);
     }, []),
   );
-
-  async function getEventByCategory(name) {
-    const {data} = await http(token).get('/events', {params: {category: name}});
-    setEventCategoriesData(data.results);
-  }
 
   async function getEventByName(search) {
     const eventdata = await http(token).get('/events?limit=20');
@@ -73,18 +98,6 @@ const SearchResults = ({route, navigation}) => {
 
   const profession = ['1', '2', '3', '4', '5'];
   const sorts = ['ASC', 'DESC'];
-
-  useFocusEffect(
-    React.useCallback(() => {
-      async function getEventCategories() {
-        let {data} = await http(token).get('/categories?limit=7');
-        setEventCategories(data.results);
-      }
-
-      getEventCategories();
-      getEventByCategory();
-    }, []),
-  );
 
   return (
     <React.Fragment>
@@ -110,10 +123,11 @@ const SearchResults = ({route, navigation}) => {
               style={styles.SearchInput}
               placeholder="Search Event"
               placeholderTextColor="white"
-              onChangeText={ev => setResults(ev)}
-              onPressOut={() => getEventByName(results)}
-              onSubmitEditing={() => getEventByName(results)}
-              onBlur={() => getEventByName(results)}
+              onChangeText={ev => {
+                setResults(ev);
+                getEventByName(results);
+              }}
+              onEndEditing={() => getEventByName()}
             />
             <FontAwesomeIcon
               icon={faSearch}
@@ -135,7 +149,7 @@ const SearchResults = ({route, navigation}) => {
               defaultButtonText="10"
               dropdownStyle={{backgroundColor: '#EFEFEF'}}
               buttonStyle={{
-                width: '20%',
+                width: '25%',
                 height: 40,
                 backgroundColor: '#FFF',
                 borderRadius: 8,
@@ -148,6 +162,15 @@ const SearchResults = ({route, navigation}) => {
                 textAlign: 'left',
                 fontFamily: 'Poppins-Medium',
                 padding: 6,
+              }}
+              renderDropdownIcon={isOpened => {
+                return (
+                  <FontAwesomeIcon
+                    icon={isOpened ? faChevronUp : faChevronDown}
+                    color={'#444'}
+                    size={18}
+                  />
+                );
               }}
               rowStyle={{
                 backgroundColor: '#EFEFEF',
@@ -177,7 +200,7 @@ const SearchResults = ({route, navigation}) => {
               defaultButtonText="ASC"
               dropdownStyle={{backgroundColor: '#EFEFEF'}}
               buttonStyle={{
-                width: '20%',
+                width: '40%',
                 height: 40,
                 backgroundColor: '#FFF',
                 borderRadius: 8,
@@ -200,6 +223,15 @@ const SearchResults = ({route, navigation}) => {
                 textAlign: 'left',
                 fontFamily: 'Poppins-Regular',
               }}
+              renderDropdownIcon={isOpened => {
+                return (
+                  <FontAwesomeIcon
+                    icon={isOpened ? faChevronUp : faChevronDown}
+                    color={'#444'}
+                    size={18}
+                  />
+                );
+              }}
               onSelect={selectedItem => {
                 getEventsSort(selectedItem);
                 return selectedItem;
@@ -216,6 +248,34 @@ const SearchResults = ({route, navigation}) => {
             <Text style={styles.EventsTextStyle}>
               Search Results : {results}
             </Text>
+            <View style={{display: 'flex', flexDirection: 'row', gap: 10}}>
+              <TouchableOpacity
+                style={{
+                  borderWidth: 1,
+                  borderRadius: 5,
+                  padding: 10,
+                  borderColor: '#19a7ce',
+                }}
+                onPress={() => {
+                  decrementPage();
+                  getPaginatedEvents(page);
+                }}>
+                <FontAwesomeIcon icon={faArrowLeft}></FontAwesomeIcon>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={{
+                  borderWidth: 1,
+                  borderRadius: 5,
+                  padding: 10,
+                  borderColor: '#19a7ce',
+                }}
+                onPress={() => {
+                  incrementPage();
+                  getPaginatedEvents(page);
+                }}>
+                <FontAwesomeIcon icon={faArrowRight}></FontAwesomeIcon>
+              </TouchableOpacity>
+            </View>
           </View>
           <ScrollView
             style={{
