@@ -69,7 +69,12 @@ const ChangePassword = ({navigation}) => {
   return (
     <View style={{width: '100%', height: '100%', backgroundColor: 'orange'}}>
       <Appbar.Header style={styles.ScrollViewStyle}>
-        <Appbar.BackAction onPress={() => {}} color="white" />
+        <Appbar.BackAction
+          onPress={() => {
+            navigation.navigate('Profile');
+          }}
+          color="white"
+        />
         <Appbar.Content
           titleStyle={styles.ManageHeaderStyle}
           title="Change Password"

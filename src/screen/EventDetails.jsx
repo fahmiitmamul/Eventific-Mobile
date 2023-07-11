@@ -4,8 +4,6 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {
   faArrowLeft,
   faClock,
-  faHeadSideCough,
-  faHeart,
   faLocationDot,
 } from '@fortawesome/free-solid-svg-icons';
 import moment from 'moment';
@@ -17,12 +15,15 @@ import {Modal} from 'react-native';
 import SimpleLottie from '../components/LottieAnimation';
 import {StatusBar} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import {faHeart} from '@fortawesome/free-regular-svg-icons';
+import {faHeart as FaHeartSolid} from '@fortawesome/free-solid-svg-icons';
 
 const EventDetails = ({route, navigation}) => {
   const {id} = route.params;
   const [events, setEvents] = React.useState([]);
   const token = useSelector(state => state.auth.token);
   const [modalVisible, setModalVisible] = React.useState(false);
+  const [added, setAdded] = React.useState(false);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -31,23 +32,31 @@ const EventDetails = ({route, navigation}) => {
         setEvents(data.results);
       }
 
+      async function getWishlistId() {
+        try {
+          const {data} = await http(token).get(`/wishlist/${id}`);
+          if (data.results.eventId) {
+            setAdded(!added);
+          }
+        } catch (err) {}
+      }
+
+      getWishlistId();
       getEventDetails();
-    }),
+    }, []),
   );
 
   async function addWishlists() {
-    setModalVisible(true);
     try {
       const eventId = id;
       const body = new URLSearchParams({eventId}).toString();
       const {data} = await http(token).post('/wishlist', body);
-      if (data.success == true) {
-        navigation.navigate('My Wishlists');
+      if (data) {
+        setAdded(!added);
       }
     } catch (err) {
-      console.warn(err);
+      console.warn(err.response?.data?.message);
     }
-    setModalVisible(false);
   }
 
   async function makePayments() {
@@ -99,9 +108,26 @@ const EventDetails = ({route, navigation}) => {
               height: 450,
               width: '100%',
             }}></LinearGradient>
-          <View style={{position: 'absolute', top: 50, left: 20}}>
-            <FontAwesomeIcon icon={faArrowLeft} color="white" size={25} />
-            <FontAwesomeIcon icon={faHeart} />
+          <View
+            style={{
+              position: 'absolute',
+              top: 50,
+              display: 'flex',
+              flexDirection: 'row',
+              width: '100%',
+              justifyContent: 'space-between',
+              paddingHorizontal: 25,
+            }}>
+            <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+              <FontAwesomeIcon icon={faArrowLeft} color="white" size={25} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={addWishlists}>
+              <FontAwesomeIcon
+                icon={added ? FaHeartSolid : faHeart}
+                color="#19a7ce"
+                size={25}
+              />
+            </TouchableOpacity>
           </View>
         </View>
         <View style={{position: 'absolute', top: 200, margin: 20}}>
@@ -142,7 +168,7 @@ const EventDetails = ({route, navigation}) => {
                 color: 'white',
                 fontFamily: 'Poppins-Regular',
               }}>
-              {moment(events?.date).format('LLL')}
+              {moment(events?.date).format('LL')}
             </Text>
           </View>
           <Text

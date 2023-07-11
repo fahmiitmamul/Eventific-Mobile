@@ -33,7 +33,7 @@ const Profile = ({navigation}) => {
   }, []);
 
   return (
-    <ScrollView style={styles.ContentWrapper}>
+    <View style={styles.ContentWrapper}>
       <Appbar.Header style={styles.ManageHeaderStyle}>
         <Appbar.Action
           color="white"
@@ -56,6 +56,7 @@ const Profile = ({navigation}) => {
           backgroundColor: 'white',
           borderTopLeftRadius: 40,
           borderTopRightRadius: 40,
+          height: '100%',
         }}>
         <View style={styles.PictureWrapper}>
           <View style={styles.PictureChildWrapper}>
@@ -177,7 +178,7 @@ const Profile = ({navigation}) => {
           </TouchableOpacity>
         </View>
       </View>
-    </ScrollView>
+    </View>
   );
 };
 

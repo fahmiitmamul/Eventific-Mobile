@@ -1,8 +1,7 @@
-import {ScrollView, View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {Appbar} from 'react-native-paper';
 import styles from '../styles/global';
-import HamburgerIcon from '../assets/images/hamburger.png';
 import {Formik} from 'formik';
 import {TextInput} from 'react-native-gesture-handler';
 import {
@@ -22,6 +21,7 @@ import {Modal} from 'react-native';
 import SimpleLottie from '../components/LottieAnimation';
 import {useFocusEffect} from '@react-navigation/native';
 import {Image} from 'react-native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const UpdateEvent = ({route, navigation}) => {
   const [category, setCategory] = React.useState([]);
@@ -159,331 +159,347 @@ const UpdateEvent = ({route, navigation}) => {
   };
 
   return (
-    <ScrollView
-      style={{width: '100%', height: '100%', backgroundColor: 'white'}}>
-      <Appbar.Header style={styles.ScrollViewStyle}>
-        <Appbar.Action
-          color="black"
-          icon={HamburgerIcon}
-          onPress={() => {
-            navigation.openDrawer();
-          }}
-        />
-        <Appbar.Content
-          titleStyle={{fontFamily: 'Poppins-Medium', paddingLeft: 70}}
-          title="Update Event"
-        />
-      </Appbar.Header>
-      <View>
-        <Formik
-          initialValues={{
-            title: events.title,
-            description: events.description,
-          }}
-          onSubmit={doUpdate}>
-          {({values, handleBlur, handleChange, handleSubmit}) => {
-            return (
-              <View style={{margin: 30}}>
-                <View>
-                  <Text style={{fontFamily: 'Poppins-Medium', marginBottom: 5}}>
-                    Name
-                  </Text>
-                  <View style={styles.ProfileValueWrapper}>
-                    {!editTitle && (
-                      <Text style={styles.FontStyle}>{events?.title}</Text>
-                    )}
-                    {!editTitle && (
-                      <Text
-                        onPress={() => setEditTitle(true)}
-                        style={styles.EditBtnStyle}>
-                        Edit
-                      </Text>
-                    )}
-                    {editTitle && (
-                      <TextInput
-                        style={styles.ProfileNameInput}
-                        onChangeText={handleChange('title')}
-                        onBlur={handleBlur('title')}
-                        value={values.title}></TextInput>
-                    )}
-                  </View>
-                </View>
-                <View>
-                  <Text
-                    style={{
-                      fontFamily: 'Poppins-Medium',
-                      marginBottom: 5,
-                      marginTop: 5,
-                    }}>
-                    Category
-                  </Text>
-                  <View style={styles.ProfileValueWrapper}>
-                    {!editCategory && (
-                      <Text style={styles.FontStyle}>{events?.category}</Text>
-                    )}
-                    {!editCategory && (
-                      <Text
-                        onPress={() => (a = setEditCategory(true))}
-                        style={styles.EditBtnStyle}>
-                        Edit
-                      </Text>
-                    )}
-                    {editCategory && (
-                      <SelectDropdown
-                        data={categoriesName}
-                        defaultButtonText="Category"
-                        dropdownStyle={{backgroundColor: '#EFEFEF'}}
-                        buttonStyle={styles.SelectDropdownStyle}
-                        buttonTextStyle={{
-                          textAlign: 'left',
-                          fontFamily: 'Poppins-Medium',
-                          color: 'gray',
-                          fontSize: 16,
-                          paddingTop: 3,
-                        }}
-                        rowStyle={{
-                          backgroundColor: '#EFEFEF',
-                          borderBottomColor: '#C5C5C5',
-                        }}
-                        rowTextStyle={{color: '#444', textAlign: 'left'}}
-                        renderDropdownIcon={isOpened => {
-                          return (
-                            <FontAwesomeIcon
-                              icon={isOpened ? faChevronUp : faChevronDown}
-                              color={'#444'}
-                              size={18}
-                            />
-                          );
-                        }}
-                        onSelect={(selectedItem, index) => {
-                          setSelectedCategory(index);
-                        }}
-                        buttonTextAfterSelection={(selectedItem, index) => {
-                          return selectedItem;
-                        }}
-                        rowTextForSelection={item => {
-                          return item;
-                        }}
-                      />
-                    )}
-                  </View>
-                </View>
-                <View>
-                  <Text
-                    style={{
-                      fontFamily: 'Poppins-Medium',
-                      marginBottom: 5,
-                      marginTop: 5,
-                    }}>
-                    Location
-                  </Text>
-                  <View style={styles.ProfileValueWrapper}>
-                    {!editLocation && (
-                      <Text style={styles.FontStyle}>{events?.location}</Text>
-                    )}
-                    {!editLocation && (
-                      <Text
-                        onPress={() => (a = setEditLocation(true))}
-                        style={styles.EditBtnStyle}>
-                        Edit
-                      </Text>
-                    )}
-                    {editLocation && (
-                      <SelectDropdown
-                        data={categoriesName}
-                        defaultButtonText="Category"
-                        dropdownStyle={{backgroundColor: '#EFEFEF'}}
-                        buttonStyle={styles.SelectDropdownStyle}
-                        buttonTextStyle={{
-                          textAlign: 'left',
-                          fontFamily: 'Poppins-Medium',
-                          color: 'gray',
-                          fontSize: 16,
-                          paddingTop: 3,
-                        }}
-                        rowStyle={{
-                          backgroundColor: '#EFEFEF',
-                          borderBottomColor: '#C5C5C5',
-                        }}
-                        rowTextStyle={{color: '#444', textAlign: 'left'}}
-                        renderDropdownIcon={isOpened => {
-                          return (
-                            <FontAwesomeIcon
-                              icon={isOpened ? faChevronUp : faChevronDown}
-                              color={'#444'}
-                              size={18}
-                            />
-                          );
-                        }}
-                        onSelect={(selectedItem, index) => {
-                          setSelectedCategory(index);
-                        }}
-                        buttonTextAfterSelection={(selectedItem, index) => {
-                          return selectedItem;
-                        }}
-                        rowTextForSelection={item => {
-                          return item;
-                        }}
-                      />
-                    )}
-                  </View>
-                </View>
-                <View>
-                  <Text style={{fontFamily: 'Poppins-Medium', marginTop: 6}}>
-                    Date Time Show
-                  </Text>
-                  <View style={styles.ProfileValueWrapper}>
-                    {!editDate && (
-                      <Text style={styles.FontStyle}>
-                        {moment(events.date).format('LLL')}
-                      </Text>
-                    )}
-                    {!editDate && (
-                      <Text
-                        onPress={() => (a = setEditDate(true))}
-                        style={styles.EditBtnStyle}>
-                        Edit
-                      </Text>
-                    )}
-                    {editDate && (
-                      <TouchableOpacity
-                        style={{
-                          borderWidth: 1,
-                          height: 50,
-                          borderRadius: 5,
-                          display: 'flex',
-                          flexDirection: 'row',
-                          justifyContent: 'space-between',
-                          paddingHorizontal: 15,
-                          paddingVertical: 12,
-                          width: '100%',
-                        }}
-                        onPress={() => setOpen(true)}>
-                        <Text style={{fontFamily: 'Poppins-Medium'}}>
-                          {moment(date).format('DD/MM/YYYY')}
+    <KeyboardAwareScrollView enableOnAndroid>
+      <View style={{width: '100%', height: '100%', backgroundColor: '#19a7ce'}}>
+        <Appbar.Header style={styles.ScrollViewStyle}>
+          <Appbar.BackAction
+            onPress={() => {
+              navigation.navigate('Manage Event');
+            }}
+            color="white"
+          />
+          <Appbar.Content
+            titleStyle={{
+              fontFamily: 'Poppins-Medium',
+              paddingLeft: 70,
+              color: 'white',
+            }}
+            title="Update Event"
+          />
+        </Appbar.Header>
+        <View
+          style={{
+            borderTopLeftRadius: 40,
+            borderTopRightRadius: 40,
+            backgroundColor: 'white',
+            height: '100%',
+          }}>
+          <Formik
+            initialValues={{
+              title: events.title,
+              description: events.description,
+            }}
+            onSubmit={doUpdate}>
+            {({values, handleBlur, handleChange, handleSubmit}) => {
+              return (
+                <View style={{margin: 30}}>
+                  <View>
+                    <Text
+                      style={{fontFamily: 'Poppins-Medium', marginBottom: 5}}>
+                      Name
+                    </Text>
+                    <View style={styles.ProfileValueWrapper}>
+                      {!editTitle && (
+                        <Text style={styles.FontStyle}>{events?.title}</Text>
+                      )}
+                      {!editTitle && (
+                        <Text
+                          onPress={() => setEditTitle(true)}
+                          style={styles.EditBtnStyle}>
+                          Edit
                         </Text>
-                        <FontAwesomeIcon icon={faCalendar}></FontAwesomeIcon>
-                        <DatePicker
-                          modal
-                          open={open}
-                          mode="date"
-                          date={date}
-                          onConfirm={date => {
-                            setOpen(false);
-                            setDate(date);
+                      )}
+                      {editTitle && (
+                        <TextInput
+                          style={styles.ProfileNameInput}
+                          onChangeText={handleChange('title')}
+                          onBlur={handleBlur('title')}
+                          value={values.title}></TextInput>
+                      )}
+                    </View>
+                  </View>
+                  <View>
+                    <Text
+                      style={{
+                        fontFamily: 'Poppins-Medium',
+                        marginBottom: 5,
+                        marginTop: 5,
+                      }}>
+                      Category
+                    </Text>
+                    <View style={styles.ProfileValueWrapper}>
+                      {!editCategory && (
+                        <Text style={styles.FontStyle}>{events?.category}</Text>
+                      )}
+                      {!editCategory && (
+                        <Text
+                          onPress={() => (a = setEditCategory(true))}
+                          style={styles.EditBtnStyle}>
+                          Edit
+                        </Text>
+                      )}
+                      {editCategory && (
+                        <SelectDropdown
+                          data={categoriesName}
+                          defaultButtonText="Category"
+                          dropdownStyle={{backgroundColor: '#EFEFEF'}}
+                          buttonStyle={styles.SelectDropdownStyle}
+                          buttonTextStyle={{
+                            textAlign: 'left',
+                            fontFamily: 'Poppins-Medium',
+                            color: 'gray',
+                            fontSize: 16,
+                            paddingTop: 3,
                           }}
-                          onCancel={() => {
-                            setOpen(false);
+                          rowStyle={{
+                            backgroundColor: '#EFEFEF',
+                            borderBottomColor: '#C5C5C5',
+                          }}
+                          rowTextStyle={{color: '#444', textAlign: 'left'}}
+                          renderDropdownIcon={isOpened => {
+                            return (
+                              <FontAwesomeIcon
+                                icon={isOpened ? faChevronUp : faChevronDown}
+                                color={'#444'}
+                                size={18}
+                              />
+                            );
+                          }}
+                          onSelect={(selectedItem, index) => {
+                            setSelectedCategory(index);
+                          }}
+                          buttonTextAfterSelection={(selectedItem, index) => {
+                            return selectedItem;
+                          }}
+                          rowTextForSelection={item => {
+                            return item;
                           }}
                         />
-                      </TouchableOpacity>
-                    )}
+                      )}
+                    </View>
                   </View>
-                </View>
-                <TouchableOpacity onPress={handleDocumentSelection}>
-                  <Text style={{fontFamily: 'Poppins-Medium', marginTop: 6}}>
-                    Select Picture
-                  </Text>
-                  <View style={styles.ProfileValueWrapper}>
-                    {!editPicture && (
-                      <Image
-                        source={{
-                          uri: `https://res.cloudinary.com/dxnewldiy/image/upload/v1683808473/${events?.picture}`,
-                        }}
-                        style={{width: 100, height: 150}}
-                      />
+                  <View>
+                    <Text
+                      style={{
+                        fontFamily: 'Poppins-Medium',
+                        marginBottom: 5,
+                        marginTop: 5,
+                      }}>
+                      Location
+                    </Text>
+                    <View style={styles.ProfileValueWrapper}>
+                      {!editLocation && (
+                        <Text style={styles.FontStyle}>{events?.location}</Text>
+                      )}
+                      {!editLocation && (
+                        <Text
+                          onPress={() => (a = setEditLocation(true))}
+                          style={styles.EditBtnStyle}>
+                          Edit
+                        </Text>
+                      )}
+                      {editLocation && (
+                        <SelectDropdown
+                          data={categoriesName}
+                          defaultButtonText="Category"
+                          dropdownStyle={{backgroundColor: '#EFEFEF'}}
+                          buttonStyle={styles.SelectDropdownStyle}
+                          buttonTextStyle={{
+                            textAlign: 'left',
+                            fontFamily: 'Poppins-Medium',
+                            color: 'gray',
+                            fontSize: 16,
+                            paddingTop: 3,
+                          }}
+                          rowStyle={{
+                            backgroundColor: '#EFEFEF',
+                            borderBottomColor: '#C5C5C5',
+                          }}
+                          rowTextStyle={{color: '#444', textAlign: 'left'}}
+                          renderDropdownIcon={isOpened => {
+                            return (
+                              <FontAwesomeIcon
+                                icon={isOpened ? faChevronUp : faChevronDown}
+                                color={'#444'}
+                                size={18}
+                              />
+                            );
+                          }}
+                          onSelect={(selectedItem, index) => {
+                            setSelectedCategory(index);
+                          }}
+                          buttonTextAfterSelection={(selectedItem, index) => {
+                            return selectedItem;
+                          }}
+                          rowTextForSelection={item => {
+                            return item;
+                          }}
+                        />
+                      )}
+                    </View>
+                  </View>
+                  <View>
+                    <Text style={{fontFamily: 'Poppins-Medium', marginTop: 6}}>
+                      Date Time Show
+                    </Text>
+                    <View style={styles.ProfileValueWrapper}>
+                      {!editDate && (
+                        <Text style={styles.FontStyle}>
+                          {moment(events.date).format('LLL')}
+                        </Text>
+                      )}
+                      {!editDate && (
+                        <Text
+                          onPress={() => (a = setEditDate(true))}
+                          style={styles.EditBtnStyle}>
+                          Edit
+                        </Text>
+                      )}
+                      {editDate && (
+                        <TouchableOpacity
+                          style={{
+                            borderWidth: 1,
+                            height: 50,
+                            borderColor: '#9DB2BF',
+                            borderRadius: 5,
+                            display: 'flex',
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            paddingHorizontal: 15,
+                            paddingVertical: 12,
+                            width: '100%',
+                          }}
+                          onPress={() => setOpen(true)}>
+                          <Text style={{fontFamily: 'Poppins-Medium'}}>
+                            {moment(date).format('DD/MM/YYYY')}
+                          </Text>
+                          <FontAwesomeIcon icon={faCalendar}></FontAwesomeIcon>
+                          <DatePicker
+                            modal
+                            open={open}
+                            mode="date"
+                            date={date}
+                            onConfirm={date => {
+                              setOpen(false);
+                              setDate(date);
+                            }}
+                            onCancel={() => {
+                              setOpen(false);
+                            }}
+                          />
+                        </TouchableOpacity>
+                      )}
+                    </View>
+                  </View>
+                  <TouchableOpacity onPress={handleDocumentSelection}>
+                    <Text style={{fontFamily: 'Poppins-Medium', marginTop: 6}}>
+                      Select Picture
+                    </Text>
+                    <View style={styles.ProfileValueWrapper}>
+                      {!editPicture && (
+                        <Image
+                          source={{
+                            uri: `https://res.cloudinary.com/dxnewldiy/image/upload/v1683808473/${events?.picture}`,
+                          }}
+                          style={{width: 100, height: 150}}
+                        />
+                      )}
+                      {!editPicture && (
+                        <Text
+                          onPress={() => (a = setEditPicture(true))}
+                          style={styles.EditBtnStyle}>
+                          Edit
+                        </Text>
+                      )}
+                      {editPicture && (
+                        <View
+                          style={{
+                            borderWidth: 1,
+                            height: 50,
+                            borderColor: '#9DB2BF',
+                            borderRadius: 5,
+                            display: 'flex',
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            paddingHorizontal: 15,
+                            paddingVertical: 12,
+                            width: '100%',
+                          }}>
+                          <Text style={{fontFamily: 'Poppins-Medium'}}>
+                            Choose File
+                          </Text>
+                          <FontAwesomeIcon icon={faUpload}></FontAwesomeIcon>
+                        </View>
+                      )}
+                    </View>
+                  </TouchableOpacity>
+                  <View>
+                    <Text style={{fontFamily: 'Poppins-Medium', marginTop: 5}}>
+                      Description
+                    </Text>
+                    {!editDescription && (
+                      <Text style={styles.FontStyle}>
+                        {events?.description}
+                      </Text>
                     )}
-                    {!editPicture && (
+                    {!editDescription && (
                       <Text
-                        onPress={() => (a = setEditPicture(true))}
+                        onPress={() => (a = setEditDescription(true))}
                         style={styles.EditBtnStyle}>
                         Edit
                       </Text>
                     )}
-                    {editPicture && (
+                    {editDescription && (
                       <View
                         style={{
                           borderWidth: 1,
-                          height: 50,
-                          borderRadius: 5,
-                          display: 'flex',
-                          flexDirection: 'row',
-                          justifyContent: 'space-between',
-                          paddingHorizontal: 15,
-                          paddingVertical: 12,
+                          borderRadius: 10,
+                          paddingLeft: 10,
                           width: '100%',
+                          borderColor: '#9DB2BF',
+                          height: 200,
                         }}>
-                        <Text style={{fontFamily: 'Poppins-Medium'}}>
-                          Choose File
-                        </Text>
-                        <FontAwesomeIcon icon={faUpload}></FontAwesomeIcon>
+                        <TextInput
+                          style={{fontFamily: 'Poppins-Regular'}}
+                          placeholder="Description"
+                          onChangeText={handleChange('description')}
+                          onBlur={handleBlur('description')}
+                          value={values.description}></TextInput>
                       </View>
                     )}
                   </View>
-                </TouchableOpacity>
-                <View>
-                  <Text style={{fontFamily: 'Poppins-Medium', marginTop: 5}}>
-                    Description
-                  </Text>
-                  {!editDescription && (
-                    <Text style={styles.FontStyle}>{events?.description}</Text>
-                  )}
-                  {!editDescription && (
-                    <Text
-                      onPress={() => (a = setEditDescription(true))}
-                      style={styles.EditBtnStyle}>
-                      Edit
-                    </Text>
-                  )}
-                  {editDescription && (
-                    <View
-                      style={{
-                        borderWidth: 1,
-                        borderRadius: 10,
-                        paddingLeft: 10,
-                        width: '100%',
-                        height: 200,
-                      }}>
-                      <TextInput
-                        style={{fontFamily: 'Poppins-Regular'}}
-                        placeholder="Description"
-                        onChangeText={handleChange('description')}
-                        onBlur={handleBlur('description')}
-                        value={values.description}></TextInput>
-                    </View>
-                  )}
+                  <View style={{marginTop: 10}}>
+                    <TouchableOpacity
+                      onPress={handleSubmit}
+                      style={styles.SaveBtnStyle}>
+                      <Text style={styles.SaveTextStyle}>Update Event</Text>
+                    </TouchableOpacity>
+                  </View>
                 </View>
-                <View style={{marginTop: 10}}>
-                  <TouchableOpacity
-                    onPress={handleSubmit}
-                    style={styles.SaveBtnStyle}>
-                    <Text style={styles.SaveTextStyle}>Update Event</Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            );
-          }}
-        </Formik>
-      </View>
-      <Modal
-        visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(!modalVisible);
-        }}>
-        <View
-          style={{
-            width: '100%',
-            height: '100%',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            gap: 25,
-            backgroundColor: 'white',
-          }}>
-          <SimpleLottie />
+              );
+            }}
+          </Formik>
         </View>
-      </Modal>
-    </ScrollView>
+        <Modal
+          visible={modalVisible}
+          onRequestClose={() => {
+            setModalVisible(!modalVisible);
+          }}>
+          <View
+            style={{
+              width: '100%',
+              height: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              gap: 25,
+              backgroundColor: 'white',
+            }}>
+            <SimpleLottie />
+          </View>
+        </Modal>
+      </View>
+    </KeyboardAwareScrollView>
   );
 };
 

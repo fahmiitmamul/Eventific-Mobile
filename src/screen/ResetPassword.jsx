@@ -48,7 +48,7 @@ const ResetPassword = ({navigation}) => {
       const {data} = await http().post('/auth/reset-password', form);
       setSuccessMsg(data.message);
     } catch (err) {
-      const errMsg = err.response?.data?.message;
+      const errMsg = err.response?.data?.results[0].msg;
       setErrorMsg(errMsg);
     }
   };
@@ -70,10 +70,14 @@ const ResetPassword = ({navigation}) => {
 
   return (
     <React.Fragment>
-      <Appbar.Header style={styles.ScrollViewStyle}>
-        <Appbar.BackAction onPress={() => {}} />
+      <Appbar.Header style={{backgroundColor: 'white'}}>
+        <Appbar.BackAction
+          onPress={() => {
+            navigation.navigate('ForgotPassword');
+          }}
+        />
       </Appbar.Header>
-      <ScrollView style={styles.ScrollViewStyle}>
+      <ScrollView style={{backgroundColor: 'white'}}>
         <View style={styles.ViewHeader}>
           <View>
             <Text style={styles.TextLoginStyle}>Reset Password</Text>

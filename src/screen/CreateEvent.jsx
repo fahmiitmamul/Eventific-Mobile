@@ -70,6 +70,7 @@ const CreateEvent = ({navigation}) => {
     try {
       const response = await launchImageLibrary({
         presentationStyle: 'fullScreen',
+        quality: 0,
       });
       setFileResponse(response.assets[0].uri);
     } catch (err) {
@@ -130,22 +131,30 @@ const CreateEvent = ({navigation}) => {
 
   return (
     <KeyboardAwareScrollView
-      style={{width: '100%', height: '100%', backgroundColor: 'white'}}
+      style={{width: '100%', height: '100%', backgroundColor: '#19a7ce'}}
       enableOnAndroid>
       <Appbar.Header style={styles.ScrollViewStyle}>
-        <Appbar.Action
-          color="black"
-          icon={HamburgerIcon}
+        <Appbar.BackAction
           onPress={() => {
-            navigation.openDrawer();
+            navigation.navigate('Manage Event');
           }}
+          color="white"
         />
         <Appbar.Content
-          titleStyle={{fontFamily: 'Poppins-Medium', paddingLeft: 70}}
+          titleStyle={{
+            fontFamily: 'Poppins-Medium',
+            paddingLeft: 70,
+            color: 'white',
+          }}
           title="Create Event"
         />
       </Appbar.Header>
-      <View>
+      <View
+        style={{
+          borderTopLeftRadius: 40,
+          borderTopRightRadius: 40,
+          backgroundColor: 'white',
+        }}>
         <Formik
           initialValues={{title: '', description: ''}}
           onSubmit={doCreate}>
@@ -271,6 +280,7 @@ const CreateEvent = ({navigation}) => {
                     style={{
                       borderWidth: 1,
                       height: 50,
+                      borderColor: '#9DB2BF',
                       borderRadius: 5,
                       display: 'flex',
                       flexDirection: 'row',
@@ -306,6 +316,7 @@ const CreateEvent = ({navigation}) => {
                     style={{
                       borderWidth: 1,
                       height: 50,
+                      borderColor: '#9DB2BF',
                       borderRadius: 5,
                       display: 'flex',
                       flexDirection: 'row',
@@ -327,6 +338,7 @@ const CreateEvent = ({navigation}) => {
                     style={{
                       borderWidth: 1,
                       borderRadius: 10,
+                      borderColor: '#9DB2BF',
                       paddingLeft: 10,
                       width: '100%',
                       height: 200,

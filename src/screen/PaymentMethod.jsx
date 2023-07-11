@@ -51,82 +51,91 @@ const PaymentMethod = ({route, navigation}) => {
         <View>
           <Text style={styles.TextPayment}>Payment Method</Text>
         </View>
-        {payment.map(p => {
-          return (
-            <View style={styles.PaymentMethodWrapper} key={p.id}>
-              <View style={styles.PaymentMethodChildWrapper}>
-                <RadioButton
-                  value="0"
-                  status={checked === p.id ? 'checked' : 'unchecked'}
-                  onPress={() => {
-                    setPaymentId(p.id);
-                    setChecked(p.id);
-                  }}
-                />
-                <Image
-                  source={{
-                    uri: `https://res.cloudinary.com/dxnewldiy/image/upload/f_auto,q_auto/v1/payment/${p.picture}`,
-                  }}
-                  style={{width: 50, height: 50}}
-                />
-                <Text
-                  style={styles.PaymentMethodText}
-                  onPress={() => setPaymentId(p.id)}>
-                  {p.name}
-                </Text>
-              </View>
-              <View>
-                <Image source={require('../assets/images/chevron-down.png')} />
-              </View>
-            </View>
-          );
-        })}
-      </View>
-      <View
-        style={{
-          width: '100%',
-          height: '100%',
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          backgroundColor: 'white',
-        }}>
         <View
           style={{
             display: 'flex',
-            flexDirection: 'row',
-            gap: 20,
-            paddingTop: 30,
-            paddingLeft: 20,
+            flexDirection: 'column',
+            width: '100%',
+            height: '80%',
+            justifyContent: 'space-between',
           }}>
-          <Text
+          <View>
+            {payment.map(p => {
+              return (
+                <View style={styles.PaymentMethodWrapper} key={p.id}>
+                  <View style={styles.PaymentMethodChildWrapper}>
+                    <RadioButton
+                      value="0"
+                      status={checked === p.id ? 'checked' : 'unchecked'}
+                      onPress={() => {
+                        setPaymentId(p.id);
+                        setChecked(p.id);
+                      }}
+                    />
+                    <Image
+                      source={{
+                        uri: `https://res.cloudinary.com/dxnewldiy/image/upload/f_auto,q_auto/v1/payment/${p.picture}`,
+                      }}
+                      style={{width: 50, height: 50}}
+                    />
+                    <Text
+                      style={styles.PaymentMethodText}
+                      onPress={() => setPaymentId(p.id)}>
+                      {p.name}
+                    </Text>
+                  </View>
+                  <View>
+                    <Image
+                      source={require('../assets/images/chevron-down.png')}
+                    />
+                  </View>
+                </View>
+              );
+            })}
+          </View>
+          <View
             style={{
-              fontSize: 15,
-              fontFamily: 'Poppins-Medium',
-              color: 'black',
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
             }}>
-            Total: Rp.{totalPayment}
-          </Text>
+            <View
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                gap: 20,
+                paddingTop: 30,
+              }}>
+              <Text
+                style={{
+                  fontSize: 15,
+                  fontFamily: 'Poppins-Medium',
+                  color: 'black',
+                }}>
+                Total: Rp.{totalPayment}
+              </Text>
+            </View>
+            <TouchableOpacity
+              style={{
+                width: 150,
+                height: 40,
+                backgroundColor: '#19a7ce',
+                borderRadius: 5,
+                margin: 20,
+              }}
+              onPress={makePayment}>
+              <Text
+                style={{
+                  fontFamily: 'Poppins-Medium',
+                  textAlign: 'center',
+                  paddingTop: 8,
+                  color: 'white',
+                }}>
+                Pay Tickets
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
-        <TouchableOpacity
-          style={{
-            width: 150,
-            height: 40,
-            backgroundColor: '#19a7ce',
-            borderRadius: 5,
-            margin: 20,
-          }}
-          onPress={makePayment}>
-          <Text
-            style={{
-              fontFamily: 'Poppins-Medium',
-              textAlign: 'center',
-              paddingTop: 8,
-              color: 'white',
-            }}>
-            Pay Tickets
-          </Text>
-        </TouchableOpacity>
       </View>
     </View>
   );

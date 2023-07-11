@@ -75,18 +75,6 @@ const Home = ({navigation}) => {
     setEventCategoriesData(data.results);
   }
 
-  async function getEventByName(search) {
-    const eventdata = await http(token).get('/events?limit=20');
-    const {data} = await http(token).get('/events', {
-      params: {search: search},
-    });
-    if (search === '') {
-      setEvents(eventdata.data.results);
-    } else {
-      setEvents(data.results);
-    }
-  }
-
   useFocusEffect(
     React.useCallback(() => {
       async function getEventCategories() {
@@ -118,16 +106,29 @@ const Home = ({navigation}) => {
           <Appbar.Action color="white" icon={MessageRegular} />
         </Appbar.Header>
         <View style={styles.TextInputWrapper}>
-          <TouchableOpacity
-            style={styles.TextInputChildWrapper}
-            onPress={() => navigation.navigate('Search Results')}>
-            <View style={styles.SearchInput} />
-            <FontAwesomeIcon
-              icon={faSearch}
-              size={25}
-              style={styles.IconSearchStyle}
-            />
-          </TouchableOpacity>
+          <View style={{position: 'relative'}}>
+            <TouchableOpacity
+              style={styles.TextInputChildWrapper}
+              onPress={() => navigation.navigate('Search Results')}>
+              <View style={styles.SearchInput} />
+              <FontAwesomeIcon
+                icon={faSearch}
+                size={25}
+                style={styles.IconSearchStyle}
+              />
+            </TouchableOpacity>
+            <Text
+              style={{
+                fontFamily: 'Poppins-Regular',
+                color: 'white',
+                position: 'absolute',
+                top: 7,
+                left: 50,
+                fontSize: 20,
+              }}>
+              Search Event
+            </Text>
+          </View>
         </View>
         <ScrollView
           style={{
@@ -137,7 +138,6 @@ const Home = ({navigation}) => {
           }}>
           <View style={styles.EventsWrapperStyle}>
             <Text style={styles.EventsTextStyle}>Events For You</Text>
-            <FontAwesomeIcon icon={faSliders} color="#19a7ce" size={25} />
           </View>
           <ScrollView
             style={{
@@ -254,8 +254,9 @@ const Home = ({navigation}) => {
                         style={{
                           width: 120,
                           height: 50,
-                          borderRadius: 30,
-                          elevation: 5,
+                          borderRadius: 20,
+                          borderWidth: 1,
+                          borderStyle: 'dotted',
                           shadowColor: '#52006A',
                           backgroundColor: 'white',
                           display: 'flex',
@@ -339,25 +340,29 @@ const Home = ({navigation}) => {
                     <View style={{position: 'relative'}}>
                       <View
                         style={{
+                          position: 'relative',
                           overflow: 'hidden',
-                          borderRadius: 25,
+                          borderRadius: 40,
                         }}>
                         <Image
                           source={{
                             uri: `https://res.cloudinary.com/dxnewldiy/image/upload/v1683808473/${item.picture}`,
                           }}
-                          style={{width: '100%', height: 450}}
+                          style={{width: 350, height: 450}}
                         />
+                        <LinearGradient
+                          start={{x: 0, y: 0}}
+                          end={{x: 0, y: 1}}
+                          colors={['#ffffff00', '#000000']}
+                          style={{
+                            position: 'absolute',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            borderRadius: 5,
+                            height: 450,
+                            width: '100%',
+                          }}></LinearGradient>
                       </View>
-                      <View
-                        style={{
-                          position: 'absolute',
-                          backgroundColor: 'black',
-                          opacity: 0.5,
-                          borderRadius: 25,
-                          width: '100%',
-                          height: 451,
-                        }}></View>
                       <View
                         style={{position: 'absolute', top: 250, margin: 20}}>
                         <Text
@@ -396,6 +401,7 @@ const Home = ({navigation}) => {
                         backgroundColor: '#19a7ce',
                         borderRadius: 8,
                         marginTop: 10,
+                        marginBottom: 20,
                       }}>
                       <Text
                         style={{

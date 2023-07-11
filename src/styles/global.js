@@ -148,6 +148,7 @@ const styles = StyleSheet.create({
     marginTop: 50,
     marginLeft: 40,
     marginRight: 40,
+    marginBottom: 40,
     flexDirection: 'column',
     gap: 20,
   },
@@ -256,7 +257,7 @@ const styles = StyleSheet.create({
   //Payment Method
   PaymentWrapper: {
     width: '100%',
-    height: '46%',
+    height: '100%',
     backgroundColor: 'white',
     paddingLeft: 30,
     paddingTop: 30,
@@ -324,6 +325,7 @@ const styles = StyleSheet.create({
   ProfileNameInput: {
     borderWidth: 1,
     borderRadius: 10,
+    borderColor: '#9DB2BF',
     paddingLeft: 10,
     width: '100%',
     fontFamily: 'Poppins-Medium',
@@ -353,7 +355,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#444',
+    borderColor: '#9DB2BF',
     fontFamily: 'Poppins-Medium',
   },
   BirthDateWrapper: {
@@ -363,7 +365,7 @@ const styles = StyleSheet.create({
   },
   SaveBtnStyle: {
     width: '100%',
-    backgroundColor: '#3366ff',
+    backgroundColor: '#19a7ce',
     padding: 12,
     borderRadius: 10,
   },

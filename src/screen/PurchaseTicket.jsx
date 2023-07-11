@@ -66,7 +66,7 @@ const PurchaseTicket = ({route, navigation}) => {
   }
 
   return (
-    <ScrollView style={styles.ContentWrapper}>
+    <View style={styles.ContentWrapper}>
       <Appbar.Header style={styles.ScrollViewStyle}>
         <Appbar.BackAction onPress={() => {}} color="white" />
         <Appbar.Content
@@ -93,7 +93,12 @@ const PurchaseTicket = ({route, navigation}) => {
               <Image source={require('../assets/images/filter.png')} />
             </View>
           </View>
-          <View style={{display: 'flex', flexDirection: 'column', gap: 20}}>
+          <View
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 20,
+            }}>
             {sections.map(item => {
               return (
                 <View style={styles.TicketContentWrapper} key={item.id}>
@@ -220,7 +225,7 @@ const PurchaseTicket = ({route, navigation}) => {
           </Text>
         </TouchableOpacity>
       </View>
-    </ScrollView>
+    </View>
   );
 };
 

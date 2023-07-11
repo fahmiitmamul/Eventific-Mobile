@@ -28,10 +28,10 @@ const MyWishlists = ({navigation}) => {
     React.useCallback(() => {
       async function getWishlists() {
         try {
-          const {data} = await http(token).get('/wishlist');
+          const {data} = await http(token).get('/wishlist/all');
           setWishlist(data.results);
         } catch (err) {
-          console.warn(err);
+          console.warn(err.response?.data);
         }
       }
 
@@ -39,23 +39,15 @@ const MyWishlists = ({navigation}) => {
     }, []),
   );
 
-  const performDelete = async itemId => {
-    try {
-      const {data} = await http(token).delete(`/wishlist/${itemId}`);
-      setWishlist(wishlist.filter(w => w.id !== itemId));
-    } catch (err) {
-      const message = err?.response?.data?.message;
-
-      if (message) {
-        console.warn(message);
-      }
-    }
-  };
-
   return (
     <View style={styles.AppWrapper}>
       <Appbar.Header style={styles.ScrollViewStyle}>
-        <Appbar.BackAction onPress={() => {}} color="white" />
+        <Appbar.BackAction
+          onPress={() => {
+            navigation.navigate('Home');
+          }}
+          color="white"
+        />
         <Appbar.Content
           titleStyle={styles.ManageHeaderStyle}
           title="My Wishlists"
@@ -79,16 +71,6 @@ const MyWishlists = ({navigation}) => {
                     {moment(w.date).format('ddd')}
                   </Text>
                 </View>
-                <TouchableOpacity
-                  style={styles.HeartWrapper}
-                  onPress={() => {
-                    openModal(w.id);
-                  }}>
-                  <FontAwesomeIcon
-                    icon={faXmark}
-                    size={30}
-                    color="red"></FontAwesomeIcon>
-                </TouchableOpacity>
               </View>
               <View style={styles.TitleWrapper}>
                 <View>
@@ -122,91 +104,6 @@ const MyWishlists = ({navigation}) => {
           </View>
         )}
       </ScrollView>
-      <Modal
-        animationType="fade"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(!modalVisible);
-        }}>
-        <View
-          style={{
-            width: '100%',
-            height: '100%',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            gap: 25,
-            backgroundColor: 'white',
-          }}>
-          <View
-            style={{
-              width: '80%',
-              height: '20%',
-              padding: 10,
-              backgroundColor: '#19a7ce',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              gap: 20,
-              borderRadius: 20,
-              opacity: 1,
-              elevation: 20,
-            }}>
-            <Text
-              style={{
-                fontFamily: 'Poppins-Medium',
-                color: 'white',
-                textAlign: 'center',
-              }}>
-              Are you sure want to delete this wishlist ?
-            </Text>
-            <View style={{display: 'flex', flexDirection: 'row', gap: 20}}>
-              <TouchableOpacity
-                style={{
-                  backgroundColor: '#F24C3D',
-                  width: 80,
-                  height: 50,
-                  borderRadius: 12,
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-                onPress={() => {
-                  performDelete(deleteWishlist);
-                  setModalVisible(!modalVisible);
-                }}>
-                <Text
-                  style={{
-                    fontFamily: 'Poppins-Medium',
-                    color: 'white',
-                  }}>
-                  Yes
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={{
-                  backgroundColor: 'green',
-                  width: 80,
-                  height: 50,
-                  borderRadius: 12,
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-                onPress={() => setModalVisible(!modalVisible)}>
-                <Text
-                  style={{
-                    fontFamily: 'Poppins-Medium',
-                    color: 'white',
-                  }}>
-                  No
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      </Modal>
     </View>
   );
 };
