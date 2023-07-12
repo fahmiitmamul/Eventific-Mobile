@@ -1,12 +1,11 @@
 import React from 'react';
-import {Appbar} from 'react-native-paper';
-import {View, Text} from 'react-native';
-import {useSelector} from 'react-redux';
-import styles from '../styles/global';
-import HamburgerIcon from '../assets/images/hamburger.png';
-import http from '../helpers/http';
 import moment from 'moment';
-import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
+import styles from '../styles/global';
+import http from '../helpers/http';
+import {Appbar} from 'react-native-paper';
+import {View, Text, FlatList} from 'react-native';
+import {useSelector} from 'react-redux';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useFocusEffect} from '@react-navigation/native';
 import {Modal} from 'react-native';
 
@@ -91,32 +90,34 @@ const ManageEvent = ({navigation}) => {
             </Text>
           </TouchableOpacity>
         </View>
-        <ScrollView>
-          {events.map(e => {
+        <FlatList
+          data={events}
+          keyExtractor={item => item.id}
+          renderItem={({item}) => {
             return (
-              <View key={e.id}>
+              <View>
                 <View style={styles.ManageWrapperStyle}>
                   <View style={styles.ManageWrapperChildStyle}>
                     <View style={styles.DateWrapper}>
                       <Text style={styles.TextDate}>
-                        {moment(e.date).format('DD')}
+                        {moment(item.date).format('DD')}
                       </Text>
                       <Text style={styles.FontStyle}>
-                        {moment(e.date).format('ddd')}
+                        {moment(item.date).format('ddd')}
                       </Text>
                     </View>
                   </View>
                   <View style={styles.TitleWrapper}>
                     <View>
-                      <Text style={styles.TitleStyles}>{e.title}</Text>
+                      <Text style={styles.TitleStyles}>{item.title}</Text>
                     </View>
                     <View>
                       <View>
-                        <Text style={styles.FontStyle}>{e.location}</Text>
+                        <Text style={styles.FontStyle}>{item.location}</Text>
                       </View>
                       <View>
                         <Text style={styles.FontStyle}>
-                          {moment(e.date).format('LLLL')}
+                          {moment(item.date).format('LLLL')}
                         </Text>
                       </View>
                     </View>
@@ -132,7 +133,7 @@ const ManageEvent = ({navigation}) => {
                       <Text
                         onPress={() =>
                           navigation.navigate('Update Event', {
-                            eventId: e.id,
+                            eventId: item.id,
                           })
                         }
                         style={{
@@ -142,7 +143,7 @@ const ManageEvent = ({navigation}) => {
                         Update
                       </Text>
                       <Text
-                        onPress={() => openModal(e.id)}
+                        onPress={() => openModal(item.id)}
                         style={{
                           fontFamily: 'Poppins-Medium',
                           color: '#3366ff',
@@ -154,8 +155,8 @@ const ManageEvent = ({navigation}) => {
                 </View>
               </View>
             );
-          })}
-        </ScrollView>
+          }}
+        />
       </View>
       <Modal
         animationType="fade"
