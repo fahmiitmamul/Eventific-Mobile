@@ -1,12 +1,11 @@
 import React from 'react';
 import {Appbar} from 'react-native-paper';
-import {View, Text, Image, TouchableOpacity} from 'react-native';
+import {View, Text, Image, TouchableOpacity, FlatList} from 'react-native';
 import {RadioButton} from 'react-native-paper';
 import styles from '../styles/global';
 import {useFocusEffect} from '@react-navigation/native';
 import http from '../helpers/http';
 import {useSelector} from 'react-redux';
-import {ScrollView} from 'react-native-gesture-handler';
 
 const PaymentMethod = ({route, navigation}) => {
   const {reservationId, totalPayment} = route.params;
@@ -59,29 +58,31 @@ const PaymentMethod = ({route, navigation}) => {
             height: '80%',
             justifyContent: 'space-between',
           }}>
-          <View>
-            {payment.map(p => {
+          <FlatList
+            data={payment}
+            keyExtractor={item => item.id}
+            renderItem={({item}) => {
               return (
-                <View style={styles.PaymentMethodWrapper} key={p.id}>
+                <View style={styles.PaymentMethodWrapper}>
                   <View style={styles.PaymentMethodChildWrapper}>
                     <RadioButton
                       value="0"
-                      status={checked === p.id ? 'checked' : 'unchecked'}
+                      status={checked === item.id ? 'checked' : 'unchecked'}
                       onPress={() => {
-                        setPaymentId(p.id);
-                        setChecked(p.id);
+                        setPaymentId(item.id);
+                        setChecked(item.id);
                       }}
                     />
                     <Image
                       source={{
-                        uri: `https://res.cloudinary.com/dxnewldiy/image/upload/f_auto,q_auto/v1/payment/${p.picture}`,
+                        uri: `https://res.cloudinary.com/dxnewldiy/image/upload/f_auto,q_auto/v1/payment/${item.picture}`,
                       }}
                       style={{width: 50, height: 50}}
                     />
                     <Text
                       style={styles.PaymentMethodText}
-                      onPress={() => setPaymentId(p.id)}>
-                      {p.name}
+                      onPress={() => setPaymentId(item.id)}>
+                      {item.name}
                     </Text>
                   </View>
                   <View>
@@ -91,8 +92,8 @@ const PaymentMethod = ({route, navigation}) => {
                   </View>
                 </View>
               );
-            })}
-          </View>
+            }}
+          />
           <View
             style={{
               display: 'flex',
