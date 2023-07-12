@@ -74,6 +74,7 @@ const Home = ({navigation}) => {
           display: 'flex',
           flexDirection: 'row',
           gap: 30,
+          backgroundColor: 'white',
         }}>
         <View
           style={{
@@ -285,7 +286,7 @@ const Home = ({navigation}) => {
       <StatusBar animated={true} backgroundColor="#19A7CE" />
       <View
         style={{
-          backgroundColor: 'white',
+          backgroundColor: '#19a7ce',
           width: '100%',
           height: '100%',
         }}>
@@ -308,79 +309,87 @@ const Home = ({navigation}) => {
                 />
                 <Appbar.Action color="white" icon={MessageRegular} />
               </Appbar.Header>
-              <View style={{display: 'flex', flexDirection: 'column', gap: 30}}>
-                <View style={styles.TextInputWrapper}>
-                  <View style={{position: 'relative'}}>
-                    <TouchableOpacity
-                      style={styles.TextInputChildWrapper}
-                      onPress={() => navigation.navigate('Search Results')}>
-                      <View style={styles.SearchInput} />
-                      <FontAwesomeIcon
-                        icon={faSearch}
-                        size={25}
-                        style={styles.IconSearchStyle}
-                      />
-                    </TouchableOpacity>
-                    <Text
-                      style={{
-                        fontFamily: 'Poppins-Regular',
-                        color: 'white',
-                        position: 'absolute',
-                        top: 7,
-                        left: 50,
-                        fontSize: 20,
-                      }}
-                      onPress={() => {
-                        navigation.navigate('Search Results');
-                      }}>
-                      Search Event
-                    </Text>
-                  </View>
-                </View>
-                <View style={styles.EventsWrapperStyle}>
-                  <Text style={styles.EventsTextStyle}>Events For You</Text>
-                </View>
-                <FlatList
-                  data={events}
-                  renderItem={CategoriesData}
-                  keyExtractor={item => item.id}
-                  horizontal
-                />
-                <View style={{marginHorizontal: 20}}>
+              <View style={styles.TextInputWrapper}>
+                <View style={{position: 'relative'}}>
+                  <TouchableOpacity
+                    style={styles.TextInputChildWrapper}
+                    onPress={() => navigation.navigate('Search Results')}>
+                    <View style={styles.SearchInput} />
+                    <FontAwesomeIcon
+                      icon={faSearch}
+                      size={25}
+                      style={styles.IconSearchStyle}
+                    />
+                  </TouchableOpacity>
                   <Text
                     style={{
-                      fontFamily: 'Poppins-Medium',
+                      fontFamily: 'Poppins-Regular',
+                      color: 'white',
+                      position: 'absolute',
+                      top: 7,
+                      left: 50,
                       fontSize: 20,
-                      marginBottom: 20,
+                    }}
+                    onPress={() => {
+                      navigation.navigate('Search Results');
                     }}>
-                    Discover
+                    Search Event
                   </Text>
+                </View>
+              </View>
+              <View
+                style={{
+                  backgroundColor: 'white',
+                  borderTopLeftRadius: 40,
+                  borderTopRightRadius: 40,
+                }}>
+                <View
+                  style={{display: 'flex', flexDirection: 'column', gap: 25}}>
+                  <View style={styles.EventsWrapperStyle}>
+                    <Text style={styles.EventsTextStyle}>Events For You</Text>
+                  </View>
                   <FlatList
-                    data={eventCategories}
-                    renderItem={EventCategories}
+                    data={events}
+                    renderItem={CategoriesData}
                     keyExtractor={item => item.id}
                     horizontal
                   />
-                </View>
-                <View
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    marginHorizontal: 20,
-                  }}>
-                  <Text
+                  <View style={{marginHorizontal: 20}}>
+                    <Text
+                      style={{
+                        fontFamily: 'Poppins-Medium',
+                        fontSize: 20,
+                        marginBottom: 20,
+                      }}>
+                      Discover
+                    </Text>
+                    <FlatList
+                      data={eventCategories}
+                      renderItem={EventCategories}
+                      keyExtractor={item => item.id}
+                      horizontal
+                    />
+                  </View>
+                  <View
                     style={{
-                      fontFamily: 'Poppins-Medium',
-                      fontSize: 20,
-                      marginBottom: 20,
+                      display: 'flex',
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      marginHorizontal: 20,
                     }}>
-                    Upcoming
-                  </Text>
-                  <Text
-                    style={{color: '#3366ff', fontFamily: 'Poppins-Regular'}}>
-                    See All
-                  </Text>
+                    <Text
+                      style={{
+                        fontFamily: 'Poppins-Medium',
+                        fontSize: 20,
+                        marginBottom: 20,
+                      }}>
+                      Upcoming
+                    </Text>
+                    <Text
+                      style={{color: '#3366ff', fontFamily: 'Poppins-Regular'}}>
+                      See All
+                    </Text>
+                  </View>
                 </View>
               </View>
             </View>

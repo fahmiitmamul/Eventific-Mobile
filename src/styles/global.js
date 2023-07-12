@@ -35,7 +35,8 @@ const styles = StyleSheet.create({
     paddingTop: 15,
   },
   EventsWrapperStyle: {
-    marginHorizontal: 30,
+    marginHorizontal: 25,
+    marginTop: 15,
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
