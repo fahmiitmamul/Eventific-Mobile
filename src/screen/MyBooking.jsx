@@ -1,13 +1,50 @@
-import {Appbar} from 'react-native-paper';
 import React from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
 import styles from '../styles/global';
-import HamburgerIcon from '../assets/images/hamburger.png';
+import http from '../helpers/http';
+import moment from 'moment';
+import {Appbar} from 'react-native-paper';
+import {View, Text, TouchableOpacity, FlatList} from 'react-native';
 import {useSelector} from 'react-redux';
 import {useFocusEffect} from '@react-navigation/native';
-import http from '../helpers/http';
-import {ScrollView} from 'react-native-gesture-handler';
-import moment from 'moment';
+
+const HistoryData = ({item}) => {
+  return (
+    <View key={item.id}>
+      <View style={styles.ManageWrapperStyle}>
+        <View style={styles.ManageWrapperChildStyle}>
+          <View style={styles.DateWrapper}>
+            <Text style={styles.TextDate}>
+              {moment(item.date).format('DD')}
+            </Text>
+            <Text style={styles.FontStyle}>
+              {moment(item.date).format('ddd')}
+            </Text>
+          </View>
+        </View>
+        <View style={styles.TitleWrapper}>
+          <View>
+            <Text style={styles.TitleStyles}>{item.title}</Text>
+          </View>
+          <View>
+            <View>
+              <Text style={styles.FontStyle}>{item.name}</Text>
+            </View>
+            <View>
+              <Text style={styles.FontStyle}>
+                {moment(item.date).format('LLLL')}
+              </Text>
+            </View>
+            <View>
+              <TouchableOpacity>
+                <Text style={styles.ManageBtn}>Detail</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  );
+};
 
 const MyBooking = ({navigation}) => {
   const [history, setHistory] = React.useState([]);
@@ -38,7 +75,7 @@ const MyBooking = ({navigation}) => {
           title="My Booking"
         />
       </Appbar.Header>
-      <ScrollView
+      <View
         style={{
           backgroundColor: 'white',
           borderTopLeftRadius: 40,
@@ -63,45 +100,18 @@ const MyBooking = ({navigation}) => {
             Create
           </Text>
         </TouchableOpacity>
-        {history.map(item => {
-          return (
-            <View key={item.id}>
-              <View style={styles.ManageWrapperStyle}>
-                <View style={styles.ManageWrapperChildStyle}>
-                  <View style={styles.DateWrapper}>
-                    <Text style={styles.TextDate}>
-                      {moment(item.date).format('DD')}
-                    </Text>
-                    <Text style={styles.FontStyle}>
-                      {moment(item.date).format('ddd')}
-                    </Text>
-                  </View>
-                </View>
-                <View style={styles.TitleWrapper}>
-                  <View>
-                    <Text style={styles.TitleStyles}>{item.title}</Text>
-                  </View>
-                  <View>
-                    <View>
-                      <Text style={styles.FontStyle}>{item.name}</Text>
-                    </View>
-                    <View>
-                      <Text style={styles.FontStyle}>
-                        {moment(item.date).format('LLLL')}
-                      </Text>
-                    </View>
-                    <View>
-                      <TouchableOpacity>
-                        <Text style={styles.ManageBtn}>Detail</Text>
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-                </View>
-              </View>
-            </View>
-          );
-        })}
-      </ScrollView>
+        <FlatList
+          style={{
+            width: '100%',
+            height: '100%',
+            backgroundColor: 'white',
+          }}
+          data={history}
+          keyExtractor={item => item.id}
+          renderItem={({item}) => {
+            return <HistoryData item={item} />;
+          }}></FlatList>
+      </View>
     </View>
   );
 };
