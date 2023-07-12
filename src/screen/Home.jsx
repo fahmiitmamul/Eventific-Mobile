@@ -1,20 +1,12 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Appbar, Button} from 'react-native-paper';
 import styles from '../styles/global';
 import SplashScreen from 'react-native-splash-screen';
 import HamburgerIcon from '../assets/images/hamburger.png';
 import {View, StatusBar, Text, Image} from 'react-native';
-import {
-  ScrollView,
-  TextInput,
-  TouchableOpacity,
-} from 'react-native-gesture-handler';
+import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {
-  faArrowRight,
-  faSearch,
-  faSliders,
-} from '@fortawesome/free-solid-svg-icons';
+import {faArrowRight, faSearch} from '@fortawesome/free-solid-svg-icons';
 import http from '../helpers/http';
 import {useSelector} from 'react-redux';
 import moment from 'moment';
@@ -30,8 +22,6 @@ const Home = ({navigation}) => {
   const [events, setEvents] = React.useState([]);
   const [eventCategories, setEventCategories] = React.useState([]);
   const [eventCategoriesData, setEventCategoriesData] = React.useState([]);
-  const [searchResult, setSearchResult] = React.useState('');
-  const src = searchResult;
 
   const saveToken = React.useCallback(async () => {
     try {
@@ -40,7 +30,7 @@ const Home = ({navigation}) => {
     } catch (err) {
       console.log('Token already exist');
     }
-  }, []);
+  }, [fcmToken, token]);
 
   React.useEffect(() => {
     saveToken();
@@ -51,7 +41,7 @@ const Home = ({navigation}) => {
       console.log(remoteMessage);
     });
     return unsubscribe;
-  }, []);
+  }, [saveToken]);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -67,7 +57,7 @@ const Home = ({navigation}) => {
       // if (search == '') {
       //   getEvents();
       // }
-    }, []),
+    }, [token]),
   );
 
   async function getEventByCategory(name) {
@@ -84,7 +74,7 @@ const Home = ({navigation}) => {
 
       getEventCategories();
       getEventByCategory();
-    }, [getEventByCategory, token]),
+    }, [token]),
   );
 
   return (

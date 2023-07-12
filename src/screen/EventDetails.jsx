@@ -36,14 +36,15 @@ const EventDetails = ({route, navigation}) => {
         try {
           const {data} = await http(token).get(`/wishlist/${id}`);
           if (data.results.eventId) {
-            setAdded(!added);
+            setAdded(true);
+            console.log(10);
           }
         } catch (err) {}
       }
 
       getWishlistId();
       getEventDetails();
-    }, [added, id, token]),
+    }, [id, token]),
   );
 
   async function addWishlists() {

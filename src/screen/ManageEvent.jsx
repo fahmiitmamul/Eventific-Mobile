@@ -93,6 +93,19 @@ const ManageEvent = ({navigation}) => {
         <FlatList
           data={events}
           keyExtractor={item => item.id}
+          ListEmptyComponent={
+            <View>
+              <Text
+                style={{
+                  fontFamily: 'Poppins-Medium',
+                  fontSize: 20,
+                  textAlign: 'center',
+                  marginTop: 20,
+                }}>
+                No events found, please create events
+              </Text>
+            </View>
+          }
           renderItem={({item}) => {
             return (
               <View>

@@ -78,6 +78,19 @@ const MyWishlists = ({navigation}) => {
         }}
         data={wishlist}
         keyExtractor={item => item.id}
+        ListEmptyComponent={
+          <View>
+            <Text
+              style={{
+                fontFamily: 'Poppins-Medium',
+                fontSize: 20,
+                textAlign: 'center',
+                marginTop: 20,
+              }}>
+              No wishlist found
+            </Text>
+          </View>
+        }
         renderItem={({item}) => {
           return <WishlistData item={item} />;
         }}></FlatList>

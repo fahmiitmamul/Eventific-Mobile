@@ -108,6 +108,19 @@ const MyBooking = ({navigation}) => {
           }}
           data={history}
           keyExtractor={item => item.id}
+          ListEmptyComponent={
+            <View>
+              <Text
+                style={{
+                  fontFamily: 'Poppins-Medium',
+                  fontSize: 20,
+                  textAlign: 'center',
+                  marginTop: 20,
+                }}>
+                No Booking was found
+              </Text>
+            </View>
+          }
           renderItem={({item}) => {
             return <HistoryData item={item} />;
           }}></FlatList>
