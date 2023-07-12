@@ -8,6 +8,7 @@ import {useSelector} from 'react-redux';
 import http from '../helpers/http';
 import styles from '../styles/global';
 import {ScrollView} from 'react-native-gesture-handler';
+import {FlatList} from 'react-native';
 
 const PurchaseTicket = ({route, navigation}) => {
   const {reservationId, eventTitle} = route.params;
@@ -84,175 +85,172 @@ const PurchaseTicket = ({route, navigation}) => {
   }
 
   return (
-    <ScrollView>
-      <View style={styles.ContentWrapper}>
-        <Appbar.Header style={styles.ScrollViewStyle}>
-          <Appbar.BackAction onPress={() => {}} color="white" />
-          <Appbar.Content
-            titleStyle={styles.ManageHeaderStyle}
-            title="Checkout"
-          />
-        </Appbar.Header>
-        <View
-          style={{
-            borderTopLeftRadius: 40,
-            borderTopRightRadius: 40,
-            backgroundColor: 'white',
-          }}>
-          <View style={styles.TicketImgWrapper}>
-            <Image source={require('../assets/images/tickets.png')} />
-          </View>
-          <View style={{marginTop: 50}}>
-            {errorMsg && (
-              <View style={styles.FormErrorViewStyle}>
-                <Text style={styles.FormErrorTextStyle}>{errorMsg}</Text>
-              </View>
-            )}
-          </View>
-          <View style={styles.TicketWrapper}>
-            <View style={styles.TitleWrapperStyle}>
-              <View>
-                <Text style={styles.TicketTitleStyle}>Tickets</Text>
-              </View>
-              <View style={styles.FilterWrapperStyle}>
-                <Text style={styles.FilterTextStyle}>BY PRICE</Text>
-                <Image source={require('../assets/images/filter.png')} />
+    <View style={styles.ContentWrapper}>
+      <Appbar.Header style={styles.ScrollViewStyle}>
+        <Appbar.BackAction onPress={() => {}} color="white" />
+        <Appbar.Content
+          titleStyle={styles.ManageHeaderStyle}
+          title="Checkout"
+        />
+      </Appbar.Header>
+      <FlatList
+        ListHeaderComponent={
+          <>
+            <View style={styles.TicketImgWrapper}>
+              <Image source={require('../assets/images/tickets.png')} />
+            </View>
+            <View style={{marginTop: 50}}>
+              {errorMsg && (
+                <View style={styles.FormErrorViewStyle}>
+                  <Text style={styles.FormErrorTextStyle}>{errorMsg}</Text>
+                </View>
+              )}
+            </View>
+            <View style={{marginHorizontal: 30}}>
+              <View style={styles.TitleWrapperStyle}>
+                <View>
+                  <Text style={styles.TicketTitleStyle}>Tickets</Text>
+                </View>
+                <View style={styles.FilterWrapperStyle}>
+                  <Text style={styles.FilterTextStyle}>BY PRICE</Text>
+                  <Image source={require('../assets/images/filter.png')} />
+                </View>
               </View>
             </View>
-            <View
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: 20,
-              }}>
-              {sections.map(item => {
-                return (
-                  <View style={styles.TicketContentWrapper} key={item.id}>
-                    <View>
-                      <View style={styles.ProfileValueWrapper}>
-                        <Image
-                          source={{
-                            uri: `https://res.cloudinary.com/dxnewldiy/image/upload/f_auto,q_auto/v1/payment/${item.picture}`,
-                            width: 40,
-                            height: 40,
-                          }}
-                        />
-                        <View style={styles.TicketSectionWrapper}>
-                          <View>
-                            <Text style={styles.TicketSectionTextStyle}>
-                              {item.name}
-                            </Text>
-                            <Text
-                              style={{
-                                fontFamily: 'Poppins-Regular',
-                                fontSize: 10,
-                              }}>
-                              12 Seats Available
-                            </Text>
-                          </View>
-                          <View style={{display: 'flex', flexDirection: 'row'}}>
-                            <Text style={styles.TicketSectionTextStyle}>
-                              {item.price}
-                            </Text>
-                            <Text style={{fontFamily: 'Poppins-Regular'}}>
-                              /person
-                            </Text>
-                          </View>
-                        </View>
-                      </View>
-                      <View style={styles.QuantityWrapper}>
-                        <View>
-                          <Text style={styles.QuantityTextStyle}>Quantity</Text>
-                        </View>
-                        <View style={styles.QuantityBtnWrapper}>
-                          <TouchableOpacity
-                            onPress={() => decrement(item.id)}
-                            style={styles.QuantityBtn}>
-                            <FontAwesomeIcon icon={faMinus}></FontAwesomeIcon>
-                          </TouchableOpacity>
-                          <Text style={{fontFamily: 'Poppins-Bold'}}>
-                            {item.id === filledSection.id
-                              ? filledSection.quantity
-                              : 0}
-                          </Text>
-                          <TouchableOpacity
-                            onPress={() => increment(item.id)}
-                            style={styles.QuantityBtn}>
-                            <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon>
-                          </TouchableOpacity>
-                        </View>
-                      </View>
-                    </View>
-                  </View>
-                );
-              })}
-            </View>
-          </View>
-        </View>
-        <View
-          style={{
-            width: '100%',
-            height: '100%',
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            backgroundColor: 'white',
-          }}>
+          </>
+        }
+        ListFooterComponent={
           <View
             style={{
               display: 'flex',
               flexDirection: 'row',
-              gap: 20,
-              paddingTop: 30,
-              paddingLeft: 20,
+              justifyContent: 'space-between',
+              backgroundColor: 'white',
             }}>
-            <Text
+            <View
               style={{
-                fontSize: 15,
-                fontFamily: 'Poppins-Medium',
-                color: 'black',
+                display: 'flex',
+                flexDirection: 'row',
+                gap: 20,
+                paddingTop: 30,
+                paddingLeft: 20,
               }}>
-              {selectedSection?.name || 'Not Set'}
-            </Text>
-            <Text
+              <Text
+                style={{
+                  fontSize: 15,
+                  fontFamily: 'Poppins-Medium',
+                  color: 'black',
+                }}>
+                {selectedSection?.name || 'Not Set'}
+              </Text>
+              <Text
+                style={{
+                  fontSize: 15,
+                  fontFamily: 'Poppins-Medium',
+                  color: 'black',
+                }}>
+                {filledSection.quantity}
+              </Text>
+              <Text
+                style={{
+                  fontSize: 15,
+                  fontFamily: 'Poppins-Medium',
+                  color: 'black',
+                }}>
+                Rp.{selectedSection?.price * filledSection.quantity || '0'}
+              </Text>
+            </View>
+            <TouchableOpacity
               style={{
-                fontSize: 15,
-                fontFamily: 'Poppins-Medium',
-                color: 'black',
-              }}>
-              {filledSection.quantity}
-            </Text>
-            <Text
-              style={{
-                fontSize: 15,
-                fontFamily: 'Poppins-Medium',
-                color: 'black',
-              }}>
-              Rp.{selectedSection?.price * filledSection.quantity || '0'}
-            </Text>
+                width: 150,
+                height: 40,
+                backgroundColor: '#19a7ce',
+                borderRadius: 5,
+                margin: 20,
+              }}
+              onPress={sendData}>
+              <Text
+                style={{
+                  fontFamily: 'Poppins-Medium',
+                  textAlign: 'center',
+                  paddingTop: 8,
+                  color: 'white',
+                }}>
+                Checkout
+              </Text>
+            </TouchableOpacity>
           </View>
-          <TouchableOpacity
-            style={{
-              width: 150,
-              height: 40,
-              backgroundColor: '#19a7ce',
-              borderRadius: 5,
-              margin: 20,
-            }}
-            onPress={sendData}>
-            <Text
-              style={{
-                fontFamily: 'Poppins-Medium',
-                textAlign: 'center',
-                paddingTop: 8,
-                color: 'white',
-              }}>
-              Checkout
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </ScrollView>
+        }
+        data={sections}
+        renderItem={({item}) => {
+          return (
+            <View style={styles.TicketContentWrapper}>
+              <View style={{marginBottom: 30}}>
+                <View style={styles.ProfileValueWrapper}>
+                  <Image
+                    source={{
+                      uri: `https://res.cloudinary.com/dxnewldiy/image/upload/f_auto,q_auto/v1/payment/${item.picture}`,
+                      width: 40,
+                      height: 40,
+                    }}
+                  />
+                  <View style={styles.TicketSectionWrapper}>
+                    <View>
+                      <Text style={styles.TicketSectionTextStyle}>
+                        {item.name}
+                      </Text>
+                      <Text
+                        style={{
+                          fontFamily: 'Poppins-Regular',
+                          fontSize: 10,
+                        }}>
+                        12 Seats Available
+                      </Text>
+                    </View>
+                    <View style={{display: 'flex', flexDirection: 'row'}}>
+                      <Text style={styles.TicketSectionTextStyle}>
+                        {item.price}
+                      </Text>
+                      <Text style={{fontFamily: 'Poppins-Regular'}}>
+                        /person
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+                <View style={styles.QuantityWrapper}>
+                  <View>
+                    <Text style={styles.QuantityTextStyle}>Quantity</Text>
+                  </View>
+                  <View style={styles.QuantityBtnWrapper}>
+                    <TouchableOpacity
+                      onPress={() => decrement(item.id)}
+                      style={styles.QuantityBtn}>
+                      <FontAwesomeIcon icon={faMinus}></FontAwesomeIcon>
+                    </TouchableOpacity>
+                    <Text style={{fontFamily: 'Poppins-Bold'}}>
+                      {item.id === filledSection.id
+                        ? filledSection.quantity
+                        : 0}
+                    </Text>
+                    <TouchableOpacity
+                      onPress={() => increment(item.id)}
+                      style={styles.QuantityBtn}>
+                      <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+            </View>
+          );
+        }}
+        style={{
+          borderTopLeftRadius: 40,
+          borderTopRightRadius: 40,
+          backgroundColor: 'white',
+          width: '100%',
+          height: '100%',
+        }}></FlatList>
+    </View>
   );
 };
 

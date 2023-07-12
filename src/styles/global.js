@@ -411,6 +411,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
+    marginHorizontal: 30,
   },
   TicketSectionWrapper: {
     display: 'flex',
