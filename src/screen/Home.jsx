@@ -4,7 +4,7 @@ import styles from '../styles/global';
 import SplashScreen from 'react-native-splash-screen';
 import HamburgerIcon from '../assets/images/hamburger.png';
 import {View, StatusBar, Text, Image, FlatList} from 'react-native';
-import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faArrowRight, faSearch} from '@fortawesome/free-solid-svg-icons';
 import http from '../helpers/http';
@@ -16,7 +16,7 @@ import NotificationController from '../helpers/notification';
 import messaging from '@react-native-firebase/messaging';
 import LinearGradient from 'react-native-linear-gradient';
 
-const YourComponent = ({navigation}) => {
+const Home = ({navigation}) => {
   const token = useSelector(state => state.auth.token);
   const fcmToken = useSelector(state => state.deviceToken.data);
   const [events, setEvents] = React.useState([]);
@@ -27,6 +27,27 @@ const YourComponent = ({navigation}) => {
     const {data} = await http(token).get('/events', {params: {category: name}});
     setEventCategoriesData(data.results);
   }
+
+  const saveToken = React.useCallback(async () => {
+    try {
+      const form = new URLSearchParams({token: fcmToken}).toString();
+      await http(token).post('/device-token', form);
+    } catch (err) {
+      console.log('Token already exist');
+    }
+  }, [fcmToken, token]);
+
+  React.useEffect(() => {
+    SplashScreen.hide();
+    saveToken();
+    messaging().setBackgroundMessageHandler(async remoteMessage => {
+      console.log('Message handled in background', remoteMessage);
+    });
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      console.log(remoteMessage);
+    });
+    return unsubscribe;
+  }, []);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -260,6 +281,8 @@ const YourComponent = ({navigation}) => {
 
   return (
     <React.Fragment>
+      <NotificationController />
+      <StatusBar animated={true} backgroundColor="#19A7CE" />
       <View
         style={{
           backgroundColor: 'white',
@@ -363,4 +386,4 @@ const YourComponent = ({navigation}) => {
   );
 };
 
-export default YourComponent;
+export default Home;
