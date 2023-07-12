@@ -58,7 +58,7 @@ const MyBooking = ({navigation}) => {
       }
 
       getWishlist();
-    }, []),
+    }, [token]),
   );
 
   return (

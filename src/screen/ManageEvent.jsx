@@ -29,7 +29,7 @@ const ManageEvent = ({navigation}) => {
       }
 
       getEvents();
-    }, []),
+    }, [token]),
   );
 
   const handleDelete = async itemId => {

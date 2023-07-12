@@ -66,7 +66,7 @@ const ResetPassword = ({navigation}) => {
         setSuccessMsg(false);
       }
     }, 3000);
-  }, []);
+  }, [errorMsg, successMsg]);
 
   return (
     <React.Fragment>

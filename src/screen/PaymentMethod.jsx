@@ -22,7 +22,7 @@ const PaymentMethod = ({route, navigation}) => {
         setPayment(data.results);
       }
       getPayment();
-    }, []),
+    }, [token]),
   );
 
   async function makePayment() {

@@ -43,7 +43,7 @@ const EventDetails = ({route, navigation}) => {
 
       getWishlistId();
       getEventDetails();
-    }, []),
+    }, [added, id, token]),
   );
 
   async function addWishlists() {

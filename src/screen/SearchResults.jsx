@@ -52,7 +52,7 @@ const SearchResults = ({route, navigation}) => {
       },
     });
     setEvents(data.results);
-  }, []);
+  }, [page, token]);
 
   function incrementPage() {
     setPage(page + 1);
@@ -81,7 +81,7 @@ const SearchResults = ({route, navigation}) => {
   useFocusEffect(
     React.useCallback(() => {
       getEvents(results);
-    }, []),
+    }, [getEvents, results]),
   );
 
   async function getEventByName(search) {

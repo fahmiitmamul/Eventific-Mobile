@@ -23,7 +23,7 @@ const PurchaseTicket = ({route, navigation}) => {
       }
 
       getSections();
-    }, []),
+    }, [token]),
   );
 
   const [filledSection, setFilledSection] = React.useState({

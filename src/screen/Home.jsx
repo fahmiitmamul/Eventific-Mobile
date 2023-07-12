@@ -84,7 +84,7 @@ const Home = ({navigation}) => {
 
       getEventCategories();
       getEventByCategory();
-    }, []),
+    }, [getEventByCategory, token]),
   );
 
   return (

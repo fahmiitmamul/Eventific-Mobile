@@ -49,7 +49,7 @@ const EditProfile = ({navigation}) => {
       setProfile(data.results);
     };
     getProfile();
-  }, []);
+  }, [token]);
 
   const editProfile = async values => {
     setModalVisible(true);

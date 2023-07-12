@@ -52,7 +52,15 @@ const UpdateEvent = ({route, navigation}) => {
       }
 
       getEvents();
-    }, []),
+      return () => {
+        setEditCategory(false);
+        setEditDate(false);
+        setEditDescription(false);
+        setEditLocation(false);
+        setEditPicture(false);
+        setEditTitle(false);
+      };
+    }, [eventId, token]),
   );
 
   category.map(c => {

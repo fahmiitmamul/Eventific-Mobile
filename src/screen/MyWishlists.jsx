@@ -53,7 +53,7 @@ const MyWishlists = ({navigation}) => {
       }
 
       getWishlists();
-    }, []),
+    }, [token]),
   );
 
   return (

@@ -30,7 +30,7 @@ const Profile = ({navigation}) => {
       setProfile(data.results);
     };
     getProfile();
-  }, []);
+  }, [token]);
 
   return (
     <View style={styles.ContentWrapper}>
