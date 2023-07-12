@@ -67,7 +67,7 @@ const Home = ({navigation}) => {
     }, [token]),
   );
 
-  const renderItem1 = ({item}) => {
+  const EventCategoriesData = ({item}) => {
     return (
       <View
         style={{
@@ -189,7 +189,7 @@ const Home = ({navigation}) => {
     );
   };
 
-  const renderItem2 = ({item}) => {
+  const EventCategories = ({item}) => {
     return (
       <View>
         <TouchableOpacity
@@ -213,7 +213,7 @@ const Home = ({navigation}) => {
     );
   };
 
-  const renderItem3 = ({item}) => {
+  const CategoriesData = ({item}) => {
     return (
       <TouchableOpacity
         onPress={() => {
@@ -291,7 +291,7 @@ const Home = ({navigation}) => {
         }}>
         <FlatList
           data={eventCategoriesData}
-          renderItem={renderItem1}
+          renderItem={EventCategoriesData}
           keyExtractor={item => item.id}
           ListHeaderComponent={
             <View>
@@ -342,17 +342,22 @@ const Home = ({navigation}) => {
                 </View>
                 <FlatList
                   data={events}
-                  renderItem={renderItem3}
+                  renderItem={CategoriesData}
                   keyExtractor={item => item.id}
                   horizontal
                 />
                 <View style={{marginHorizontal: 20}}>
-                  <Text style={{fontFamily: 'Poppins-Medium', fontSize: 20}}>
+                  <Text
+                    style={{
+                      fontFamily: 'Poppins-Medium',
+                      fontSize: 20,
+                      marginBottom: 20,
+                    }}>
                     Discover
                   </Text>
                   <FlatList
                     data={eventCategories}
-                    renderItem={renderItem2}
+                    renderItem={EventCategories}
                     keyExtractor={item => item.id}
                     horizontal
                   />

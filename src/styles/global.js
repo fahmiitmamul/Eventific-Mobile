@@ -36,7 +36,6 @@ const styles = StyleSheet.create({
   },
   EventsWrapperStyle: {
     marginHorizontal: 30,
-    marginVertical: 10,
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
