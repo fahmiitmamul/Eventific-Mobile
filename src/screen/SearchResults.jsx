@@ -17,51 +17,19 @@ import moment from 'moment';
 import {useFocusEffect} from '@react-navigation/native';
 import NotificationController from '../helpers/notification';
 import SelectDropdown from 'react-native-select-dropdown';
+import LinearGradient from 'react-native-linear-gradient';
 
-const SearchResults = ({route, navigation}) => {
+const SearchResults = ({navigation}) => {
   const token = useSelector(state => state.auth.token);
   const [events, setEvents] = React.useState([]);
   const [results, setResults] = React.useState('');
-  const [page, setPage] = React.useState(2);
-
-  async function getEvents(results) {
-    const {data} = await http(token).get('/events?limit=20', {
-      params: {search: results},
-    });
-    setEvents(data.results);
-  }
 
   async function getEventsLimit(limits) {
     const {data} = await http(token).get('/events', {
       params: {limit: limits},
     });
 
-    setEvents(data.results);
-  }
-
-  const getPaginatedEvents = React.useCallback(async () => {
-    const {data} = await http(token).get('/events', {
-      params: {
-        page,
-      },
-    });
-    setEvents(data.results);
-  }, [page, token]);
-
-  function incrementPage() {
-    setPage(page + 1);
-    if (page === 10) {
-      setPage(10);
-    }
-    console.log(page);
-  }
-
-  function decrementPage() {
-    setPage(page - 1);
-    if (page === 1) {
-      setPage(1);
-    }
-    console.log(page);
+    setEvents(data.results.rows);
   }
 
   async function getEventsSort(sort) {
@@ -69,13 +37,26 @@ const SearchResults = ({route, navigation}) => {
       params: {sortBy: sort},
     });
 
-    setEvents(data.results);
+    setEvents(data.results.rows);
   }
 
   useFocusEffect(
     React.useCallback(() => {
-      getEvents(results);
-    }, [getEvents, results]),
+      async function getEvents(page = 1, search = '') {
+        try {
+          const {data} = await http(token).get('/events', {
+            params: {
+              page: page,
+              search: search,
+            },
+          });
+          setEvents(data.results.rows);
+        } catch (err) {
+          console.log(err.response.data);
+        }
+      }
+      getEvents();
+    }, [token]),
   );
 
   async function getEventByName(search) {
@@ -84,9 +65,9 @@ const SearchResults = ({route, navigation}) => {
       params: {search: search},
     });
     if (search === '') {
-      setEvents(eventdata.data.results);
+      setEvents(eventdata.data.results.rows);
     } else {
-      setEvents(data.results);
+      setEvents(data.results.rows);
     }
   }
 
@@ -250,10 +231,7 @@ const SearchResults = ({route, navigation}) => {
                   padding: 10,
                   borderColor: '#19a7ce',
                 }}
-                onPress={() => {
-                  decrementPage();
-                  getPaginatedEvents(page);
-                }}>
+                onPress={() => {}}>
                 <FontAwesomeIcon icon={faArrowLeft}></FontAwesomeIcon>
               </TouchableOpacity>
               <TouchableOpacity
@@ -263,10 +241,7 @@ const SearchResults = ({route, navigation}) => {
                   padding: 10,
                   borderColor: '#19a7ce',
                 }}
-                onPress={() => {
-                  incrementPage();
-                  getPaginatedEvents(page);
-                }}>
+                onPress={() => {}}>
                 <FontAwesomeIcon icon={faArrowRight}></FontAwesomeIcon>
               </TouchableOpacity>
             </View>
@@ -274,6 +249,7 @@ const SearchResults = ({route, navigation}) => {
           <FlatList
             data={events}
             keyExtractor={item => item.id}
+            horizontal
             renderItem={({item}) => {
               return (
                 <TouchableOpacity
@@ -282,12 +258,12 @@ const SearchResults = ({route, navigation}) => {
                       id: item.id,
                     });
                   }}>
-                  <View
-                    style={{margin: 20, position: 'relative', height: '100%'}}>
+                  <View style={{position: 'relative', marginLeft: 20}}>
                     <View
                       style={{
+                        position: 'relative',
                         overflow: 'hidden',
-                        borderRadius: 25,
+                        borderRadius: 40,
                       }}>
                       <Image
                         source={{
@@ -295,16 +271,19 @@ const SearchResults = ({route, navigation}) => {
                         }}
                         style={{width: 300, height: 450}}
                       />
+                      <LinearGradient
+                        start={{x: 0, y: 0}}
+                        end={{x: 0, y: 1}}
+                        colors={['#ffffff00', '#000000']}
+                        style={{
+                          position: 'absolute',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          borderRadius: 5,
+                          height: 450,
+                          width: '100%',
+                        }}></LinearGradient>
                     </View>
-                    <View
-                      style={{
-                        position: 'absolute',
-                        backgroundColor: 'black',
-                        opacity: 0.5,
-                        borderRadius: 25,
-                        width: 300,
-                        height: 451,
-                      }}></View>
                     <View style={{position: 'absolute', top: 250, margin: 20}}>
                       <Text
                         style={{
