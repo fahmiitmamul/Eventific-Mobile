@@ -48,7 +48,7 @@ const UpdateEvent = ({route, navigation}) => {
     React.useCallback(() => {
       async function getEvents() {
         const {data} = await http(token).get(`/events/${eventId}`);
-        setEvents(data.results);
+        setEvents(data.results.rows);
       }
 
       getEvents();
