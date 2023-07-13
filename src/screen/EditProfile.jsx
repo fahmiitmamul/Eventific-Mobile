@@ -24,6 +24,7 @@ import {
   faChevronUp,
 } from '@fortawesome/free-solid-svg-icons';
 import {Modal} from 'react-native';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import SimpleLottie from '../components/LottieAnimation';
 
 const EditProfile = ({navigation}) => {
@@ -42,10 +43,13 @@ const EditProfile = ({navigation}) => {
   const [prof, setProf] = React.useState('');
   const [nation, setNation] = React.useState('');
   const [modalVisible, setModalVisible] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
 
   React.useEffect(() => {
     const getProfile = async () => {
+      setLoading(true);
       const {data} = await http(token).get('/profile');
+      setLoading(false);
       setProfile(data.results);
     };
     getProfile();
@@ -185,68 +189,94 @@ const EditProfile = ({navigation}) => {
           {({values, handleBlur, handleChange, handleSubmit}) => {
             return (
               <>
-                <View style={styles.PictureWrapper}>
-                  <View style={styles.PictureChildWrapper}>
-                    {profile?.picture === null && (
-                      <Image
-                        source={require('../assets/images/images.png')}
-                        style={styles.ImageStyle}
-                      />
-                    )}
-                    {profile?.picture !== null && (
-                      <Image
-                        source={{
-                          uri: `https://res.cloudinary.com/dxnewldiy/image/upload/v1683808473/${profile?.picture}`,
-                        }}
-                        style={styles.ImageStyle}
-                      />
-                    )}
-                    <View
-                      style={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        gap: 20,
-                      }}>
-                      <TouchableOpacity
-                        style={{
-                          backgroundColor: '#19a7ce',
-                          display: 'flex',
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                          borderRadius: 8,
-                          marginTop: 5,
-                          marginBottom: 50,
-                        }}
-                        onPress={handleDocumentSelection}>
-                        <Text
+                {!loading ? (
+                  <View style={{height: 230}}>
+                    <View style={styles.PictureWrapper}>
+                      <View style={styles.PictureChildWrapper}>
+                        {profile?.picture === null && (
+                          <Image
+                            source={require('../assets/images/images.png')}
+                            style={styles.ImageStyle}
+                          />
+                        )}
+                        {profile?.picture !== null && (
+                          <Image
+                            source={{
+                              uri: `https://res.cloudinary.com/dxnewldiy/image/upload/v1683808473/${profile?.picture}`,
+                            }}
+                            style={styles.ImageStyle}
+                          />
+                        )}
+                        <View
                           style={{
-                            fontFamily: 'Poppins-Regular',
-                            color: 'white',
-                            paddingTop: 5,
-                            paddingHorizontal: 8,
+                            display: 'flex',
+                            flexDirection: 'row',
+                            gap: 20,
                           }}>
-                          Select Picture
-                        </Text>
-                      </TouchableOpacity>
-                      <TouchableOpacity
-                        style={{
-                          backgroundColor: '#19a7ce',
-                          display: 'flex',
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                          borderRadius: 8,
-                          marginTop: 5,
-                          marginBottom: 50,
-                          paddingHorizontal: 20,
-                        }}
-                        onPress={handleCameraSelection}>
-                        <FontAwesomeIcon
-                          icon={faCamera}
-                          color="white"></FontAwesomeIcon>
-                      </TouchableOpacity>
+                          <TouchableOpacity
+                            style={{
+                              backgroundColor: '#19a7ce',
+                              display: 'flex',
+                              justifyContent: 'center',
+                              alignItems: 'center',
+                              borderRadius: 8,
+                              marginTop: 5,
+                              marginBottom: 50,
+                            }}
+                            onPress={handleDocumentSelection}>
+                            <Text
+                              style={{
+                                fontFamily: 'Poppins-Regular',
+                                color: 'white',
+                                paddingTop: 5,
+                                paddingHorizontal: 8,
+                              }}>
+                              Select Picture
+                            </Text>
+                          </TouchableOpacity>
+                          <TouchableOpacity
+                            style={{
+                              backgroundColor: '#19a7ce',
+                              display: 'flex',
+                              justifyContent: 'center',
+                              alignItems: 'center',
+                              borderRadius: 8,
+                              marginTop: 5,
+                              marginBottom: 50,
+                              paddingHorizontal: 20,
+                            }}
+                            onPress={handleCameraSelection}>
+                            <FontAwesomeIcon
+                              icon={faCamera}
+                              color="white"></FontAwesomeIcon>
+                          </TouchableOpacity>
+                        </View>
+                      </View>
                     </View>
                   </View>
-                </View>
+                ) : (
+                  <View>
+                    <SkeletonPlaceholder borderRadius={4}>
+                      <SkeletonPlaceholder.Item
+                        flexDirection="column"
+                        alignItems="center"
+                        marginTop={20}>
+                        <SkeletonPlaceholder.Item
+                          width={160}
+                          height={160}
+                          borderRadius={130}
+                        />
+                        <SkeletonPlaceholder.Item
+                          flexDirection="row"
+                          gap={10}
+                          marginTop={5}>
+                          <SkeletonPlaceholder.Item width={120} height={30} />
+                          <SkeletonPlaceholder.Item width={50} height={30} />
+                        </SkeletonPlaceholder.Item>
+                      </SkeletonPlaceholder.Item>
+                    </SkeletonPlaceholder>
+                  </View>
+                )}
                 <View style={styles.ProfileContentWrapper}>
                   <View>
                     <Text style={styles.ProfileContentHeader}>Name</Text>
