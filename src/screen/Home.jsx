@@ -292,6 +292,19 @@ const Home = ({navigation}) => {
           }}>
           <FlatList
             data={eventCategoriesData}
+            ListEmptyComponent={
+              <View style={{backgroundColor: 'white'}}>
+                <Text
+                  style={{
+                    fontFamily: 'Poppins-Medium',
+                    fontSize: 20,
+                    textAlign: 'center',
+                    marginTop: 20,
+                  }}>
+                  No Upcoming Events was found
+                </Text>
+              </View>
+            }
             renderItem={EventCategoriesData}
             keyExtractor={item => item.id}
             ListHeaderComponent={
@@ -350,6 +363,19 @@ const Home = ({navigation}) => {
                     </View>
                     <FlatList
                       data={events}
+                      ListEmptyComponent={
+                        <View style={{marginLeft: 30}}>
+                          <Text
+                            style={{
+                              fontFamily: 'Poppins-Medium',
+                              fontSize: 20,
+                              textAlign: 'center',
+                              marginTop: 20,
+                            }}>
+                            No Events was found
+                          </Text>
+                        </View>
+                      }
                       renderItem={EventsData}
                       keyExtractor={item => item.id}
                       horizontal
