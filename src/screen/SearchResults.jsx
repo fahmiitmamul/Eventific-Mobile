@@ -1,13 +1,8 @@
 import React from 'react';
 import {Appbar} from 'react-native-paper';
 import styles from '../styles/global';
-import HamburgerIcon from '../assets/images/hamburger.png';
-import {View, StatusBar, Text, Image} from 'react-native';
-import {
-  ScrollView,
-  TextInput,
-  TouchableOpacity,
-} from 'react-native-gesture-handler';
+import {View, StatusBar, Image, Text, FlatList} from 'react-native';
+import {TextInput, TouchableOpacity} from 'react-native-gesture-handler';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {
   faArrowLeft,
@@ -20,7 +15,6 @@ import http from '../helpers/http';
 import {useSelector} from 'react-redux';
 import moment from 'moment';
 import {useFocusEffect} from '@react-navigation/native';
-import MessageRegular from '../assets/images/message-regular.png';
 import NotificationController from '../helpers/notification';
 import SelectDropdown from 'react-native-select-dropdown';
 
@@ -134,11 +128,13 @@ const SearchResults = ({route, navigation}) => {
             />
           </View>
         </View>
-        <ScrollView
+        <View
           style={{
             backgroundColor: 'white',
             borderTopLeftRadius: 35,
             borderTopRightRadius: 35,
+            width: '100%',
+            height: '100%',
           }}>
           <View style={styles.EventsWrapperStyle}>
             <Text style={styles.EventsTextStyle}>Limit :</Text>
@@ -275,20 +271,15 @@ const SearchResults = ({route, navigation}) => {
               </TouchableOpacity>
             </View>
           </View>
-          <ScrollView
-            style={{
-              height: 470,
-              display: 'flex',
-              flexDirection: 'row',
-            }}
-            horizontal={true}>
-            {events.map(e => {
+          <FlatList
+            data={events}
+            keyExtractor={item => item.id}
+            renderItem={({item}) => {
               return (
                 <TouchableOpacity
-                  key={e.id}
                   onPress={() => {
                     navigation.navigate('Detail Event', {
-                      id: e.id,
+                      id: item.id,
                     });
                   }}>
                   <View
@@ -300,7 +291,7 @@ const SearchResults = ({route, navigation}) => {
                       }}>
                       <Image
                         source={{
-                          uri: `https://res.cloudinary.com/dxnewldiy/image/upload/v1683808473/${e.picture}`,
+                          uri: `https://res.cloudinary.com/dxnewldiy/image/upload/v1683808473/${item.picture}`,
                         }}
                         style={{width: 300, height: 450}}
                       />
@@ -320,7 +311,7 @@ const SearchResults = ({route, navigation}) => {
                           color: 'white',
                           fontFamily: 'Poppins-Regular',
                         }}>
-                        {moment(e.date).format('LLLL')}
+                        {moment(item.date).format('LLLL')}
                       </Text>
                       <Text
                         style={{
@@ -328,7 +319,7 @@ const SearchResults = ({route, navigation}) => {
                           fontFamily: 'Poppins-Medium',
                           fontSize: 25,
                         }}>
-                        {e.title}
+                        {item.title}
                       </Text>
                       <View
                         style={{
@@ -348,25 +339,9 @@ const SearchResults = ({route, navigation}) => {
                   </View>
                 </TouchableOpacity>
               );
-            })}
-            {events.length <= 0 && (
-              <View
-                style={{
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                <Text
-                  style={{
-                    fontFamily: 'Poppins-Medium',
-                    fontSize: 20,
-                    marginLeft: 110,
-                  }}>
-                  No Events Found
-                </Text>
-              </View>
-            )}
-          </ScrollView>
-        </ScrollView>
+            }}
+          />
+        </View>
       </View>
     </React.Fragment>
   );
