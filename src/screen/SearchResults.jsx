@@ -29,7 +29,7 @@ const SearchResults = ({navigation}) => {
       params: {limit: limits},
     });
 
-    setEvents(data.results.rows);
+    setEvents(data);
   }
 
   async function getEventsSort(sort) {
@@ -37,20 +37,29 @@ const SearchResults = ({navigation}) => {
       params: {sortBy: sort},
     });
 
-    setEvents(data.results.rows);
+    setEvents(data);
+  }
+
+  async function getEventsPaginated(page = 1, search = '') {
+    try {
+      const {data} = await http(token).get('/events', {
+        params: {
+          page: page,
+          search: search,
+        },
+      });
+      setEvents(data);
+    } catch (err) {
+      console.log(err.response.data);
+    }
   }
 
   useFocusEffect(
     React.useCallback(() => {
-      async function getEvents(page = 1, search = '') {
+      async function getEvents() {
         try {
-          const {data} = await http(token).get('/events', {
-            params: {
-              page: page,
-              search: search,
-            },
-          });
-          setEvents(data.results.rows);
+          const {data} = await http(token).get('/events');
+          setEvents(data);
         } catch (err) {
           console.log(err.response.data);
         }
@@ -65,9 +74,9 @@ const SearchResults = ({navigation}) => {
       params: {search: search},
     });
     if (search === '') {
-      setEvents(eventdata.data.results.rows);
+      setEvents(eventdata.data);
     } else {
-      setEvents(data.results.rows);
+      setEvents(data);
     }
   }
 
@@ -231,7 +240,10 @@ const SearchResults = ({navigation}) => {
                   padding: 10,
                   borderColor: '#19a7ce',
                 }}
-                onPress={() => {}}>
+                disabled={events.results.pageInfo.page <= 1}
+                onPress={() =>
+                  getEventsPaginated(events.results.pageInfo.page - 1, '')
+                }>
                 <FontAwesomeIcon icon={faArrowLeft}></FontAwesomeIcon>
               </TouchableOpacity>
               <TouchableOpacity
@@ -241,13 +253,19 @@ const SearchResults = ({navigation}) => {
                   padding: 10,
                   borderColor: '#19a7ce',
                 }}
-                onPress={() => {}}>
+                disabled={
+                  events.results.pageInfo.page ===
+                  events.results.pageInfo.totalPage
+                }
+                onPress={() =>
+                  getEventsPaginated(events.results.pageInfo.page + 1, '')
+                }>
                 <FontAwesomeIcon icon={faArrowRight}></FontAwesomeIcon>
               </TouchableOpacity>
             </View>
           </View>
           <FlatList
-            data={events}
+            data={events.results.rows}
             keyExtractor={item => item.id}
             horizontal
             renderItem={({item}) => {
