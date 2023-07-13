@@ -25,7 +25,7 @@ const ManageEvent = ({navigation}) => {
     React.useCallback(() => {
       async function getEvents() {
         const {data} = await http(token).get('/events/manage?limit=20');
-        setEvents(data.results);
+        setEvents(data.results.rows);
       }
 
       getEvents();
