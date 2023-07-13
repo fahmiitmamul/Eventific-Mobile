@@ -1,11 +1,4 @@
-import {
-  View,
-  Image,
-  Text,
-  TextInput,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native';
+import {View, Image, Text, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {Appbar} from 'react-native-paper';
 import styles from '../styles/global';
@@ -19,14 +12,18 @@ import {
   faPencil,
   faPlus,
 } from '@fortawesome/free-solid-svg-icons';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
 const Profile = ({navigation}) => {
   const token = useSelector(state => state.auth.token);
   const [profile, setProfile] = React.useState([]);
+  const [loading, setLoading] = React.useState(false);
 
   React.useEffect(() => {
     const getProfile = async () => {
+      setLoading(true);
       const {data} = await http(token).get('/profile');
+      setLoading(false);
       setProfile(data.results);
     };
     getProfile();
@@ -58,46 +55,74 @@ const Profile = ({navigation}) => {
           borderTopRightRadius: 40,
           height: '100%',
         }}>
-        <View style={styles.PictureWrapper}>
-          <View style={styles.PictureChildWrapper}>
-            {profile?.picture === null && (
-              <Image
-                source={require('../assets/images/images.png')}
-                style={styles.ImageStyle}
-              />
-            )}
-            {profile?.picture !== null && (
-              <Image
-                source={{
-                  uri: `https://res.cloudinary.com/dxnewldiy/image/upload/v1683808473/${profile?.picture}`,
-                }}
-                style={styles.ImageStyle}
-              />
-            )}
+        {!loading ? (
+          <View>
+            <View style={styles.PictureWrapper}>
+              <View style={styles.PictureChildWrapper}>
+                {profile?.picture === null && (
+                  <Image
+                    source={require('../assets/images/images.png')}
+                    style={styles.ImageStyle}
+                  />
+                )}
+                {profile?.picture !== null && (
+                  <Image
+                    source={{
+                      uri: `https://res.cloudinary.com/dxnewldiy/image/upload/v1683808473/${profile?.picture}`,
+                    }}
+                    style={styles.ImageStyle}
+                  />
+                )}
+              </View>
+            </View>
+            <View>
+              <Text
+                style={{
+                  fontFamily: 'Poppins-Medium',
+                  fontSize: 20,
+                  textAlign: 'center',
+                }}>
+                {profile?.fullName}
+              </Text>
+              <Text
+                style={{
+                  fontFamily: 'Poppins-Medium',
+                  fontSize: 13,
+                  textAlign: 'center',
+                }}>
+                {profile?.profession === null ? (
+                  <Text>Profession Not set</Text>
+                ) : (
+                  profile?.profession
+                )}
+              </Text>
+            </View>
           </View>
-        </View>
-        <View>
-          <Text
-            style={{
-              fontFamily: 'Poppins-Medium',
-              fontSize: 20,
-              textAlign: 'center',
-            }}>
-            {profile?.fullName}
-          </Text>
-          <Text
-            style={{
-              fontFamily: 'Poppins-Medium',
-              fontSize: 13,
-              textAlign: 'center',
-            }}>
-            {profile?.profession === null ? (
-              <Text>Profession Not set</Text>
-            ) : (
-              profile?.profession
-            )}
-          </Text>
-        </View>
+        ) : (
+          <View>
+            <SkeletonPlaceholder borderRadius={4}>
+              <SkeletonPlaceholder.Item
+                flexDirection="column"
+                alignItems="center"
+                marginTop={20}>
+                <SkeletonPlaceholder.Item
+                  width={160}
+                  height={160}
+                  borderRadius={130}
+                />
+                <SkeletonPlaceholder.Item
+                  flexDirection="column"
+                  gap={3}
+                  marginTop={5}
+                  justifyContent="center"
+                  alignItems="center">
+                  <SkeletonPlaceholder.Item width={30} height={10} />
+                  <SkeletonPlaceholder.Item width={120} height={30} />
+                </SkeletonPlaceholder.Item>
+              </SkeletonPlaceholder.Item>
+            </SkeletonPlaceholder>
+          </View>
+        )}
         <View>
           <View
             style={{
