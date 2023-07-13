@@ -25,7 +25,7 @@ const Home = ({navigation}) => {
 
   async function getEventByCategory(name) {
     const {data} = await http(token).get('/events', {params: {category: name}});
-    setEventCategoriesData(data.results);
+    setEventCategoriesData(data.results.rows);
   }
 
   const saveToken = React.useCallback(async () => {
@@ -58,7 +58,7 @@ const Home = ({navigation}) => {
 
       async function getEvents() {
         const {data} = await http(token).get('/events?limit=20');
-        setEvents(data.results);
+        setEvents(data.results.rows);
       }
 
       getEvents();
