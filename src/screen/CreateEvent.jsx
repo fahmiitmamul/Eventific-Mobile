@@ -70,7 +70,6 @@ const CreateEvent = ({navigation}) => {
     try {
       const response = await launchImageLibrary({
         presentationStyle: 'fullScreen',
-        quality: 0,
       });
       setFileResponse(response.assets[0].uri);
     } catch (err) {
