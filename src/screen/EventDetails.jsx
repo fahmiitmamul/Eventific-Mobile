@@ -23,6 +23,7 @@ const EventDetails = ({route, navigation}) => {
   const [events, setEvents] = React.useState([]);
   const token = useSelector(state => state.auth.token);
   const [modalVisible, setModalVisible] = React.useState(false);
+  const [profileId, setProfileId] = React.useState(null);
   const [added, setAdded] = React.useState(false);
 
   useFocusEffect(
@@ -32,19 +33,31 @@ const EventDetails = ({route, navigation}) => {
         setEvents(data.results);
       }
 
+      async function getProfile() {
+        try {
+          const {data} = await http(token).get('/profile');
+          setProfileId(data.results.id);
+        } catch (err) {
+          console.log(err.response.data.message);
+        }
+      }
+
       async function getWishlistId() {
         try {
           const {data} = await http(token).get(`/wishlist/${id}`);
-          if (data.results.eventId) {
+          const userId = data.results.userId;
+          if (userId === profileId) {
             setAdded(true);
-            console.log(10);
           }
-        } catch (err) {}
+        } catch (err) {
+          console.log('Data not found');
+        }
       }
 
+      getProfile();
       getWishlistId();
       getEventDetails();
-    }, [id, token]),
+    }, [id, token, profileId]),
   );
 
   async function addWishlists() {
