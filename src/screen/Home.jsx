@@ -24,8 +24,14 @@ const Home = ({navigation}) => {
   const [eventCategoriesData, setEventCategoriesData] = React.useState([]);
 
   async function getEventByCategory(name) {
-    const {data} = await http(token).get('/events', {params: {category: name}});
-    setEventCategoriesData(data.results.rows);
+    try {
+      const {data} = await http(token).get('/events', {
+        params: {category: name},
+      });
+      setEventCategoriesData(data.results.rows);
+    } catch (err) {
+      console.warn(err.response?.data?.message);
+    }
   }
 
   const saveToken = React.useCallback(async () => {
@@ -52,13 +58,21 @@ const Home = ({navigation}) => {
   useFocusEffect(
     React.useCallback(() => {
       async function getEventCategories() {
-        let {data} = await http(token).get('/categories?limit=7');
-        setEventCategories(data.results);
+        try {
+          let {data} = await http(token).get('/categories?limit=7');
+          setEventCategories(data.results);
+        } catch (err) {
+          console.warn(err.response?.data?.message);
+        }
       }
 
       async function getEvents() {
-        const {data} = await http(token).get('/events?limit=20');
-        setEvents(data.results.rows);
+        try {
+          const {data} = await http(token).get('/events?limit=20');
+          setEvents(data.results.rows);
+        } catch (err) {
+          console.warn(err.response?.data?.message);
+        }
       }
 
       getEvents();
