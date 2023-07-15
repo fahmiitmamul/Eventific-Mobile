@@ -24,6 +24,20 @@ const SearchResults = ({navigation}) => {
   const [events, setEvents] = React.useState([]);
   const [results, setResults] = React.useState('');
 
+  useFocusEffect(
+    React.useCallback(() => {
+      async function getEvents() {
+        try {
+          const {data} = await http(token).get('/events');
+          setEvents(data);
+        } catch (err) {
+          console.log(err.response.data);
+        }
+      }
+      getEvents();
+    }, [token]),
+  );
+
   async function getEventsLimit(limits) {
     const {data} = await http(token).get('/events', {
       params: {limit: limits},
@@ -53,20 +67,6 @@ const SearchResults = ({navigation}) => {
       console.log(err.response.data);
     }
   }
-
-  useFocusEffect(
-    React.useCallback(() => {
-      async function getEvents() {
-        try {
-          const {data} = await http(token).get('/events');
-          setEvents(data);
-        } catch (err) {
-          console.log(err.response.data);
-        }
-      }
-      getEvents();
-    }, [token]),
-  );
 
   async function getEventByName(search) {
     const eventdata = await http(token).get('/events?limit=20');
@@ -240,9 +240,9 @@ const SearchResults = ({navigation}) => {
                   padding: 10,
                   borderColor: '#19a7ce',
                 }}
-                disabled={events.results.pageInfo.page <= 1}
+                disabled={events.results?.pageInfo?.page <= 1}
                 onPress={() =>
-                  getEventsPaginated(events.results.pageInfo.page - 1, '')
+                  getEventsPaginated(events.results?.pageInfo?.page - 1, '')
                 }>
                 <FontAwesomeIcon icon={faArrowLeft}></FontAwesomeIcon>
               </TouchableOpacity>
@@ -254,18 +254,18 @@ const SearchResults = ({navigation}) => {
                   borderColor: '#19a7ce',
                 }}
                 disabled={
-                  events.results.pageInfo.page ===
-                  events.results.pageInfo.totalPage
+                  events.results?.pageInfo?.page ===
+                  events.results?.pageInfo?.totalPage
                 }
                 onPress={() =>
-                  getEventsPaginated(events.results.pageInfo.page + 1, '')
+                  getEventsPaginated(events.results?.pageInfo?.page + 1, '')
                 }>
                 <FontAwesomeIcon icon={faArrowRight}></FontAwesomeIcon>
               </TouchableOpacity>
             </View>
           </View>
           <FlatList
-            data={events.results.rows}
+            data={events.results?.rows}
             keyExtractor={item => item.id}
             horizontal
             renderItem={({item}) => {
@@ -302,7 +302,12 @@ const SearchResults = ({navigation}) => {
                           width: '100%',
                         }}></LinearGradient>
                     </View>
-                    <View style={{position: 'absolute', top: 250, margin: 20}}>
+                    <View
+                      style={{
+                        position: 'absolute',
+                        top: 250,
+                        margin: 20,
+                      }}>
                       <Text
                         style={{
                           color: 'white',
