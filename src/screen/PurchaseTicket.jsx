@@ -68,7 +68,7 @@ const PurchaseTicket = ({route, navigation}) => {
         setErrorMsg('Please select quantity');
       } else {
         const {data} = await http(token).post('/reservations/ticket', body);
-        if (data.success == true) {
+        if (data.success === true) {
           navigation.navigate('Payment Method', {
             reservationId: reservationId,
             eventTitle: eventTitle,
@@ -98,14 +98,14 @@ const PurchaseTicket = ({route, navigation}) => {
             <View style={styles.TicketImgWrapper}>
               <Image source={require('../assets/images/tickets.png')} />
             </View>
-            <View style={{marginTop: 50}}>
+            <View style={styles.ErrorBtnWrapper}>
               {errorMsg && (
                 <View style={styles.FormErrorViewStyle}>
                   <Text style={styles.FormErrorTextStyle}>{errorMsg}</Text>
                 </View>
               )}
             </View>
-            <View style={{marginHorizontal: 30}}>
+            <View style={styles.SortStyle}>
               <View style={styles.TitleWrapperStyle}>
                 <View>
                   <Text style={styles.TicketTitleStyle}>Tickets</Text>
@@ -119,64 +119,20 @@ const PurchaseTicket = ({route, navigation}) => {
           </>
         }
         ListFooterComponent={
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              backgroundColor: 'white',
-            }}>
-            <View
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                gap: 20,
-                paddingTop: 30,
-                paddingLeft: 20,
-              }}>
-              <Text
-                style={{
-                  fontSize: 15,
-                  fontFamily: 'Poppins-Medium',
-                  color: 'black',
-                }}>
+          <View style={styles.SectionWrapper}>
+            <View style={styles.SectionStyle}>
+              <Text style={styles.SectionTextStyle}>
                 {selectedSection?.name || 'Not Set'}
               </Text>
-              <Text
-                style={{
-                  fontSize: 15,
-                  fontFamily: 'Poppins-Medium',
-                  color: 'black',
-                }}>
+              <Text style={styles.SectionTextStyle}>
                 {filledSection.quantity}
               </Text>
-              <Text
-                style={{
-                  fontSize: 15,
-                  fontFamily: 'Poppins-Medium',
-                  color: 'black',
-                }}>
+              <Text style={styles.SectionTextStyle}>
                 Rp.{selectedSection?.price * filledSection.quantity || '0'}
               </Text>
             </View>
-            <TouchableOpacity
-              style={{
-                width: 150,
-                height: 40,
-                backgroundColor: '#19a7ce',
-                borderRadius: 5,
-                margin: 20,
-              }}
-              onPress={sendData}>
-              <Text
-                style={{
-                  fontFamily: 'Poppins-Medium',
-                  textAlign: 'center',
-                  paddingTop: 8,
-                  color: 'white',
-                }}>
-                Checkout
-              </Text>
+            <TouchableOpacity style={styles.CheckoutStyle} onPress={sendData}>
+              <Text style={styles.CheckoutBtnStyle}>Checkout</Text>
             </TouchableOpacity>
           </View>
         }
@@ -184,7 +140,7 @@ const PurchaseTicket = ({route, navigation}) => {
         renderItem={({item}) => {
           return (
             <View style={styles.TicketContentWrapper}>
-              <View style={{marginBottom: 30}}>
+              <View style={styles.PurchaseWrapperStyle}>
                 <View style={styles.ProfileValueWrapper}>
                   <Image
                     source={{
@@ -198,21 +154,13 @@ const PurchaseTicket = ({route, navigation}) => {
                       <Text style={styles.TicketSectionTextStyle}>
                         {item.name}
                       </Text>
-                      <Text
-                        style={{
-                          fontFamily: 'Poppins-Regular',
-                          fontSize: 10,
-                        }}>
-                        12 Seats Available
-                      </Text>
+                      <Text style={styles.SeatsStyle}>12 Seats Available</Text>
                     </View>
-                    <View style={{display: 'flex', flexDirection: 'row'}}>
+                    <View style={styles.AttendeeWrapperStyle}>
                       <Text style={styles.TicketSectionTextStyle}>
                         {item.price}
                       </Text>
-                      <Text style={{fontFamily: 'Poppins-Regular'}}>
-                        /person
-                      </Text>
+                      <Text style={styles.PoppinsRegular}>/person</Text>
                     </View>
                   </View>
                 </View>
@@ -226,7 +174,7 @@ const PurchaseTicket = ({route, navigation}) => {
                       style={styles.QuantityBtn}>
                       <FontAwesomeIcon icon={faMinus} />
                     </TouchableOpacity>
-                    <Text style={{fontFamily: 'Poppins-Bold'}}>
+                    <Text style={styles.PoppinsBold}>
                       {item.id === filledSection.id
                         ? filledSection.quantity
                         : 0}
@@ -242,13 +190,7 @@ const PurchaseTicket = ({route, navigation}) => {
             </View>
           );
         }}
-        style={{
-          borderTopLeftRadius: 40,
-          borderTopRightRadius: 40,
-          backgroundColor: 'white',
-          width: '100%',
-          height: '100%',
-        }}
+        style={styles.ProfileWrapperStyle}
       />
     </View>
   );

@@ -1125,6 +1125,53 @@ const styles = StyleSheet.create({
     borderColor: '#C1C5D0',
     borderRadius: 5,
   },
+  ErrorBtnWrapper: {
+    marginTop: 50,
+  },
+  SortStyle: {
+    marginHorizontal: 30,
+  },
+  PoppinsBold: {
+    fontFamily: 'Poppins-Bold',
+  },
+  SeatsStyle: {
+    fontFamily: 'Poppins-Regular',
+    fontSize: 10,
+  },
+  PurchaseWrapperStyle: {
+    marginBottom: 30,
+  },
+  CheckoutBtnStyle: {
+    fontFamily: 'Poppins-Medium',
+    textAlign: 'center',
+    paddingTop: 8,
+    color: 'white',
+  },
+  CheckoutStyle: {
+    width: 150,
+    height: 40,
+    backgroundColor: '#19a7ce',
+    borderRadius: 5,
+    margin: 20,
+  },
+  SectionTextStyle: {
+    fontSize: 15,
+    fontFamily: 'Poppins-Medium',
+    color: 'black',
+  },
+  SectionWrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    backgroundColor: 'white',
+  },
+  SectionStyle: {
+    display: 'flex',
+    flexDirection: 'row',
+    gap: 20,
+    paddingTop: 30,
+    paddingLeft: 20,
+  },
 });
 
 export default styles;
