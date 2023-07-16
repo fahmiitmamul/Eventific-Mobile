@@ -54,8 +54,8 @@ const SignIn = ({navigation}) => {
   }, []);
 
   return (
-    <View style={{backgroundColor: 'white', width: '100%', height: '100%'}}>
-      <Appbar.Header style={{backgroundColor: 'white'}}>
+    <View style={styles.MainWrapper}>
+      <Appbar.Header style={styles.FlatListEmptyWrapper}>
         <Appbar.BackAction
           onPress={() => {
             navigation.navigate('SignUp');
@@ -63,7 +63,7 @@ const SignIn = ({navigation}) => {
         />
       </Appbar.Header>
       <View style={styles.ScrollViewStyle}>
-        <View style={{backgroundColor: 'white'}}>
+        <View style={styles.FlatListEmptyWrapper}>
           <View style={styles.ViewHeader}>
             <View>
               <Text style={styles.TextLoginStyle}>Log In</Text>
@@ -71,7 +71,7 @@ const SignIn = ({navigation}) => {
             <View style={styles.SubtitleWrapper}>
               <Text style={styles.FontStyle}>Don't have an account ?</Text>
               <Text
-                style={{fontFamily: 'Poppins-Medium', color: '#3366ff'}}
+                style={styles.EditBtnStyle}
                 onPress={() => {
                   navigation.navigate('SignUp');
                 }}>
