@@ -1,15 +1,14 @@
 import React from 'react';
-import {ScrollView, Text, TextInput, View, StyleSheet} from 'react-native';
+import * as Yup from 'yup';
+import styles from '../styles/global';
+import http from '../helpers/http';
+import {Text, TextInput, View} from 'react-native';
 import {Formik} from 'formik';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faEye, faEyeSlash} from '@fortawesome/free-solid-svg-icons';
 import {Button} from 'react-native-paper';
 import {Appbar} from 'react-native-paper';
-import * as Yup from 'yup';
-import HamburgerIcon from '../assets/images/hamburger.png';
-import styles from '../styles/global';
 import {useSelector} from 'react-redux';
-import http from '../helpers/http';
 
 const validationSchema = Yup.object().shape({
   oldPassword: Yup.string()
@@ -67,7 +66,7 @@ const ChangePassword = ({navigation}) => {
   };
 
   return (
-    <View style={{width: '100%', height: '100%', backgroundColor: 'orange'}}>
+    <View style={styles.ChangePasswordWrapper}>
       <Appbar.Header style={styles.ScrollViewStyle}>
         <Appbar.BackAction
           onPress={() => {
@@ -81,13 +80,7 @@ const ChangePassword = ({navigation}) => {
         />
       </Appbar.Header>
       <View style={styles.ScrollViewStyle}>
-        <View
-          style={{
-            backgroundColor: 'white',
-            borderRadius: 40,
-            width: '100%',
-            height: '100%',
-          }}>
+        <View style={styles.ChangePasswordSecondWrapper}>
           <View style={styles.ChangePassFormWrapper}>
             {successMsg && (
               <View style={styles.FormErrorViewStyle}>
@@ -118,21 +111,23 @@ const ChangePassword = ({navigation}) => {
                 return (
                   <View>
                     <View style={styles.FormWrapperStyle}>
-                      <View style={{position: 'relative'}}>
+                      <View style={styles.Relative}>
                         {errors.oldPassword && touched.oldPassword ? (
                           <TextInput
                             placeholder="Old Password"
                             onChangeText={handleChange('oldPassword')}
                             onBlur={handleBlur('oldPassword')}
                             value={values.oldPassword}
-                            style={styles.FormTextInputErrorStyle}></TextInput>
+                            style={styles.FormTextInputErrorStyle}
+                          />
                         ) : (
                           <TextInput
                             placeholder="Old Password"
                             onChangeText={handleChange('oldPassword')}
                             onBlur={handleBlur('oldPassword')}
                             value={values.oldPassword}
-                            style={styles.FormTextInputNormalStyle}></TextInput>
+                            style={styles.FormTextInputNormalStyle}
+                          />
                         )}
                         {errors.oldPassword && touched.oldPassword && (
                           <Text style={styles.FormTextErrorStyle}>
@@ -142,7 +137,8 @@ const ChangePassword = ({navigation}) => {
                         <Text style={styles.EyeButtonStyle} onPress={Passwords}>
                           <FontAwesomeIcon
                             icon={openOld ? faEyeSlash : faEye}
-                            size={30}></FontAwesomeIcon>
+                            size={30}
+                          />
                         </Text>
                       </View>
                       <View style={styles.PasswordWrapperStyle}>
@@ -154,9 +150,8 @@ const ChangePassword = ({navigation}) => {
                               onBlur={handleBlur('newPassword')}
                               value={values.newPassword}
                               secureTextEntry={openPassword ? true : false}
-                              style={
-                                styles.FormTextInputErrorStyle
-                              }></TextInput>
+                              style={styles.FormTextInputErrorStyle}
+                            />
                           ) : (
                             <TextInput
                               placeholder="New Password"
@@ -164,9 +159,8 @@ const ChangePassword = ({navigation}) => {
                               onBlur={handleBlur('newPassword')}
                               value={values.newPassword}
                               secureTextEntry={openPassword ? true : false}
-                              style={
-                                styles.FormTextInputNormalStyle
-                              }></TextInput>
+                              style={styles.FormTextInputNormalStyle}
+                            />
                           )}
                           {errors.newPassword && touched.newPassword && (
                             <Text style={styles.FormTextErrorStyle}>
@@ -177,7 +171,8 @@ const ChangePassword = ({navigation}) => {
                         <Text style={styles.EyeButtonStyle} onPress={Password}>
                           <FontAwesomeIcon
                             icon={openPassword ? faEyeSlash : faEye}
-                            size={30}></FontAwesomeIcon>
+                            size={30}
+                          />
                         </Text>
                       </View>
                       <View style={styles.PasswordWrapperStyle}>
@@ -189,9 +184,8 @@ const ChangePassword = ({navigation}) => {
                               onBlur={handleBlur('confirmPassword')}
                               value={values.confirmPassword}
                               secureTextEntry={openConfirm ? true : false}
-                              style={
-                                styles.FormTextInputErrorStyle
-                              }></TextInput>
+                              style={styles.FormTextInputErrorStyle}
+                            />
                           ) : (
                             <TextInput
                               placeholder="Confirm Password"
@@ -199,9 +193,8 @@ const ChangePassword = ({navigation}) => {
                               onBlur={handleBlur('confirmPassword')}
                               value={values.confirmPassword}
                               secureTextEntry={openConfirm ? true : false}
-                              style={
-                                styles.FormTextInputNormalStyle
-                              }></TextInput>
+                              style={styles.FormTextInputNormalStyle}
+                            />
                           )}
                           {errors.confirmPassword &&
                             touched.confirmPassword && (
@@ -213,7 +206,8 @@ const ChangePassword = ({navigation}) => {
                         <Text style={styles.EyeButtonStyle} onPress={Confirm}>
                           <FontAwesomeIcon
                             icon={openConfirm ? faEyeSlash : faEye}
-                            size={30}></FontAwesomeIcon>
+                            size={30}
+                          />
                         </Text>
                       </View>
                     </View>

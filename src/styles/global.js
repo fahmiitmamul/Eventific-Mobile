@@ -361,6 +361,19 @@ const styles = StyleSheet.create({
     paddingTop: 3,
   },
   //Change Password
+  ChangePasswordWrapper: {
+    width: '100%',
+    height: '100%',
+  },
+  Relative: {
+    position: 'relative',
+  },
+  ChangePasswordSecondWrapper: {
+    backgroundColor: 'white',
+    borderRadius: 40,
+    width: '100%',
+    height: '100%',
+  },
   ChangePassFormWrapper: {
     paddingTop: 50,
   },
