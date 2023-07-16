@@ -12,15 +12,28 @@ import ForgotPassword from './ForgotPassword';
 import ResetPassword from './ResetPassword';
 import ChangePassword from './ChangePassword';
 import ManageEvent from './ManageEvent';
+import EditProfile from './EditProfile';
+import http from '../helpers/http';
+import CreateEvent from './CreateEvent';
+import UpdateEvent from './UpdateEvent';
+import SearchResults from './SearchResults';
+import styles from '../styles/global';
 import {PaperProvider, MD3LightTheme as DefaultTheme} from 'react-native-paper';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {useSelector} from 'react-redux';
-import EditProfile from './EditProfile';
-import CreateEvent from './CreateEvent';
-import CustomDrawer from '../components/CustomDrawer';
+import {useDispatch} from 'react-redux';
+import {useNavigation} from '@react-navigation/native';
+import {useFocusEffect} from '@react-navigation/native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {View, Text, Image, TouchableOpacity} from 'react-native';
+import {
+  DrawerContentScrollView,
+  DrawerItemList,
+} from '@react-navigation/drawer';
+import {faArrowRightFromBracket} from '@fortawesome/free-solid-svg-icons';
+import {logout} from '../redux/reducers/auth';
 import {
   faHeart,
   faHome,
@@ -28,8 +41,6 @@ import {
   faPlusSquare,
   faUserCircle,
 } from '@fortawesome/free-solid-svg-icons';
-import UpdateEvent from './UpdateEvent';
-import SearchResults from './SearchResults';
 
 const AuthStack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -42,6 +53,98 @@ const theme = {
     secondary: '#77037B',
   },
 };
+
+const CustomDrawer = props => {
+  const [profile, setProfile] = React.useState([]);
+  const token = useSelector(state => state.auth.token);
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+
+  useFocusEffect(
+    React.useCallback(() => {
+      async function getProfile() {
+        try {
+          const {data} = await http(token).get('/profile');
+          setProfile(data.results);
+        } catch (err) {
+          console.warn(err);
+        }
+      }
+
+      getProfile();
+    }, [token]),
+  );
+
+  const doLogout = () => {
+    dispatch(logout());
+  };
+
+  return (
+    <View style={styles.CustomDrawerWrapper}>
+      <DrawerContentScrollView {...props}>
+        <TouchableOpacity
+          style={styles.ProfileWrapper}
+          onPress={() => navigation.navigate('Profile')}>
+          {profile?.picture === null && (
+            <Image
+              source={require('../assets/images/images.png')}
+              style={styles.ProfileImgWrapper}
+            />
+          )}
+          {profile?.picture !== null && (
+            <Image
+              source={{
+                uri: `https://res.cloudinary.com/dxnewldiy/image/upload/v1683808473/${profile?.picture}`,
+              }}
+              style={styles.ProfileImgWrapper}
+            />
+          )}
+          <View>
+            <Text style={styles.FullNameStyle}>{profile?.fullName}</Text>
+            <View style={styles.ProfessionWrapper}>
+              <Text style={styles.ProfessionTextStyle}>
+                {profile?.profession === null ? (
+                  <Text>Not Set</Text>
+                ) : (
+                  profile?.profession
+                )}
+              </Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <View style={styles.DrawerItemWrapper}>
+          <DrawerItemList {...props} />
+          <View>
+            <TouchableOpacity onPress={doLogout} style={styles.LogoutBtnStyle}>
+              <View style={styles.LogoutWrapper}>
+                <FontAwesomeIcon
+                  icon={faArrowRightFromBracket}
+                  size={25}
+                  color="red"
+                />
+                <Text style={styles.LogoutTextStyle}>Sign Out</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </DrawerContentScrollView>
+    </View>
+  );
+};
+
+const HomeComponent = () => <FontAwesomeIcon icon={faHome} color="gray" />;
+const ProfileComponent = () => (
+  <FontAwesomeIcon icon={faUserCircle} size={25} color="gray" />
+);
+const ManageEventComponent = () => (
+  <FontAwesomeIcon icon={faPlusSquare} size={25} color="gray" />
+);
+const MyBookingComponent = () => (
+  <FontAwesomeIcon icon={faListCheck} size={25} color="gray" />
+);
+const MyWishlistsComponent = () => (
+  <FontAwesomeIcon icon={faHeart} size={25} color="gray" />
+);
 
 const Main = () => {
   const token = useSelector(state => state.auth.token);
@@ -61,7 +164,7 @@ const Main = () => {
         )}
         {token && (
           <Drawer.Navigator
-            drawerContent={props => <CustomDrawer {...props} />}
+            drawerContent={CustomDrawer}
             screenOptions={{
               headerShown: false,
               drawerActiveBackgroundColor: '#fff',
@@ -76,9 +179,7 @@ const Main = () => {
               name="Home"
               component={Home}
               options={{
-                drawerIcon: ({color}) => (
-                  <FontAwesomeIcon icon={faHome} color="gray"></FontAwesomeIcon>
-                ),
+                drawerIcon: HomeComponent,
                 drawerItemStyle: {display: 'none'},
               }}
             />
@@ -86,12 +187,7 @@ const Main = () => {
               name="Profile"
               component={Profile}
               options={{
-                drawerIcon: ({color}) => (
-                  <FontAwesomeIcon
-                    icon={faUserCircle}
-                    size={25}
-                    color="gray"></FontAwesomeIcon>
-                ),
+                drawerIcon: ProfileComponent,
               }}
             />
             <Drawer.Screen
@@ -105,36 +201,21 @@ const Main = () => {
               name="Manage Event"
               component={ManageEvent}
               options={{
-                drawerIcon: ({color}) => (
-                  <FontAwesomeIcon
-                    icon={faPlusSquare}
-                    size={25}
-                    color="gray"></FontAwesomeIcon>
-                ),
+                drawerIcon: ManageEventComponent,
               }}
             />
             <Drawer.Screen
               name="My Booking"
               component={MyBooking}
               options={{
-                drawerIcon: ({color}) => (
-                  <FontAwesomeIcon
-                    icon={faListCheck}
-                    size={25}
-                    color="gray"></FontAwesomeIcon>
-                ),
+                drawerIcon: MyBookingComponent,
               }}
             />
             <Drawer.Screen
               name="My Wishlists"
               component={MyWishlists}
               options={{
-                drawerIcon: ({color}) => (
-                  <FontAwesomeIcon
-                    icon={faHeart}
-                    size={25}
-                    color="gray"></FontAwesomeIcon>
-                ),
+                drawerIcon: MyWishlistsComponent,
               }}
             />
             <Drawer.Screen

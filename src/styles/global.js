@@ -210,6 +210,56 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
+  //Custom Drawer
+  CustomDrawerWrapper: {
+    flex: 1,
+  },
+  ProfileImgWrapper: {
+    height: 80,
+    width: 80,
+    borderRadius: 40,
+    marginBottom: 10,
+  },
+  ProfileWrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 20,
+    marginHorizontal: 10,
+    marginVertical: 50,
+  },
+  FullNameStyle: {
+    fontSize: 18,
+    fontFamily: 'Poppins-Medium',
+    marginBottom: 5,
+  },
+  ProfessionWrapper: {
+    flexDirection: 'row',
+  },
+  ProfessionTextStyle: {
+    fontFamily: 'Poppins-Regular',
+    marginRight: 5,
+  },
+  DrawerItemWrapper: {
+    flex: 1,
+    backgroundColor: '#fff',
+    paddingTop: 10,
+  },
+  LogoutBtnStyle: {
+    paddingVertical: 15,
+  },
+  LogoutWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 28,
+    marginLeft: 20,
+  },
+  LogoutTextStyle: {
+    fontSize: 13,
+    fontFamily: 'Poppins-Medium',
+    marginLeft: 5,
+    color: 'red',
+  },
   //Event Details
   ScrollViewWrapper: {
     position: 'relative',
