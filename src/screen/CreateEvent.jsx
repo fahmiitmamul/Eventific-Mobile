@@ -178,7 +178,7 @@ const CreateEvent = ({navigation}) => {
                       );
                     }}
                     onSelect={(selectedItem, index) => {
-                      setSelectedCategory(index);
+                      setSelectedCategory(index + 1);
                     }}
                     buttonTextAfterSelection={(selectedItem, index) => {
                       return selectedItem;
@@ -208,7 +208,7 @@ const CreateEvent = ({navigation}) => {
                       );
                     }}
                     onSelect={(selectedItem, index) => {
-                      setSelectedLocation(index);
+                      setSelectedLocation(index + 1);
                     }}
                     buttonTextAfterSelection={(selectedItem, index) => {
                       return selectedItem;
