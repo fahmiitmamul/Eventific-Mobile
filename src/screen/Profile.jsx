@@ -40,21 +40,11 @@ const Profile = ({navigation}) => {
           }}
         />
         <Appbar.Content
-          titleStyle={{
-            fontFamily: 'Poppins-Medium',
-            paddingLeft: 115,
-            color: 'white',
-          }}
+          titleStyle={styles.ProfileAppbarContent}
           title="Profile"
         />
       </Appbar.Header>
-      <View
-        style={{
-          backgroundColor: 'white',
-          borderTopLeftRadius: 40,
-          borderTopRightRadius: 40,
-          height: '100%',
-        }}>
+      <View style={styles.ProfileWrapperStyle}>
         {!loading ? (
           <View>
             <View style={styles.PictureWrapper}>
@@ -76,20 +66,8 @@ const Profile = ({navigation}) => {
               </View>
             </View>
             <View>
-              <Text
-                style={{
-                  fontFamily: 'Poppins-Medium',
-                  fontSize: 20,
-                  textAlign: 'center',
-                }}>
-                {profile?.fullName}
-              </Text>
-              <Text
-                style={{
-                  fontFamily: 'Poppins-Medium',
-                  fontSize: 13,
-                  textAlign: 'center',
-                }}>
+              <Text style={styles.ProfileTextStyle}>{profile?.fullName}</Text>
+              <Text style={styles.ProfileProfession}>
                 {profile?.profession === null ? (
                   <Text>Profession Not set</Text>
                 ) : (
@@ -124,78 +102,32 @@ const Profile = ({navigation}) => {
           </View>
         )}
         <View>
-          <View
-            style={{
-              margin: 20,
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}>
-            <Text style={{fontFamily: 'Poppins-Medium', fontSize: 20}}>
-              Card
-            </Text>
-            <View
-              style={{
-                borderWidth: 3,
-                padding: 10,
-                borderRadius: 5,
-                borderStyle: 'dotted',
-              }}>
+          <View style={styles.ProfileCardWrapper}>
+            <Text style={styles.ProfileTextStyle}>Card</Text>
+            <View style={styles.PlusBtnStyle}>
               <FontAwesomeIcon icon={faPlus} />
             </View>
           </View>
-          <View
-            style={{
-              margin: 20,
-            }}>
+          <View style={styles.CardWrapperStyle}>
             <Image source={require('../assets/images/card.png')} />
           </View>
           <TouchableOpacity
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              marginRight: 30,
-            }}
+            style={styles.EditProfileStyle}
             onPress={() => navigation.navigate('Edit Profile')}>
-            <View
-              style={{
-                margin: 20,
-                display: 'flex',
-                flexDirection: 'row',
-                gap: 10,
-                alignItems: 'center',
-              }}>
+            <View style={styles.EditProfileWrapper}>
               <FontAwesomeIcon icon={faPencil} />
-              <Text style={{fontFamily: 'Poppins-Medium'}}>Edit Profile</Text>
+              <Text style={styles.PoppinsMedium}>Edit Profile</Text>
             </View>
             <View>
               <FontAwesomeIcon icon={faChevronRight} />
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              marginRight: 30,
-            }}
+            style={styles.ChangePasswordStyle}
             onPress={() => navigation.navigate('Change Password')}>
-            <View
-              style={{
-                margin: 20,
-                display: 'flex',
-                flexDirection: 'row',
-                gap: 10,
-                alignItems: 'center',
-              }}>
+            <View style={styles.ChangePasswordWrapper}>
               <FontAwesomeIcon icon={faLock} />
-              <Text style={{fontFamily: 'Poppins-Medium'}}>
-                Change Password
-              </Text>
+              <Text style={styles.PoppinsMedium}>Change Password</Text>
             </View>
             <View>
               <FontAwesomeIcon icon={faChevronRight} />

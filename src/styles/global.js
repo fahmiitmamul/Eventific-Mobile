@@ -815,6 +815,72 @@ const styles = StyleSheet.create({
     paddingTop: 8,
     color: 'white',
   },
+  //Profile
+  ProfileAppbarContent: {
+    fontFamily: 'Poppins-Medium',
+    paddingLeft: 115,
+    color: 'white',
+  },
+  ProfileWrapperStyle: {
+    backgroundColor: 'white',
+    borderTopLeftRadius: 40,
+    borderTopRightRadius: 40,
+    height: '100%',
+  },
+  ProfileTextStyle: {
+    fontFamily: 'Poppins-Medium',
+    fontSize: 20,
+    textAlign: 'center',
+  },
+  ProfileProfession: {
+    fontFamily: 'Poppins-Medium',
+    fontSize: 13,
+    textAlign: 'center',
+  },
+  ProfileCardWrapper: {
+    margin: 20,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  PlusBtnStyle: {
+    borderWidth: 3,
+    padding: 10,
+    borderRadius: 5,
+    borderStyle: 'dotted',
+  },
+  CardWrapperStyle: {
+    margin: 20,
+  },
+  EditProfileStyle: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginRight: 30,
+  },
+  EditProfileWrapper: {
+    margin: 20,
+    display: 'flex',
+    flexDirection: 'row',
+    gap: 10,
+    alignItems: 'center',
+  },
+  ChangePasswordStyle: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginRight: 30,
+  },
+  ChangePasswordWrapper: {
+    margin: 20,
+    display: 'flex',
+    flexDirection: 'row',
+    gap: 10,
+    alignItems: 'center',
+  },
   //Delete Modal Style
   DeleteModalWrapper: {
     width: '100%',
