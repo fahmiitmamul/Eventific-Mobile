@@ -1,4 +1,3 @@
-import {View, Text} from 'react-native';
 import React from 'react';
 import messaging from '@react-native-firebase/messaging';
 import PushNotification from 'react-native-push-notification';
