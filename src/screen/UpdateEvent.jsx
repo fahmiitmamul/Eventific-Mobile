@@ -121,13 +121,13 @@ const UpdateEvent = ({route, navigation}) => {
       name: 'image' + '-' + Date.now() + '.jpg',
     };
 
-    if (selectedCategory === 0) {
+    if (selectedCategory === 0 || selectedLocation === '') {
       form.append('categoryId', 1);
     } else {
       form.append('categoryId', selectedCategory);
     }
 
-    if (selectedLocation === 0) {
+    if (selectedLocation === 0 || selectedLocation === '') {
       form.append('cityId', 1);
     } else {
       form.append('cityId', selectedLocation);
