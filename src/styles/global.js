@@ -210,6 +210,43 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
+  //Search Results
+  LimitDropdownStyle: {
+    width: '25%',
+    height: 40,
+    backgroundColor: '#FFF',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#19a7ce',
+    fontFamily: 'Poppins-Medium',
+  },
+  LimitBtnTextStyle: {
+    color: '#444',
+    textAlign: 'left',
+    fontFamily: 'Poppins-Medium',
+    padding: 6,
+  },
+  SortBtnStyle: {
+    width: '40%',
+    height: 40,
+    backgroundColor: '#FFF',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#19a7ce',
+    fontFamily: 'Poppins-Medium',
+  },
+  PageInfoStyle: {
+    borderWidth: 1,
+    borderRadius: 5,
+    padding: 10,
+    borderColor: '#19a7ce',
+  },
+  PageInfoSecondStyle: {
+    borderWidth: 1,
+    borderRadius: 5,
+    padding: 10,
+    borderColor: '#19a7ce',
+  },
   //Custom Drawer
   CustomDrawerWrapper: {
     flex: 1,

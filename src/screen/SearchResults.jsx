@@ -87,7 +87,7 @@ const SearchResults = ({navigation}) => {
     <React.Fragment>
       <NotificationController />
       <StatusBar animated={true} backgroundColor="#19A7CE" />
-      <View style={{width: '100%', height: '100%', backgroundColor: '#19A7CE'}}>
+      <View style={styles.CreateEventWrapper}>
         <Appbar.Header style={styles.HomeHeaderStyle}>
           <Appbar.BackAction
             onPress={() => {
@@ -95,9 +95,7 @@ const SearchResults = ({navigation}) => {
             }}
             color="white"
           />
-          <Appbar.Content
-            titleStyle={{fontFamily: 'Poppins-Medium', paddingLeft: 70}}
-          />
+          <Appbar.Content titleStyle={styles.CreateEventAppbar} />
         </Appbar.Header>
         <View style={styles.TextInputWrapper}>
           <View style={styles.TextInputChildWrapper}>
@@ -118,35 +116,15 @@ const SearchResults = ({navigation}) => {
             />
           </View>
         </View>
-        <View
-          style={{
-            backgroundColor: 'white',
-            borderTopLeftRadius: 35,
-            borderTopRightRadius: 35,
-            width: '100%',
-            height: '100%',
-          }}>
+        <View style={styles.ProfileWrapperStyle}>
           <View style={styles.EventsWrapperStyle}>
             <Text style={styles.EventsTextStyle}>Limit :</Text>
             <SelectDropdown
               data={profession}
               defaultButtonText="10"
-              dropdownStyle={{backgroundColor: '#EFEFEF'}}
-              buttonStyle={{
-                width: '25%',
-                height: 40,
-                backgroundColor: '#FFF',
-                borderRadius: 8,
-                borderWidth: 1,
-                borderColor: '#19a7ce',
-                fontFamily: 'Poppins-Medium',
-              }}
-              buttonTextStyle={{
-                color: '#444',
-                textAlign: 'left',
-                fontFamily: 'Poppins-Medium',
-                padding: 6,
-              }}
+              dropdownStyle={styles.DropdownStyle}
+              buttonStyle={styles.LimitDropdownStyle}
+              buttonTextStyle={styles.LimitBtnTextStyle}
               renderDropdownIcon={isOpened => {
                 return (
                   <FontAwesomeIcon
@@ -156,15 +134,8 @@ const SearchResults = ({navigation}) => {
                   />
                 );
               }}
-              rowStyle={{
-                backgroundColor: '#EFEFEF',
-                borderBottomColor: '#C5C5C5',
-              }}
-              rowTextStyle={{
-                color: '#444',
-                textAlign: 'left',
-                fontFamily: 'Poppins-Regular',
-              }}
+              rowStyle={styles.DropdownRowStyle}
+              rowTextStyle={styles.DropdownRowTextStyle}
               onSelect={selectedItem => {
                 getEventsLimit(selectedItem);
                 return selectedItem;
@@ -182,31 +153,11 @@ const SearchResults = ({navigation}) => {
             <SelectDropdown
               data={sorts}
               defaultButtonText="ASC"
-              dropdownStyle={{backgroundColor: '#EFEFEF'}}
-              buttonStyle={{
-                width: '40%',
-                height: 40,
-                backgroundColor: '#FFF',
-                borderRadius: 8,
-                borderWidth: 1,
-                borderColor: '#19a7ce',
-                fontFamily: 'Poppins-Medium',
-              }}
-              buttonTextStyle={{
-                color: '#444',
-                textAlign: 'left',
-                fontFamily: 'Poppins-Medium',
-                padding: 6,
-              }}
-              rowStyle={{
-                backgroundColor: '#EFEFEF',
-                borderBottomColor: '#C5C5C5',
-              }}
-              rowTextStyle={{
-                color: '#444',
-                textAlign: 'left',
-                fontFamily: 'Poppins-Regular',
-              }}
+              dropdownStyle={styles.DropdownStyle}
+              buttonStyle={styles.SortBtnStyle}
+              buttonTextStyle={styles.LimitBtnTextStyle}
+              rowStyle={styles.DropdownRowStyle}
+              rowTextStyle={styles.DropdownRowTextStyle}
               renderDropdownIcon={isOpened => {
                 return (
                   <FontAwesomeIcon
@@ -232,27 +183,17 @@ const SearchResults = ({navigation}) => {
             <Text style={styles.EventsTextStyle}>
               Search Results : {results}
             </Text>
-            <View style={{display: 'flex', flexDirection: 'row', gap: 10}}>
+            <View style={styles.ProfileValueWrapper}>
               <TouchableOpacity
-                style={{
-                  borderWidth: 1,
-                  borderRadius: 5,
-                  padding: 10,
-                  borderColor: '#19a7ce',
-                }}
+                style={styles.PageInfoStyle}
                 disabled={events.results?.pageInfo?.page <= 1}
                 onPress={() =>
                   getEventsPaginated(events.results?.pageInfo?.page - 1, '')
                 }>
-                <FontAwesomeIcon icon={faArrowLeft}></FontAwesomeIcon>
+                <FontAwesomeIcon icon={faArrowLeft} />
               </TouchableOpacity>
               <TouchableOpacity
-                style={{
-                  borderWidth: 1,
-                  borderRadius: 5,
-                  padding: 10,
-                  borderColor: '#19a7ce',
-                }}
+                style={styles.PageInfoSecondStyle}
                 disabled={
                   events.results?.pageInfo?.page ===
                   events.results?.pageInfo?.totalPage
@@ -260,7 +201,7 @@ const SearchResults = ({navigation}) => {
                 onPress={() =>
                   getEventsPaginated(events.results?.pageInfo?.page + 1, '')
                 }>
-                <FontAwesomeIcon icon={faArrowRight}></FontAwesomeIcon>
+                <FontAwesomeIcon icon={faArrowRight} />
               </TouchableOpacity>
             </View>
           </View>
@@ -276,62 +217,29 @@ const SearchResults = ({navigation}) => {
                       id: item.id,
                     });
                   }}>
-                  <View style={{position: 'relative', marginLeft: 20}}>
-                    <View
-                      style={{
-                        position: 'relative',
-                        overflow: 'hidden',
-                        borderRadius: 40,
-                      }}>
+                  <View style={styles.EventsDataWrapper}>
+                    <View style={styles.EventCatImageStyle}>
                       <Image
                         source={{
                           uri: `https://res.cloudinary.com/dxnewldiy/image/upload/v1683808473/${item.picture}`,
                         }}
-                        style={{width: 300, height: 450}}
+                        style={styles.EventCatImg}
                       />
                       <LinearGradient
                         start={{x: 0, y: 0}}
                         end={{x: 0, y: 1}}
                         colors={['#ffffff00', '#000000']}
-                        style={{
-                          position: 'absolute',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          borderRadius: 5,
-                          height: 450,
-                          width: '100%',
-                        }}
+                        style={styles.LinearGradientStyle}
                       />
                     </View>
-                    <View
-                      style={{
-                        position: 'absolute',
-                        top: 250,
-                        margin: 20,
-                      }}>
-                      <Text
-                        style={{
-                          color: 'white',
-                          fontFamily: 'Poppins-Regular',
-                        }}>
+                    <View style={styles.EventCatTitleWrapper}>
+                      <Text style={styles.EventCatDateTextStyle}>
                         {moment(item.date).format('LLLL')}
                       </Text>
-                      <Text
-                        style={{
-                          color: 'white',
-                          fontFamily: 'Poppins-Medium',
-                          fontSize: 25,
-                        }}>
+                      <Text style={styles.EventCatTitleStyle}>
                         {item.title}
                       </Text>
-                      <View
-                        style={{
-                          marginTop: 5,
-                          backgroundColor: 'red',
-                          width: 40,
-                          borderRadius: 10,
-                          padding: 5,
-                        }}>
+                      <View style={styles.EventCatFaWrapper}>
                         <FontAwesomeIcon
                           icon={faArrowRight}
                           color="white"
