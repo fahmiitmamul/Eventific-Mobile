@@ -300,7 +300,8 @@ const SearchResults = ({navigation}) => {
                           borderRadius: 5,
                           height: 450,
                           width: '100%',
-                        }}></LinearGradient>
+                        }}
+                      />
                     </View>
                     <View
                       style={{
