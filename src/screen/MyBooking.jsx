@@ -75,48 +75,17 @@ const MyBooking = ({navigation}) => {
           title="My Booking"
         />
       </Appbar.Header>
-      <View
-        style={{
-          backgroundColor: 'white',
-          borderTopLeftRadius: 40,
-          borderTopRightRadius: 40,
-          paddingTop: 20,
-        }}>
-        <TouchableOpacity
-          style={{
-            backgroundColor: '#19a7ce',
-            width: 100,
-            margin: 20,
-            padding: 10,
-            borderRadius: 10,
-          }}>
-          <Text
-            style={{
-              fontFamily: 'Poppins-Medium',
-              color: 'white',
-              paddingTop: 3,
-              textAlign: 'center',
-            }}>
-            Create
-          </Text>
+      <View style={styles.BookingWrapper}>
+        <TouchableOpacity style={styles.BookingBtnStyle}>
+          <Text style={styles.BookingCreateStyle}>Create</Text>
         </TouchableOpacity>
         <FlatList
-          style={{
-            width: '100%',
-            height: '100%',
-            backgroundColor: 'white',
-          }}
+          style={styles.BookingFlatlistStyle}
           data={history}
           keyExtractor={item => item.id}
           ListEmptyComponent={
             <View>
-              <Text
-                style={{
-                  fontFamily: 'Poppins-Medium',
-                  fontSize: 20,
-                  textAlign: 'center',
-                  marginTop: 20,
-                }}>
+              <Text style={styles.FlatListEmptyStyle}>
                 No Booking was found
               </Text>
             </View>
