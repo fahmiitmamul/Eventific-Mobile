@@ -71,24 +71,12 @@ const MyWishlists = ({navigation}) => {
         />
       </Appbar.Header>
       <FlatList
-        style={{
-          backgroundColor: 'white',
-          borderTopLeftRadius: 40,
-          borderTopRightRadius: 40,
-        }}
+        style={styles.WishlistFlatlist}
         data={wishlist}
         keyExtractor={item => item.id}
         ListEmptyComponent={
           <View>
-            <Text
-              style={{
-                fontFamily: 'Poppins-Medium',
-                fontSize: 20,
-                textAlign: 'center',
-                marginTop: 20,
-              }}>
-              No wishlist found
-            </Text>
+            <Text style={styles.FlatListEmptyStyle}>No wishlist found</Text>
           </View>
         }
         renderItem={({item}) => {

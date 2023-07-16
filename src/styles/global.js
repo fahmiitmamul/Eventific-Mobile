@@ -623,6 +623,37 @@ const styles = StyleSheet.create({
   ChangePassFormWrapper: {
     paddingTop: 50,
   },
+  //My Booking
+  BookingWrapper: {
+    backgroundColor: 'white',
+    borderTopLeftRadius: 40,
+    borderTopRightRadius: 40,
+    paddingTop: 20,
+  },
+  BookingBtnStyle: {
+    backgroundColor: '#19a7ce',
+    width: 100,
+    margin: 20,
+    padding: 10,
+    borderRadius: 10,
+  },
+  BookingCreateStyle: {
+    fontFamily: 'Poppins-Medium',
+    color: 'white',
+    paddingTop: 3,
+    textAlign: 'center',
+  },
+  BookingFlatlistStyle: {
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'white',
+  },
+  //MyWishlist
+  WishlistFlatlist: {
+    backgroundColor: 'white',
+    borderTopLeftRadius: 40,
+    borderTopRightRadius: 40,
+  },
   //Manage Event
   AppWrapper: {
     backgroundColor: '#19a7ce',
