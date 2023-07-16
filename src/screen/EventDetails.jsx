@@ -3,6 +3,7 @@ import moment from 'moment';
 import http from '../helpers/http';
 import SimpleLottie from '../components/LottieAnimation';
 import LinearGradient from 'react-native-linear-gradient';
+import styles from '../styles/global';
 import {View, Text, Image} from 'react-native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {
@@ -92,46 +93,27 @@ const EventDetails = ({route, navigation}) => {
   }
 
   return (
-    <ScrollView
-      style={{
-        position: 'relative',
-        backgroundColor: 'white',
-      }}>
+    <ScrollView style={styles.ScrollViewWrapper}>
       <StatusBar
         animated={true}
         translucent={true}
         backgroundColor="#ffffff00"
       />
-      <View style={{width: '100%', height: '0%', position: 'relative'}}>
-        <View style={{position: 'relative'}}>
+      <View style={styles.DetailImgWrapper}>
+        <View style={styles.Relative}>
           <Image
             source={{
               uri: `https://res.cloudinary.com/dxnewldiy/image/upload/v1683808473/${events?.picture}`,
             }}
-            style={{height: 450, width: '100%'}}
+            style={styles.DetailImgStyle}
           />
           <LinearGradient
             start={{x: 0, y: 1}}
             end={{x: 0, y: 0}}
             colors={['#ffffff00', '#000000']}
-            style={{
-              position: 'absolute',
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderRadius: 5,
-              height: 450,
-              width: '100%',
-            }}></LinearGradient>
-          <View
-            style={{
-              position: 'absolute',
-              top: 50,
-              display: 'flex',
-              flexDirection: 'row',
-              width: '100%',
-              justifyContent: 'space-between',
-              paddingHorizontal: 25,
-            }}>
+            style={styles.LinearGradientStyle}
+          />
+          <View style={styles.DetailContentWrapper}>
             <TouchableOpacity onPress={() => navigation.navigate('Home')}>
               <FontAwesomeIcon icon={faArrowLeft} color="white" size={30} />
             </TouchableOpacity>
@@ -144,164 +126,60 @@ const EventDetails = ({route, navigation}) => {
             </TouchableOpacity>
           </View>
         </View>
-        <View style={{position: 'absolute', top: 180, margin: 20}}>
-          <Text
-            style={{
-              color: 'white',
-              fontFamily: 'Poppins-Medium',
-              fontSize: 25,
-            }}>
-            {events?.title}
-          </Text>
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center',
-              gap: 10,
-            }}>
+        <View style={styles.DetailTextWrapper}>
+          <Text style={styles.DetailTitleStyle}>{events?.title}</Text>
+          <View style={styles.DetailLocationWrapper}>
             <FontAwesomeIcon icon={faLocationDot} color="white" />
-            <Text
-              style={{
-                color: 'white',
-                fontFamily: 'Poppins-Regular',
-              }}>
-              {events?.location}
-            </Text>
+            <Text style={styles.EventCatDateTextStyle}>{events?.location}</Text>
           </View>
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center',
-              gap: 10,
-            }}>
+          <View style={styles.DetailTimeWrapper}>
             <FontAwesomeIcon icon={faClock} color="white" />
-            <Text
-              style={{
-                color: 'white',
-                fontFamily: 'Poppins-Regular',
-              }}>
+            <Text style={styles.EventCatDateTextStyle}>
               {moment(events?.date).format('LL')}
             </Text>
           </View>
-          <Text
-            style={{
-              fontFamily: 'Poppins-Regular',
-              color: 'white',
-              fontSize: 20,
-            }}>
-            Attendees
-          </Text>
-          <View style={{display: 'flex', flexDirection: 'row'}}>
-            <View
-              style={{
-                overflow: 'hidden',
-                borderRadius: 100,
-                width: 40,
-              }}>
+          <Text style={styles.AttendeeTextStyle}>Attendees</Text>
+          <View style={styles.AttendeeWrapperStyle}>
+            <View style={styles.AttendeeStyle}>
               <Image
                 source={require('../assets/images/attendes-1.jpg')}
-                style={{width: 40, height: 40}}
+                style={styles.AttendeeImgStyle}
               />
             </View>
-            <View
-              style={{
-                overflow: 'hidden',
-                borderRadius: 100,
-                width: 40,
-                marginLeft: -13,
-              }}>
+            <View style={styles.AttendeeStyle}>
               <Image
                 source={require('../assets/images/attendes-2.jpg')}
-                style={{width: 40, height: 40}}
+                style={styles.AttendeeImgStyle}
               />
             </View>
-            <View
-              style={{
-                overflow: 'hidden',
-                borderRadius: 100,
-                width: 40,
-                marginLeft: -13,
-              }}>
+            <View style={styles.AttendeeStyle}>
               <Image
                 source={require('../assets/images/attendes-3.jpg')}
-                style={{width: 40, height: 40}}
+                style={styles.AttendeeImgStyle}
               />
             </View>
-            <View
-              style={{
-                overflow: 'hidden',
-                borderRadius: 100,
-                width: 40,
-                marginLeft: -13,
-              }}>
+            <View style={styles.AttendeeStyle}>
               <Image
                 source={require('../assets/images/attendes-4.jpg')}
-                style={{width: 40, height: 40}}
+                style={styles.AttendeeImgStyle}
               />
             </View>
           </View>
         </View>
       </View>
-      <View
-        style={{
-          padding: 30,
-          borderTopLeftRadius: 40,
-          borderTopRightRadius: 40,
-          backgroundColor: 'white',
-          top: 420,
-        }}>
+      <View style={styles.EventDetailStyle}>
         <View>
-          <Text
-            style={{
-              fontFamily: 'Poppins-Medium',
-              fontSize: 20,
-              color: 'black',
-            }}>
-            Event Detail
-          </Text>
-          <Text style={{fontFamily: 'Poppins-Regular'}}>
-            {events?.description}
-          </Text>
-          <Text
-            style={{
-              fontFamily: 'Poppins-Regular',
-              color: '#3366ff',
-              fontSize: 13,
-            }}>
-            Read More
-          </Text>
+          <Text style={styles.EventDetailTextStyle}>Event Detail</Text>
+          <Text style={styles.PoppinsRegular}>{events?.description}</Text>
+          <Text style={styles.ReadMoreStyle}>Read More</Text>
         </View>
         <View>
-          <Text
-            style={{
-              fontFamily: 'Poppins-Medium',
-              fontSize: 20,
-              color: 'black',
-              marginTop: 10,
-            }}>
-            Location
-          </Text>
+          <Text style={styles.LocationTextStyle}>Location</Text>
           <Image source={require('../assets/images/maps.png')} />
         </View>
-        <View style={{marginTop: 30}}>
-          <TouchableOpacity
-            onPress={makePayments}
-            style={{
-              backgroundColor: '#19a7ce',
-              borderRadius: 8,
-              padding: 8,
-            }}>
-            <Text
-              style={{
-                color: 'white',
-                fontFamily: 'Poppins-Medium',
-                textAlign: 'center',
-                padding: 5,
-              }}>
-              Buy Tickets
-            </Text>
+        <View style={styles.BuyTicketWrapper}>
+          <TouchableOpacity onPress={makePayments} style={styles.BuyBtnStyle}>
+            <Text style={styles.BuyBtnTextStyle}>Buy Tickets</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -310,16 +188,7 @@ const EventDetails = ({route, navigation}) => {
         onRequestClose={() => {
           setModalVisible(!modalVisible);
         }}>
-        <View
-          style={{
-            width: '100%',
-            height: '100%',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            gap: 25,
-            backgroundColor: 'white',
-          }}>
+        <View style={styles.ModalStyle}>
           <SimpleLottie />
         </View>
       </Modal>

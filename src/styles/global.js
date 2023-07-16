@@ -210,6 +210,106 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
+  //Event Details
+  ScrollViewWrapper: {
+    position: 'relative',
+    backgroundColor: 'white',
+  },
+  DetailImgWrapper: {
+    width: '100%',
+    height: '0%',
+    position: 'relative',
+  },
+  DetailImgStyle: {
+    height: 450,
+    width: '100%',
+  },
+  DetailContentWrapper: {
+    position: 'absolute',
+    top: 50,
+    display: 'flex',
+    flexDirection: 'row',
+    width: '100%',
+    justifyContent: 'space-between',
+    paddingHorizontal: 25,
+  },
+  DetailTextWrapper: {
+    position: 'absolute',
+    top: 180,
+    margin: 20,
+  },
+  DetailTitleStyle: {
+    color: 'white',
+    fontFamily: 'Poppins-Medium',
+    fontSize: 25,
+  },
+  DetailLocationWrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+  },
+  DetailTimeWrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+  },
+  AttendeeTextStyle: {
+    fontFamily: 'Poppins-Regular',
+    color: 'white',
+    fontSize: 20,
+  },
+  AttendeeWrapperStyle: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  AttendeeStyle: {
+    overflow: 'hidden',
+    borderRadius: 100,
+    width: 40,
+  },
+  AttendeeImgStyle: {
+    width: 40,
+    height: 40,
+  },
+  EventDetailStyle: {
+    padding: 30,
+    borderTopLeftRadius: 40,
+    borderTopRightRadius: 40,
+    backgroundColor: 'white',
+    top: 420,
+  },
+  EventDetailTextStyle: {
+    fontFamily: 'Poppins-Medium',
+    fontSize: 20,
+    color: 'black',
+  },
+  ReadMoreStyle: {
+    fontFamily: 'Poppins-Regular',
+    color: '#3366ff',
+    fontSize: 13,
+  },
+  LocationTextStyle: {
+    fontFamily: 'Poppins-Medium',
+    fontSize: 20,
+    color: 'black',
+    marginTop: 10,
+  },
+  BuyBtnStyle: {
+    backgroundColor: '#19a7ce',
+    borderRadius: 8,
+    padding: 8,
+  },
+  BuyBtnTextStyle: {
+    color: 'white',
+    fontFamily: 'Poppins-Medium',
+    textAlign: 'center',
+    padding: 5,
+  },
+  BuyTicketWrapper: {
+    marginTop: 30,
+  },
   //Sign In
   ScrollViewStyle: {
     backgroundColor: '#19a7ce',
