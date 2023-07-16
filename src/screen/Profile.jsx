@@ -125,7 +125,7 @@ const Profile = ({navigation}) => {
           <TouchableOpacity
             style={styles.ChangePasswordStyle}
             onPress={() => navigation.navigate('Change Password')}>
-            <View style={styles.ChangePasswordWrapper}>
+            <View style={styles.ChangePasswordText}>
               <FontAwesomeIcon icon={faLock} />
               <Text style={styles.PoppinsMedium}>Change Password</Text>
             </View>

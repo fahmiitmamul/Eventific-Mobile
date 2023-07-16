@@ -911,7 +911,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginRight: 30,
   },
-  ChangePasswordWrapper: {
+  ChangePasswordText: {
     margin: 20,
     display: 'flex',
     flexDirection: 'row',
