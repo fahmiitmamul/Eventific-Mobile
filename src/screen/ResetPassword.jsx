@@ -127,14 +127,16 @@ const ResetPassword = ({navigation}) => {
                           onChangeText={handleChange('code')}
                           onBlur={handleBlur('code')}
                           value={values.code}
-                          style={styles.FormTextInputErrorStyle}></TextInput>
+                          style={styles.FormTextInputErrorStyle}
+                        />
                       ) : (
                         <TextInput
                           placeholder="Code"
                           onChangeText={handleChange('code')}
                           onBlur={handleBlur('code')}
                           value={values.code}
-                          style={styles.FormTextInputNormalStyle}></TextInput>
+                          style={styles.FormTextInputNormalStyle}
+                        />
                       )}
                       {errors.code && touched.code && (
                         <Text style={styles.FormTextErrorStyle}>
@@ -149,14 +151,16 @@ const ResetPassword = ({navigation}) => {
                           onChangeText={handleChange('email')}
                           onBlur={handleBlur('email')}
                           value={values.email}
-                          style={styles.FormTextInputErrorStyle}></TextInput>
+                          style={styles.FormTextInputErrorStyle}
+                        />
                       ) : (
                         <TextInput
                           placeholder="Email"
                           onChangeText={handleChange('email')}
                           onBlur={handleBlur('email')}
                           value={values.email}
-                          style={styles.FormTextInputNormalStyle}></TextInput>
+                          style={styles.FormTextInputNormalStyle}
+                        />
                       )}
                       {errors.email && touched.email && (
                         <Text style={styles.FormTextErrorStyle}>
@@ -173,7 +177,8 @@ const ResetPassword = ({navigation}) => {
                             onBlur={handleBlur('password')}
                             value={values.password}
                             secureTextEntry={openPassword ? true : false}
-                            style={styles.FormTextInputErrorStyle}></TextInput>
+                            style={styles.FormTextInputErrorStyle}
+                          />
                         ) : (
                           <TextInput
                             placeholder="New Password"
@@ -181,7 +186,8 @@ const ResetPassword = ({navigation}) => {
                             onBlur={handleBlur('password')}
                             value={values.password}
                             secureTextEntry={openPassword ? true : false}
-                            style={styles.FormTextInputNormalStyle}></TextInput>
+                            style={styles.FormTextInputNormalStyle}
+                          />
                         )}
                         {errors.password && touched.password && (
                           <Text style={styles.FormErrorTextStyle}>
@@ -192,7 +198,8 @@ const ResetPassword = ({navigation}) => {
                       <Text style={styles.EyeButtonStyle} onPress={Password}>
                         <FontAwesomeIcon
                           icon={openPassword ? faEyeSlash : faEye}
-                          size={30}></FontAwesomeIcon>
+                          size={30}
+                        />
                       </Text>
                     </View>
                     <View style={styles.PasswordWrapperStyle}>
@@ -204,7 +211,8 @@ const ResetPassword = ({navigation}) => {
                             onBlur={handleBlur('confirmPassword')}
                             value={values.confirmPassword}
                             secureTextEntry={openConfirm ? true : false}
-                            style={styles.FormTextInputErrorStyle}></TextInput>
+                            style={styles.FormTextInputErrorStyle}
+                          />
                         ) : (
                           <TextInput
                             placeholder="Confirm Password"
@@ -212,7 +220,8 @@ const ResetPassword = ({navigation}) => {
                             onBlur={handleBlur('confirmPassword')}
                             value={values.confirmPassword}
                             secureTextEntry={openConfirm ? true : false}
-                            style={styles.FormTextInputNormalStyle}></TextInput>
+                            style={styles.FormTextInputNormalStyle}
+                          />
                         )}
                         {errors.confirmPassword && touched.confirmPassword && (
                           <Text style={styles.FormTextErrorStyle}>
@@ -223,7 +232,8 @@ const ResetPassword = ({navigation}) => {
                       <Text style={styles.EyeButtonStyle} onPress={Confirm}>
                         <FontAwesomeIcon
                           icon={openConfirm ? faEyeSlash : faEye}
-                          size={30}></FontAwesomeIcon>
+                          size={30}
+                        />
                       </Text>
                     </View>
                   </View>
