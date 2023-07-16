@@ -1,18 +1,18 @@
 import React from 'react';
+import * as Yup from 'yup';
+import SplashScreen from 'react-native-splash-screen';
+import styles from '../styles/global';
+import SimpleLottie from '../components/LottieAnimation';
 import {ScrollView, Text, TextInput, View} from 'react-native';
 import {Formik} from 'formik';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faEye, faEyeSlash} from '@fortawesome/free-solid-svg-icons';
 import {Checkbox} from 'react-native-paper';
 import {Button} from 'react-native-paper';
-import * as Yup from 'yup';
 import {Appbar} from 'react-native-paper';
 import {asyncRegisterAction} from '../redux/actions/auth';
 import {useDispatch, useSelector} from 'react-redux';
 import {clearMessage} from '../redux/reducers/auth';
-import SplashScreen from 'react-native-splash-screen';
-import styles from '../styles/global';
-import SimpleLottie from '../components/LottieAnimation';
 import {Modal} from 'react-native';
 
 const validationSchema = Yup.object().shape({
@@ -131,14 +131,16 @@ const SignUp = ({navigation}) => {
                           onChangeText={handleChange('fullName')}
                           onBlur={handleBlur('fullName')}
                           value={values.fullName}
-                          style={styles.FormTextInputErrorStyle}></TextInput>
+                          style={styles.FormTextInputErrorStyle}
+                        />
                       ) : (
                         <TextInput
                           placeholder="Full Name"
                           onChangeText={handleChange('fullName')}
                           onBlur={handleBlur('fullName')}
                           value={values.fullName}
-                          style={styles.FormTextInputNormalStyle}></TextInput>
+                          style={styles.FormTextInputNormalStyle}
+                        />
                       )}
                       {errors.fullName && touched.fullName && (
                         <Text style={styles.FormTextErrorStyle}>
@@ -153,14 +155,16 @@ const SignUp = ({navigation}) => {
                           onChangeText={handleChange('email')}
                           onBlur={handleBlur('email')}
                           value={values.email}
-                          style={styles.FormTextInputErrorStyle}></TextInput>
+                          style={styles.FormTextInputErrorStyle}
+                        />
                       ) : (
                         <TextInput
                           placeholder="Email"
                           onChangeText={handleChange('email')}
                           onBlur={handleBlur('email')}
                           value={values.email}
-                          style={styles.FormTextInputNormalStyle}></TextInput>
+                          style={styles.FormTextInputNormalStyle}
+                        />
                       )}
                       {errors.email && touched.email && (
                         <Text style={styles.FormTextErrorStyle}>
@@ -177,7 +181,8 @@ const SignUp = ({navigation}) => {
                             onBlur={handleBlur('password')}
                             value={values.password}
                             secureTextEntry={openPassword ? true : false}
-                            style={styles.FormTextInputErrorStyle}></TextInput>
+                            style={styles.FormTextInputErrorStyle}
+                          />
                         ) : (
                           <TextInput
                             placeholder="Password"
@@ -185,7 +190,8 @@ const SignUp = ({navigation}) => {
                             onBlur={handleBlur('password')}
                             value={values.password}
                             secureTextEntry={openPassword ? true : false}
-                            style={styles.FormTextInputNormalStyle}></TextInput>
+                            style={styles.FormTextInputNormalStyle}
+                          />
                         )}
                         {errors.password && touched.password && (
                           <Text style={styles.FormTextErrorStyle}>
@@ -196,7 +202,8 @@ const SignUp = ({navigation}) => {
                       <Text style={styles.EyeButtonStyle} onPress={Password}>
                         <FontAwesomeIcon
                           icon={openPassword ? faEyeSlash : faEye}
-                          size={30}></FontAwesomeIcon>
+                          size={30}
+                        />
                       </Text>
                     </View>
                     <View style={styles.PasswordWrapperStyle}>
@@ -208,7 +215,8 @@ const SignUp = ({navigation}) => {
                             onBlur={handleBlur('confirmPassword')}
                             value={values.confirmPassword}
                             secureTextEntry={openConfirm ? true : false}
-                            style={styles.FormTextInputErrorStyle}></TextInput>
+                            style={styles.FormTextInputErrorStyle}
+                          />
                         ) : (
                           <TextInput
                             placeholder="Confirm Password"
@@ -216,7 +224,8 @@ const SignUp = ({navigation}) => {
                             onBlur={handleBlur('confirmPassword')}
                             value={values.confirmPassword}
                             secureTextEntry={openConfirm ? true : false}
-                            style={styles.FormTextInputNormalStyle}></TextInput>
+                            style={styles.FormTextInputNormalStyle}
+                          />
                         )}
                         {errors.confirmPassword && touched.confirmPassword && (
                           <Text style={styles.FormTextErrorStyle}>
@@ -227,7 +236,8 @@ const SignUp = ({navigation}) => {
                       <Text style={styles.EyeButtonStyle} onPress={Confirm}>
                         <FontAwesomeIcon
                           icon={openConfirm ? faEyeSlash : faEye}
-                          size={30}></FontAwesomeIcon>
+                          size={30}
+                        />
                       </Text>
                     </View>
                   </View>
@@ -269,16 +279,7 @@ const SignUp = ({navigation}) => {
         onRequestClose={() => {
           setModalVisible(!modalVisible);
         }}>
-        <View
-          style={{
-            width: '100%',
-            height: '100%',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            gap: 25,
-            backgroundColor: 'white',
-          }}>
+        <View style={styles.ModalStyle}>
           <SimpleLottie />
         </View>
       </Modal>
