@@ -1,5 +1,5 @@
 import React from 'react';
-import {ScrollView, Text, TextInput, View, Image} from 'react-native';
+import {Text, TextInput, View, Image} from 'react-native';
 import {Formik} from 'formik';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faEye, faEyeSlash} from '@fortawesome/free-solid-svg-icons';
@@ -126,14 +126,16 @@ const SignIn = ({navigation}) => {
                             onChangeText={handleChange('username')}
                             onBlur={handleBlur('username')}
                             value={values.username}
-                            style={styles.FormTextInputErrorStyle}></TextInput>
+                            style={styles.FormTextInputErrorStyle}
+                          />
                         ) : (
                           <TextInput
                             placeholder="Username"
                             onChangeText={handleChange('username')}
                             onBlur={handleBlur('username')}
                             value={values.username}
-                            style={styles.FormTextInputNormalStyle}></TextInput>
+                            style={styles.FormTextInputNormalStyle}
+                          />
                         )}
                         {errors.username && touched.username && (
                           <Text style={styles.FormTextErrorStyle}>
@@ -148,14 +150,16 @@ const SignIn = ({navigation}) => {
                             onChangeText={handleChange('email')}
                             onBlur={handleBlur('email')}
                             value={values.email}
-                            style={styles.FormTextInputErrorStyle}></TextInput>
+                            style={styles.FormTextInputErrorStyle}
+                          />
                         ) : (
                           <TextInput
                             placeholder="Email"
                             onChangeText={handleChange('email')}
                             onBlur={handleBlur('email')}
                             value={values.email}
-                            style={styles.FormTextInputNormalStyle}></TextInput>
+                            style={styles.FormTextInputNormalStyle}
+                          />
                         )}
                         {errors.email && touched.email && (
                           <Text style={styles.FormTextErrorStyle}>
@@ -172,9 +176,8 @@ const SignIn = ({navigation}) => {
                               onBlur={handleBlur('password')}
                               value={values.password}
                               secureTextEntry={openPassword ? true : false}
-                              style={
-                                styles.FormTextInputErrorStyle
-                              }></TextInput>
+                              style={styles.FormTextInputErrorStyle}
+                            />
                           ) : (
                             <TextInput
                               placeholder="Password"
@@ -182,9 +185,8 @@ const SignIn = ({navigation}) => {
                               onBlur={handleBlur('password')}
                               value={values.password}
                               secureTextEntry={openPassword ? true : false}
-                              style={
-                                styles.FormTextInputNormalStyle
-                              }></TextInput>
+                              style={styles.FormTextInputNormalStyle}
+                            />
                           )}
                           {errors.password && touched.password && (
                             <Text style={styles.FormTextErrorStyle}>
@@ -195,7 +197,8 @@ const SignIn = ({navigation}) => {
                         <Text style={styles.EyeButtonStyle} onPress={Password}>
                           <FontAwesomeIcon
                             icon={openPassword ? faEyeSlash : faEye}
-                            size={30}></FontAwesomeIcon>
+                            size={30}
+                          />
                         </Text>
                       </View>
                     </View>
@@ -239,16 +242,7 @@ const SignIn = ({navigation}) => {
         onRequestClose={() => {
           setModalVisible(!modalVisible);
         }}>
-        <View
-          style={{
-            width: '100%',
-            height: '100%',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            gap: 25,
-            backgroundColor: 'white',
-          }}>
+        <View style={styles.ModalStyle}>
           <SimpleLottie />
         </View>
       </Modal>
