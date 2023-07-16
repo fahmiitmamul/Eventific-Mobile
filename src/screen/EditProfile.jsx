@@ -6,13 +6,8 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import React from 'react';
 import {Appbar, RadioButton} from 'react-native-paper';
-import SelectDropdown from 'react-native-select-dropdown';
-import DatePicker from 'react-native-date-picker';
-import moment from 'moment';
-import styles from '../styles/global';
-import HamburgerIcon from '../assets/images/hamburger.png';
+import React from 'react';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import {Formik} from 'formik';
 import {useSelector} from 'react-redux';
@@ -24,6 +19,11 @@ import {
   faChevronUp,
 } from '@fortawesome/free-solid-svg-icons';
 import {Modal} from 'react-native';
+import SelectDropdown from 'react-native-select-dropdown';
+import DatePicker from 'react-native-date-picker';
+import moment from 'moment';
+import styles from '../styles/global';
+import HamburgerIcon from '../assets/images/hamburger.png';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import SimpleLottie from '../components/LottieAnimation';
 
@@ -161,21 +161,9 @@ const EditProfile = ({navigation}) => {
             navigation.openDrawer();
           }}
         />
-        <Appbar.Content
-          titleStyle={{
-            fontFamily: 'Poppins-Medium',
-            paddingLeft: 115,
-            color: 'white',
-          }}
-          title="Profile"
-        />
+        <Appbar.Content titleStyle={styles.AppbarProfile} title="Profile" />
       </Appbar.Header>
-      <View
-        style={{
-          backgroundColor: 'white',
-          borderTopLeftRadius: 40,
-          borderTopRightRadius: 40,
-        }}>
+      <View style={styles.MainEventsWrapper}>
         <Formik
           initialValues={{
             fullName: profile?.fullName,
@@ -190,7 +178,7 @@ const EditProfile = ({navigation}) => {
             return (
               <>
                 {!loading ? (
-                  <View style={{height: 230}}>
+                  <View style={styles.SkeletonHeight}>
                     <View style={styles.PictureWrapper}>
                       <View style={styles.PictureChildWrapper}>
                         {profile?.picture === null && (
@@ -207,48 +195,18 @@ const EditProfile = ({navigation}) => {
                             style={styles.ImageStyle}
                           />
                         )}
-                        <View
-                          style={{
-                            display: 'flex',
-                            flexDirection: 'row',
-                            gap: 20,
-                          }}>
+                        <View style={styles.DocumentSelectWrapper}>
                           <TouchableOpacity
-                            style={{
-                              backgroundColor: '#19a7ce',
-                              display: 'flex',
-                              justifyContent: 'center',
-                              alignItems: 'center',
-                              borderRadius: 8,
-                              marginTop: 5,
-                              marginBottom: 50,
-                            }}
+                            style={styles.SelectPictureStyle}
                             onPress={handleDocumentSelection}>
-                            <Text
-                              style={{
-                                fontFamily: 'Poppins-Regular',
-                                color: 'white',
-                                paddingTop: 5,
-                                paddingHorizontal: 8,
-                              }}>
+                            <Text style={styles.SelectPictureTextStyle}>
                               Select Picture
                             </Text>
                           </TouchableOpacity>
                           <TouchableOpacity
-                            style={{
-                              backgroundColor: '#19a7ce',
-                              display: 'flex',
-                              justifyContent: 'center',
-                              alignItems: 'center',
-                              borderRadius: 8,
-                              marginTop: 5,
-                              marginBottom: 50,
-                              paddingHorizontal: 20,
-                            }}
+                            style={styles.CameraBtnStyle}
                             onPress={handleCameraSelection}>
-                            <FontAwesomeIcon
-                              icon={faCamera}
-                              color="white"></FontAwesomeIcon>
+                            <FontAwesomeIcon icon={faCamera} color="white" />
                           </TouchableOpacity>
                         </View>
                       </View>
@@ -298,7 +256,8 @@ const EditProfile = ({navigation}) => {
                           style={styles.ProfileNameInput}
                           onChangeText={handleChange('fullName')}
                           onBlur={handleBlur('fullName')}
-                          value={values.fullName}></TextInput>
+                          value={values.fullName}
+                        />
                       )}
                     </View>
                   </View>
@@ -322,7 +281,8 @@ const EditProfile = ({navigation}) => {
                           style={styles.ProfileNameInput}
                           onChangeText={handleChange('username')}
                           onBlur={handleBlur('username')}
-                          value={values.username}></TextInput>
+                          value={values.username}
+                        />
                       )}
                     </View>
                   </View>
@@ -344,7 +304,8 @@ const EditProfile = ({navigation}) => {
                           style={styles.ProfileNameInput}
                           onChangeText={handleChange('email')}
                           onBlur={handleBlur('email')}
-                          value={values.email}></TextInput>
+                          value={values.email}
+                        />
                       )}
                     </View>
                   </View>
@@ -374,7 +335,8 @@ const EditProfile = ({navigation}) => {
                           style={styles.ProfileNameInput}
                           onChangeText={handleChange('phoneNumber')}
                           onBlur={handleBlur('phoneNumber')}
-                          value={values.phoneNumber}></TextInput>
+                          value={values.phoneNumber}
+                        />
                       )}
                     </View>
                   </View>
@@ -432,11 +394,7 @@ const EditProfile = ({navigation}) => {
                       )}
                       <Text
                         onPress={() => setEditGender(true)}
-                        style={{
-                          fontFamily: 'Poppins-Medium',
-                          color: '#3366ff',
-                          marginLeft: 10,
-                        }}>
+                        style={styles.EditGenderTextStyle}>
                         Edit
                       </Text>
                     </View>
@@ -448,22 +406,11 @@ const EditProfile = ({navigation}) => {
                     <SelectDropdown
                       data={profession}
                       defaultButtonText={profile?.profession}
-                      dropdownStyle={{backgroundColor: '#EFEFEF'}}
+                      dropdownStyle={styles.DropdownStyle}
                       buttonStyle={styles.SelectDropdownStyle}
-                      buttonTextStyle={{
-                        color: '#444',
-                        textAlign: 'left',
-                        fontFamily: 'Poppins-Regular',
-                      }}
-                      rowStyle={{
-                        backgroundColor: '#EFEFEF',
-                        borderBottomColor: '#C5C5C5',
-                      }}
-                      rowTextStyle={{
-                        color: '#444',
-                        textAlign: 'left',
-                        fontFamily: 'Poppins-Regular',
-                      }}
+                      buttonTextStyle={styles.ProfileDropdownBtn}
+                      rowStyle={styles.DropdownRowStyle}
+                      rowTextStyle={styles.DropdownRowTextStyle}
                       renderDropdownIcon={isOpened => {
                         return (
                           <FontAwesomeIcon
@@ -491,21 +438,10 @@ const EditProfile = ({navigation}) => {
                     <SelectDropdown
                       data={nationality}
                       defaultButtonText={profile?.nationality}
-                      dropdownStyle={{backgroundColor: '#EFEFEF'}}
-                      buttonTextStyle={{
-                        color: '#444',
-                        textAlign: 'left',
-                        fontFamily: 'Poppins-Regular',
-                      }}
-                      rowStyle={{
-                        backgroundColor: '#EFEFEF',
-                        borderBottomColor: '#C5C5C5',
-                      }}
-                      rowTextStyle={{
-                        color: '#444',
-                        textAlign: 'left',
-                        fontFamily: 'Poppins-Regular',
-                      }}
+                      dropdownStyle={styles.DropdownStyle}
+                      buttonTextStyle={styles.DropdownRowTextStyle}
+                      rowStyle={styles.DropdownRowStyle}
+                      rowTextStyle={styles.DropdownRowTextStyle}
                       renderDropdownIcon={isOpened => {
                         return (
                           <FontAwesomeIcon
@@ -553,9 +489,9 @@ const EditProfile = ({navigation}) => {
                         open={open}
                         mode="date"
                         date={date}
-                        onConfirm={date => {
+                        onConfirm={dates => {
                           setOpen(false);
-                          setDate(date);
+                          setDate(dates);
                         }}
                         onCancel={() => {
                           setOpen(false);
@@ -581,16 +517,7 @@ const EditProfile = ({navigation}) => {
         onRequestClose={() => {
           setModalVisible(!modalVisible);
         }}>
-        <View
-          style={{
-            width: '100%',
-            height: '100%',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            gap: 25,
-            backgroundColor: 'white',
-          }}>
+        <View style={styles.ModalStyle}>
           <SimpleLottie />
         </View>
       </Modal>

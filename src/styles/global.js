@@ -561,6 +561,54 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   //Profile
+  AppbarProfile: {
+    fontFamily: 'Poppins-Medium',
+    paddingLeft: 115,
+    color: 'white',
+  },
+  SkeletonHeight: {
+    height: 230,
+  },
+  DocumentSelectWrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+    gap: 20,
+  },
+  SelectPictureStyle: {
+    backgroundColor: '#19a7ce',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 8,
+    marginTop: 5,
+    marginBottom: 50,
+  },
+  SelectPictureTextStyle: {
+    fontFamily: 'Poppins-Regular',
+    color: 'white',
+    paddingTop: 5,
+    paddingHorizontal: 8,
+  },
+  CameraBtnStyle: {
+    backgroundColor: '#19a7ce',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 8,
+    marginTop: 5,
+    marginBottom: 50,
+    paddingHorizontal: 20,
+  },
+  EditGenderTextStyle: {
+    fontFamily: 'Poppins-Medium',
+    color: '#3366ff',
+    marginLeft: 10,
+  },
+  ProfileDropdownBtn: {
+    color: '#444',
+    textAlign: 'left',
+    fontFamily: 'Poppins-Regular',
+  },
   ContentWrapper: {
     width: '100%',
     height: '100%',
