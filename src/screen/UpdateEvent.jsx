@@ -1,20 +1,9 @@
-import {View, Text, TouchableOpacity} from 'react-native';
 import React from 'react';
-import {Appbar} from 'react-native-paper';
-import styles from '../styles/global';
-import {Formik} from 'formik';
-import {TextInput} from 'react-native-gesture-handler';
-import {
-  faChevronUp,
-  faChevronDown,
-  faCalendar,
-  faUpload,
-} from '@fortawesome/free-solid-svg-icons';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import SelectDropdown from 'react-native-select-dropdown';
 import http from '../helpers/http';
 import DatePicker from 'react-native-date-picker';
 import moment from 'moment';
+import styles from '../styles/global';
 import {launchImageLibrary} from 'react-native-image-picker';
 import {useSelector} from 'react-redux';
 import {Modal} from 'react-native';
@@ -22,6 +11,17 @@ import SimpleLottie from '../components/LottieAnimation';
 import {useFocusEffect} from '@react-navigation/native';
 import {Image} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {
+  faChevronUp,
+  faChevronDown,
+  faCalendar,
+  faUpload,
+} from '@fortawesome/free-solid-svg-icons';
+import {View, Text, TouchableOpacity} from 'react-native';
+import {Appbar} from 'react-native-paper';
+import {Formik} from 'formik';
+import {TextInput} from 'react-native-gesture-handler';
 
 const UpdateEvent = ({route, navigation}) => {
   const [category, setCategory] = React.useState([]);
@@ -121,13 +121,13 @@ const UpdateEvent = ({route, navigation}) => {
       name: 'image' + '-' + Date.now() + '.jpg',
     };
 
-    if (selectedCategory == 0) {
+    if (selectedCategory === 0) {
       form.append('categoryId', 1);
     } else {
       form.append('categoryId', selectedCategory);
     }
 
-    if (selectedLocation == 0) {
+    if (selectedLocation === 0) {
       form.append('cityId', 1);
     } else {
       form.append('cityId', selectedLocation);
@@ -168,7 +168,7 @@ const UpdateEvent = ({route, navigation}) => {
 
   return (
     <KeyboardAwareScrollView enableOnAndroid>
-      <View style={{width: '100%', height: '100%', backgroundColor: '#19a7ce'}}>
+      <View style={styles.CreateEventWrapper}>
         <Appbar.Header style={styles.ScrollViewStyle}>
           <Appbar.BackAction
             onPress={() => {
@@ -177,35 +177,22 @@ const UpdateEvent = ({route, navigation}) => {
             color="white"
           />
           <Appbar.Content
-            titleStyle={{
-              fontFamily: 'Poppins-Medium',
-              paddingLeft: 70,
-              color: 'white',
-            }}
+            titleStyle={styles.CreateEventAppbar}
             title="Update Event"
           />
         </Appbar.Header>
-        <View
-          style={{
-            borderTopLeftRadius: 40,
-            borderTopRightRadius: 40,
-            backgroundColor: 'white',
-            height: '100%',
-          }}>
+        <View style={styles.ContentWrapperStyle}>
           <Formik
             initialValues={{
-              title: events.title,
-              description: events.description,
+              title: events?.title,
+              description: events?.description,
             }}
             onSubmit={doUpdate}>
             {({values, handleBlur, handleChange, handleSubmit}) => {
               return (
-                <View style={{margin: 30}}>
+                <View style={styles.CreateEventForm}>
                   <View>
-                    <Text
-                      style={{fontFamily: 'Poppins-Medium', marginBottom: 5}}>
-                      Name
-                    </Text>
+                    <Text style={styles.InputEventStyle}>Name</Text>
                     <View style={styles.ProfileValueWrapper}>
                       {!editTitle && (
                         <Text style={styles.FontStyle}>{events?.title}</Text>
@@ -222,26 +209,20 @@ const UpdateEvent = ({route, navigation}) => {
                           style={styles.ProfileNameInput}
                           onChangeText={handleChange('title')}
                           onBlur={handleBlur('title')}
-                          value={values.title}></TextInput>
+                          value={values.title}
+                        />
                       )}
                     </View>
                   </View>
                   <View>
-                    <Text
-                      style={{
-                        fontFamily: 'Poppins-Medium',
-                        marginBottom: 5,
-                        marginTop: 5,
-                      }}>
-                      Category
-                    </Text>
+                    <Text style={styles.CategoryTextStyle}>Category</Text>
                     <View style={styles.ProfileValueWrapper}>
                       {!editCategory && (
                         <Text style={styles.FontStyle}>{events?.category}</Text>
                       )}
                       {!editCategory && (
                         <Text
-                          onPress={() => (a = setEditCategory(true))}
+                          onPress={() => setEditCategory(true)}
                           style={styles.EditBtnStyle}>
                           Edit
                         </Text>
@@ -250,20 +231,11 @@ const UpdateEvent = ({route, navigation}) => {
                         <SelectDropdown
                           data={categoriesName}
                           defaultButtonText="Category"
-                          dropdownStyle={{backgroundColor: '#EFEFEF'}}
+                          dropdownStyle={styles.DropdownStyle}
                           buttonStyle={styles.SelectDropdownStyle}
-                          buttonTextStyle={{
-                            textAlign: 'left',
-                            fontFamily: 'Poppins-Medium',
-                            color: 'gray',
-                            fontSize: 16,
-                            paddingTop: 3,
-                          }}
-                          rowStyle={{
-                            backgroundColor: '#EFEFEF',
-                            borderBottomColor: '#C5C5C5',
-                          }}
-                          rowTextStyle={{color: '#444', textAlign: 'left'}}
+                          buttonTextStyle={styles.CategoriesDropdown}
+                          rowStyle={styles.DropdownRowStyle}
+                          rowTextStyle={styles.DropdownRowTextStyle}
                           renderDropdownIcon={isOpened => {
                             return (
                               <FontAwesomeIcon
@@ -287,21 +259,14 @@ const UpdateEvent = ({route, navigation}) => {
                     </View>
                   </View>
                   <View>
-                    <Text
-                      style={{
-                        fontFamily: 'Poppins-Medium',
-                        marginBottom: 5,
-                        marginTop: 5,
-                      }}>
-                      Location
-                    </Text>
+                    <Text style={styles.CategoryTextStyle}>Location</Text>
                     <View style={styles.ProfileValueWrapper}>
                       {!editLocation && (
                         <Text style={styles.FontStyle}>{events?.location}</Text>
                       )}
                       {!editLocation && (
                         <Text
-                          onPress={() => (a = setEditLocation(true))}
+                          onPress={() => setEditLocation(true)}
                           style={styles.EditBtnStyle}>
                           Edit
                         </Text>
@@ -353,7 +318,7 @@ const UpdateEvent = ({route, navigation}) => {
                     <View style={styles.ProfileValueWrapper}>
                       {!editDate && (
                         <Text style={styles.FontStyle}>
-                          {moment(events.date).format('LLL')}
+                          {moment(events?.date).format('LLL')}
                         </Text>
                       )}
                       {!editDate && (

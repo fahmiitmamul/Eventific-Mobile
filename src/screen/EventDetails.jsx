@@ -1,30 +1,30 @@
-import {View, Text, Image} from 'react-native';
 import React from 'react';
+import moment from 'moment';
+import http from '../helpers/http';
+import SimpleLottie from '../components/LottieAnimation';
+import LinearGradient from 'react-native-linear-gradient';
+import {View, Text, Image} from 'react-native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {
   faArrowLeft,
   faClock,
   faLocationDot,
 } from '@fortawesome/free-solid-svg-icons';
-import moment from 'moment';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
-import http from '../helpers/http';
 import {useFocusEffect} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
 import {Modal} from 'react-native';
-import SimpleLottie from '../components/LottieAnimation';
 import {StatusBar} from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
 import {faHeart} from '@fortawesome/free-regular-svg-icons';
 import {faHeart as FaHeartSolid} from '@fortawesome/free-solid-svg-icons';
 
 const EventDetails = ({route, navigation}) => {
   const {id} = route.params;
   const [events, setEvents] = React.useState([]);
-  const token = useSelector(state => state.auth.token);
   const [modalVisible, setModalVisible] = React.useState(false);
   const [profileId, setProfileId] = React.useState(null);
   const [added, setAdded] = React.useState(false);
+  const token = useSelector(state => state.auth.token);
 
   useFocusEffect(
     React.useCallback(() => {
