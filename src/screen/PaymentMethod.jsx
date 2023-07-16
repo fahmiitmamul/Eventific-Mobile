@@ -32,7 +32,7 @@ const PaymentMethod = ({route, navigation}) => {
         paymentMethodId,
       }).toString();
       const {data} = await http(token).post('/payment', body);
-      if (data.success == true) {
+      if (data.success === true) {
         navigation.navigate('My Booking');
       }
     } catch (err) {
@@ -41,7 +41,7 @@ const PaymentMethod = ({route, navigation}) => {
   }
 
   return (
-    <View style={{backgroundColor: '#19a7ce'}}>
+    <View style={styles.MainSecondWrapper}>
       <Appbar.Header style={styles.ScrollViewStyle}>
         <Appbar.BackAction onPress={() => {}} color="white" />
         <Appbar.Content titleStyle={styles.ManageHeaderStyle} title="Payment" />
@@ -50,14 +50,7 @@ const PaymentMethod = ({route, navigation}) => {
         <View>
           <Text style={styles.TextPayment}>Payment Method</Text>
         </View>
-        <View
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            width: '100%',
-            height: '80%',
-            justifyContent: 'space-between',
-          }}>
+        <View style={styles.PaymentFlatlistStyle}>
           <FlatList
             data={payment}
             keyExtractor={item => item.id}
@@ -77,7 +70,7 @@ const PaymentMethod = ({route, navigation}) => {
                       source={{
                         uri: `https://res.cloudinary.com/dxnewldiy/image/upload/f_auto,q_auto/v1/payment/${item.picture}`,
                       }}
-                      style={{width: 50, height: 50}}
+                      style={styles.PaymentMethodImg}
                     />
                     <Text
                       style={styles.PaymentMethodText}
@@ -94,46 +87,16 @@ const PaymentMethod = ({route, navigation}) => {
               );
             }}
           />
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            }}>
-            <View
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                gap: 20,
-                paddingTop: 30,
-              }}>
-              <Text
-                style={{
-                  fontSize: 15,
-                  fontFamily: 'Poppins-Medium',
-                  color: 'black',
-                }}>
+          <View style={styles.TotalPaymentWrapper}>
+            <View style={styles.TotalPaymentSecondWrapper}>
+              <Text style={styles.TotalPaymentTextStyle}>
                 Total: Rp.{totalPayment}
               </Text>
             </View>
             <TouchableOpacity
-              style={{
-                width: 150,
-                height: 40,
-                backgroundColor: '#19a7ce',
-                borderRadius: 5,
-                margin: 20,
-              }}
+              style={styles.MakePaymentBtnStyle}
               onPress={makePayment}>
-              <Text
-                style={{
-                  fontFamily: 'Poppins-Medium',
-                  textAlign: 'center',
-                  paddingTop: 8,
-                  color: 'white',
-                }}>
-                Pay Tickets
-              </Text>
+              <Text style={styles.MakePaymentTextStyle}>Pay Tickets</Text>
             </TouchableOpacity>
           </View>
         </View>

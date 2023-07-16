@@ -775,6 +775,46 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Medium',
     color: 'black',
   },
+  PaymentFlatlistStyle: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '100%',
+    height: '80%',
+    justifyContent: 'space-between',
+  },
+  PaymentMethodImg: {
+    width: 50,
+    height: 50,
+  },
+  TotalPaymentWrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  TotalPaymentSecondWrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+    gap: 20,
+    paddingTop: 30,
+  },
+  TotalPaymentTextStyle: {
+    fontSize: 15,
+    fontFamily: 'Poppins-Medium',
+    color: 'black',
+  },
+  MakePaymentBtnStyle: {
+    width: 150,
+    height: 40,
+    backgroundColor: '#19a7ce',
+    borderRadius: 5,
+    margin: 20,
+  },
+  MakePaymentTextStyle: {
+    fontFamily: 'Poppins-Medium',
+    textAlign: 'center',
+    paddingTop: 8,
+    color: 'white',
+  },
   //Delete Modal Style
   DeleteModalWrapper: {
     width: '100%',
