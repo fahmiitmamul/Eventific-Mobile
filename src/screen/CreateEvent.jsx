@@ -1,26 +1,25 @@
-import {ScrollView, View, Text, TouchableOpacity} from 'react-native';
-import React from 'react';
-import {Appbar} from 'react-native-paper';
 import styles from '../styles/global';
-import HamburgerIcon from '../assets/images/hamburger.png';
+import SelectDropdown from 'react-native-select-dropdown';
+import http from '../helpers/http';
+import DatePicker from 'react-native-date-picker';
+import moment from 'moment';
+import SimpleLottie from '../components/LottieAnimation';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {launchImageLibrary} from 'react-native-image-picker';
+import {useSelector} from 'react-redux';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {Modal} from 'react-native';
 import {Formik} from 'formik';
 import {TextInput} from 'react-native-gesture-handler';
+import {View, Text, TouchableOpacity} from 'react-native';
+import React from 'react';
+import {Appbar} from 'react-native-paper';
 import {
   faChevronUp,
   faChevronDown,
   faCalendar,
   faUpload,
 } from '@fortawesome/free-solid-svg-icons';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import SelectDropdown from 'react-native-select-dropdown';
-import http from '../helpers/http';
-import DatePicker from 'react-native-date-picker';
-import moment from 'moment';
-import {launchImageLibrary} from 'react-native-image-picker';
-import {useSelector} from 'react-redux';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {Modal} from 'react-native';
-import SimpleLottie from '../components/LottieAnimation';
 
 const CreateEvent = ({navigation}) => {
   const [category, setCategory] = React.useState([]);
@@ -93,13 +92,13 @@ const CreateEvent = ({navigation}) => {
       name: 'image' + '-' + Date.now() + '.jpg',
     };
 
-    if (selectedCategory == 0) {
+    if (selectedCategory === 0) {
       form.append('categoryId', 1);
     } else {
       form.append('categoryId', selectedCategory);
     }
 
-    if (selectedLocation == 0) {
+    if (selectedLocation === 0) {
       form.append('cityId', 1);
     } else {
       form.append('cityId', selectedLocation);
@@ -129,9 +128,7 @@ const CreateEvent = ({navigation}) => {
   };
 
   return (
-    <KeyboardAwareScrollView
-      style={{width: '100%', height: '100%', backgroundColor: '#19a7ce'}}
-      enableOnAndroid>
+    <KeyboardAwareScrollView style={styles.CreateEventWrapper} enableOnAndroid>
       <Appbar.Header style={styles.ScrollViewStyle}>
         <Appbar.BackAction
           onPress={() => {
@@ -140,67 +137,37 @@ const CreateEvent = ({navigation}) => {
           color="white"
         />
         <Appbar.Content
-          titleStyle={{
-            fontFamily: 'Poppins-Medium',
-            paddingLeft: 70,
-            color: 'white',
-          }}
+          titleStyle={styles.CreateEventAppbar}
           title="Create Event"
         />
       </Appbar.Header>
-      <View
-        style={{
-          borderTopLeftRadius: 40,
-          borderTopRightRadius: 40,
-          backgroundColor: 'white',
-        }}>
+      <View style={styles.ContentWrapperStyle}>
         <Formik
           initialValues={{title: '', description: ''}}
           onSubmit={doCreate}>
           {({values, handleBlur, handleChange, handleSubmit}) => {
             return (
-              <View style={{margin: 30}}>
+              <View style={styles.CreateEventForm}>
                 <View>
-                  <Text style={{fontFamily: 'Poppins-Medium', marginBottom: 5}}>
-                    Name
-                  </Text>
+                  <Text style={styles.InputEventStyle}>Name</Text>
                   <TextInput
                     style={styles.ProfileNameInput}
                     placeholder="Input name event..."
                     onChangeText={handleChange('title')}
                     onBlur={handleBlur('title')}
-                    value={values.title}></TextInput>
+                    value={values.title}
+                  />
                 </View>
                 <View>
-                  <Text
-                    style={{
-                      fontFamily: 'Poppins-Medium',
-                      marginBottom: 5,
-                      marginTop: 5,
-                    }}>
-                    Category
-                  </Text>
+                  <Text style={styles.CategoryTextStyle}>Category</Text>
                   <SelectDropdown
                     data={categoriesName}
                     defaultButtonText="Category"
-                    dropdownStyle={{backgroundColor: '#EFEFEF'}}
+                    dropdownStyle={styles.DropdownStyle}
                     buttonStyle={styles.SelectDropdownStyle}
-                    buttonTextStyle={{
-                      textAlign: 'left',
-                      fontFamily: 'Poppins-Medium',
-                      color: 'gray',
-                      fontSize: 16,
-                      paddingTop: 3,
-                    }}
-                    rowStyle={{
-                      backgroundColor: '#EFEFEF',
-                      borderBottomColor: '#C5C5C5',
-                    }}
-                    rowTextStyle={{
-                      color: '#444',
-                      textAlign: 'left',
-                      fontFamily: 'Poppins-Regular',
-                    }}
+                    buttonTextStyle={styles.CategoriesDropdown}
+                    rowStyle={styles.DropdownRowStyle}
+                    rowTextStyle={styles.DropdownRowTextStyle}
                     renderDropdownIcon={isOpened => {
                       return (
                         <FontAwesomeIcon
@@ -222,35 +189,15 @@ const CreateEvent = ({navigation}) => {
                   />
                 </View>
                 <View>
-                  <Text
-                    style={{
-                      fontFamily: 'Poppins-Medium',
-                      marginBottom: 5,
-                      marginTop: 5,
-                    }}>
-                    Location
-                  </Text>
+                  <Text style={styles.CategoryTextStyle}>Location</Text>
                   <SelectDropdown
                     data={locationName}
                     defaultButtonText="Location"
-                    dropdownStyle={{backgroundColor: '#EFEFEF'}}
+                    dropdownStyle={styles.DropdownStyle}
                     buttonStyle={styles.SelectDropdownStyle}
-                    buttonTextStyle={{
-                      textAlign: 'left',
-                      fontFamily: 'Poppins-Medium',
-                      color: 'gray',
-                      fontSize: 16,
-                      paddingTop: 3,
-                    }}
-                    rowStyle={{
-                      backgroundColor: '#EFEFEF',
-                      borderBottomColor: '#C5C5C5',
-                    }}
-                    rowTextStyle={{
-                      color: '#444',
-                      textAlign: 'left',
-                      fontFamily: 'Poppins-Regular',
-                    }}
+                    buttonTextStyle={styles.CategoriesDropdown}
+                    rowStyle={styles.DropdownRowStyle}
+                    rowTextStyle={styles.DropdownRowStyle}
                     renderDropdownIcon={isOpened => {
                       return (
                         <FontAwesomeIcon
@@ -272,34 +219,22 @@ const CreateEvent = ({navigation}) => {
                   />
                 </View>
                 <View>
-                  <Text style={{fontFamily: 'Poppins-Medium', marginTop: 6}}>
-                    Date Time Show
-                  </Text>
+                  <Text style={styles.DateTextStyle}>Date Time Show</Text>
                   <TouchableOpacity
-                    style={{
-                      borderWidth: 1,
-                      height: 50,
-                      borderColor: '#9DB2BF',
-                      borderRadius: 5,
-                      display: 'flex',
-                      flexDirection: 'row',
-                      justifyContent: 'space-between',
-                      paddingHorizontal: 15,
-                      paddingVertical: 12,
-                    }}
+                    style={styles.DateWrapperStyle}
                     onPress={() => setOpen(true)}>
-                    <Text style={{fontFamily: 'Poppins-Medium'}}>
+                    <Text style={styles.PoppinsMedium}>
                       {moment(date).format('DD/MM/YYYY')}
                     </Text>
-                    <FontAwesomeIcon icon={faCalendar}></FontAwesomeIcon>
+                    <FontAwesomeIcon icon={faCalendar} />
                     <DatePicker
                       modal
                       open={open}
                       mode="date"
                       date={date}
-                      onConfirm={date => {
+                      onConfirm={dates => {
                         setOpen(false);
-                        setDate(date);
+                        setDate(dates);
                       }}
                       onCancel={() => {
                         setOpen(false);
@@ -308,49 +243,27 @@ const CreateEvent = ({navigation}) => {
                   </TouchableOpacity>
                 </View>
                 <TouchableOpacity onPress={handleDocumentSelection}>
-                  <Text style={{fontFamily: 'Poppins-Medium', marginTop: 6}}>
+                  <Text style={styles.SelectPictureTextStyle}>
                     Select Picture
                   </Text>
-                  <View
-                    style={{
-                      borderWidth: 1,
-                      height: 50,
-                      borderColor: '#9DB2BF',
-                      borderRadius: 5,
-                      display: 'flex',
-                      flexDirection: 'row',
-                      justifyContent: 'space-between',
-                      paddingHorizontal: 15,
-                      paddingVertical: 12,
-                    }}>
-                    <Text style={{fontFamily: 'Poppins-Medium'}}>
-                      Choose File
-                    </Text>
-                    <FontAwesomeIcon icon={faUpload}></FontAwesomeIcon>
+                  <View style={styles.DateWrapperStyle}>
+                    <Text style={styles.PoppinsMedium}>Choose File</Text>
+                    <FontAwesomeIcon icon={faUpload} />
                   </View>
                 </TouchableOpacity>
                 <View>
-                  <Text style={{fontFamily: 'Poppins-Medium', marginTop: 5}}>
-                    Description
-                  </Text>
-                  <View
-                    style={{
-                      borderWidth: 1,
-                      borderRadius: 10,
-                      borderColor: '#9DB2BF',
-                      paddingLeft: 10,
-                      width: '100%',
-                      height: 200,
-                    }}>
+                  <Text style={styles.SelectPictureTextStyle}>Description</Text>
+                  <View style={styles.DescriptionStyle}>
                     <TextInput
-                      style={{fontFamily: 'Poppins-Regular'}}
+                      style={styles.PoppinsRegular}
                       placeholder="Description"
                       onChangeText={handleChange('description')}
                       onBlur={handleBlur('description')}
-                      value={values.description}></TextInput>
+                      value={values.description}
+                    />
                   </View>
                 </View>
-                <View style={{marginTop: 10}}>
+                <View style={styles.CreateEventBtnStyle}>
                   <TouchableOpacity
                     onPress={handleSubmit}
                     style={styles.SaveBtnStyle}>
@@ -367,16 +280,7 @@ const CreateEvent = ({navigation}) => {
         onRequestClose={() => {
           setModalVisible(!modalVisible);
         }}>
-        <View
-          style={{
-            width: '100%',
-            height: '100%',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            gap: 25,
-            backgroundColor: 'white',
-          }}>
+        <View style={styles.ModalStyle}>
           <SimpleLottie />
         </View>
       </Modal>

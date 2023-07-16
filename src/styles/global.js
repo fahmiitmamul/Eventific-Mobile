@@ -344,6 +344,98 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  //Create Event
+  CreateEventWrapper: {
+    width: '100%',
+    height: '100%',
+    backgroundColor: '#19a7ce',
+  },
+  CreateEventAppbar: {
+    fontFamily: 'Poppins-Medium',
+    paddingLeft: 70,
+    color: 'white',
+  },
+  ContentWrapperStyle: {
+    borderTopLeftRadius: 40,
+    borderTopRightRadius: 40,
+    backgroundColor: 'white',
+  },
+  InputEventStyle: {
+    fontFamily: 'Poppins-Medium',
+    marginBottom: 5,
+  },
+  CategoryTextStyle: {
+    fontFamily: 'Poppins-Medium',
+    marginBottom: 5,
+    marginTop: 5,
+  },
+  CategoriesDropdown: {
+    textAlign: 'left',
+    fontFamily: 'Poppins-Medium',
+    color: 'gray',
+    fontSize: 16,
+    paddingTop: 3,
+  },
+  DropdownRowStyle: {
+    backgroundColor: '#EFEFEF',
+    borderBottomColor: '#C5C5C5',
+  },
+  DropdownStyle: {
+    backgroundColor: '#EFEFEF',
+  },
+  DropdownRowTextStyle: {
+    color: '#444',
+    textAlign: 'left',
+    fontFamily: 'Poppins-Regular',
+  },
+  CreateEventForm: {
+    padding: 30,
+  },
+  DateTextStyle: {
+    fontFamily: 'Poppins-Medium',
+    marginTop: 6,
+  },
+  DateWrapperStyle: {
+    borderWidth: 1,
+    height: 50,
+    borderColor: '#9DB2BF',
+    borderRadius: 5,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 15,
+    paddingVertical: 12,
+  },
+  PoppinsMedium: {
+    fontFamily: 'Poppins-Medium',
+  },
+  SelectPictureTextStyle: {
+    fontFamily: 'Poppins-Medium',
+    marginTop: 6,
+  },
+  DescriptionStyle: {
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: '#9DB2BF',
+    paddingLeft: 10,
+    width: '100%',
+    height: 200,
+  },
+  PoppinsRegular: {
+    fontFamily: 'Poppins-Regular',
+  },
+  CreateEventBtnStyle: {
+    marginTop: 10,
+  },
+  ModalStyle: {
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 25,
+    backgroundColor: 'white',
+  },
   //Sign Up
   LinkLoginStyle: {
     color: 'blue',
