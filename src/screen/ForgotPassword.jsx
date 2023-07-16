@@ -1,11 +1,11 @@
 import React from 'react';
-import {ScrollView, Text, TextInput, View, Image} from 'react-native';
-import {Formik} from 'formik';
-import {Button} from 'react-native-paper';
 import * as Yup from 'yup';
-import {Appbar} from 'react-native-paper';
 import styles from '../styles/global';
 import http from '../helpers/http';
+import {Appbar} from 'react-native-paper';
+import {ScrollView, Text, TextInput, View} from 'react-native';
+import {Formik} from 'formik';
+import {Button} from 'react-native-paper';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
@@ -46,14 +46,14 @@ const ForgotPassword = ({navigation}) => {
 
   return (
     <React.Fragment>
-      <Appbar.Header style={{backgroundColor: 'white'}}>
+      <Appbar.Header style={styles.FlatListEmptyWrapper}>
         <Appbar.BackAction
           onPress={() => {
             navigation.navigate('SignIn');
           }}
         />
       </Appbar.Header>
-      <ScrollView style={{backgroundColor: 'white'}}>
+      <ScrollView style={styles.FlatListEmptyWrapper}>
         <View style={styles.ViewHeader}>
           <View>
             <Text style={styles.TextLoginStyle}>Forgot Password</Text>
@@ -100,14 +100,16 @@ const ForgotPassword = ({navigation}) => {
                           onChangeText={handleChange('email')}
                           onBlur={handleBlur('email')}
                           value={values.email}
-                          style={styles.FormTextInputErrorStyle}></TextInput>
+                          style={styles.FormTextInputErrorStyle}
+                        />
                       ) : (
                         <TextInput
                           placeholder="Email"
                           onChangeText={handleChange('email')}
                           onBlur={handleBlur('email')}
                           value={values.email}
-                          style={styles.FormTextInputNormalStyle}></TextInput>
+                          style={styles.FormTextInputNormalStyle}
+                        />
                       )}
                       {errors.email && touched.email && (
                         <Text style={styles.FormErrorTextStyle}>
