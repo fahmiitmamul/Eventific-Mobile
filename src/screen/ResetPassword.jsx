@@ -70,14 +70,14 @@ const ResetPassword = ({navigation}) => {
 
   return (
     <React.Fragment>
-      <Appbar.Header style={{backgroundColor: 'white'}}>
+      <Appbar.Header style={styles.FlatListEmptyWrapper}>
         <Appbar.BackAction
           onPress={() => {
             navigation.navigate('ForgotPassword');
           }}
         />
       </Appbar.Header>
-      <ScrollView style={{backgroundColor: 'white'}}>
+      <ScrollView style={styles.FlatListEmptyWrapper}>
         <View style={styles.ViewHeader}>
           <View>
             <Text style={styles.TextLoginStyle}>Reset Password</Text>
