@@ -243,16 +243,14 @@ const CreateEvent = ({navigation}) => {
                   </TouchableOpacity>
                 </View>
                 <TouchableOpacity onPress={handleDocumentSelection}>
-                  <Text style={styles.SelectPictureTextStyle}>
-                    Select Picture
-                  </Text>
+                  <Text style={styles.SelectPictureText}>Select Picture</Text>
                   <View style={styles.DateWrapperStyle}>
                     <Text style={styles.PoppinsMedium}>Choose File</Text>
                     <FontAwesomeIcon icon={faUpload} />
                   </View>
                 </TouchableOpacity>
                 <View>
-                  <Text style={styles.SelectPictureTextStyle}>Description</Text>
+                  <Text style={styles.SelectPictureText}>Description</Text>
                   <View style={styles.DescriptionStyle}>
                     <TextInput
                       style={styles.PoppinsRegular}

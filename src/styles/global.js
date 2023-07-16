@@ -409,7 +409,7 @@ const styles = StyleSheet.create({
   PoppinsMedium: {
     fontFamily: 'Poppins-Medium',
   },
-  SelectPictureTextStyle: {
+  SelectPictureText: {
     fontFamily: 'Poppins-Medium',
     marginTop: 6,
   },
