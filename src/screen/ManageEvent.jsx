@@ -58,31 +58,11 @@ const ManageEvent = ({navigation}) => {
           title="Manage Event"
         />
       </Appbar.Header>
-      <View
-        style={{
-          backgroundColor: 'white',
-          borderTopLeftRadius: 40,
-          borderTopRightRadius: 40,
-          width: '100%',
-          height: '100%',
-          paddingTop: 20,
-        }}>
+      <View style={styles.ManageWrapper}>
         <View>
-          <TouchableOpacity
-            style={{
-              backgroundColor: '#19a7ce',
-              width: 100,
-              margin: 20,
-              padding: 10,
-              borderRadius: 10,
-            }}>
+          <TouchableOpacity style={styles.CreateBtnStyle}>
             <Text
-              style={{
-                fontFamily: 'Poppins-Medium',
-                color: 'white',
-                paddingTop: 3,
-                textAlign: 'center',
-              }}
+              style={styles.CreateTextStyle}
               onPress={() => {
                 navigation.navigate('Create Event');
               }}>
@@ -95,13 +75,7 @@ const ManageEvent = ({navigation}) => {
           keyExtractor={item => item.id}
           ListEmptyComponent={
             <View>
-              <Text
-                style={{
-                  fontFamily: 'Poppins-Medium',
-                  fontSize: 20,
-                  textAlign: 'center',
-                  marginTop: 20,
-                }}>
+              <Text style={styles.FlatListEmptyStyle}>
                 No events found, please create events
               </Text>
             </View>
@@ -134,33 +108,20 @@ const ManageEvent = ({navigation}) => {
                         </Text>
                       </View>
                     </View>
-                    <View
-                      style={{display: 'flex', flexDirection: 'row', gap: 10}}>
-                      <Text
-                        style={{
-                          fontFamily: 'Poppins-Medium',
-                          color: '#3366ff',
-                        }}>
-                        Detail
-                      </Text>
+                    <View style={styles.ProfileValueWrapper}>
+                      <Text style={styles.EditBtnStyle}>Detail</Text>
                       <Text
                         onPress={() =>
                           navigation.navigate('Update Event', {
                             eventId: item.id,
                           })
                         }
-                        style={{
-                          fontFamily: 'Poppins-Medium',
-                          color: '#3366ff',
-                        }}>
+                        style={styles.EditBtnStyle}>
                         Update
                       </Text>
                       <Text
                         onPress={() => openModal(item.id)}
-                        style={{
-                          fontFamily: 'Poppins-Medium',
-                          color: '#3366ff',
-                        }}>
+                        style={styles.EditBtnStyle}>
                         Delete
                       </Text>
                     </View>
@@ -178,54 +139,15 @@ const ManageEvent = ({navigation}) => {
         onRequestClose={() => {
           setModalVisible(!modalVisible);
         }}>
-        <View
-          style={{
-            width: '100%',
-            height: '100%',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            gap: 25,
-            backgroundColor: 'white',
-          }}>
-          <View
-            style={{
-              width: '80%',
-              height: '20%',
-              padding: 10,
-              backgroundColor: '#19a7ce',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              gap: 20,
-              borderRadius: 20,
-              opacity: 1,
-              elevation: 20,
-            }}>
-            <Text
-              style={{
-                fontFamily: 'Poppins-Medium',
-                color: 'white',
-                textAlign: 'center',
-              }}>
+        <View style={styles.DeleteModalWrapper}>
+          <View style={styles.DeleteModalSecondWrapper}>
+            <Text style={styles.DeleteModalTextStyle}>
               Are you sure want to delete this event ?
             </Text>
-            <View style={{display: 'flex', flexDirection: 'row', gap: 20}}>
-              <TouchableOpacity
-                style={{
-                  backgroundColor: '#F24C3D',
-                  width: 80,
-                  height: 50,
-                  borderRadius: 12,
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
+            <View style={styles.DocumentSelectWrapper}>
+              <TouchableOpacity style={styles.DeleteWrapperStyle}>
                 <Text
-                  style={{
-                    fontFamily: 'Poppins-Medium',
-                    color: 'white',
-                  }}
+                  style={styles.SaveTextStyle}
                   onPress={() => {
                     handleDelete(deleteWishlist);
                     setModalVisible(!modalVisible);
@@ -233,21 +155,9 @@ const ManageEvent = ({navigation}) => {
                   Yes
                 </Text>
               </TouchableOpacity>
-              <TouchableOpacity
-                style={{
-                  backgroundColor: 'green',
-                  width: 80,
-                  height: 50,
-                  borderRadius: 12,
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
+              <TouchableOpacity style={styles.NoBtnStyle}>
                 <Text
-                  style={{
-                    fontFamily: 'Poppins-Medium',
-                    color: 'white',
-                  }}
+                  style={styles.DeleteModalTextStyle}
                   onPress={() => setModalVisible(!modalVisible)}>
                   No
                 </Text>

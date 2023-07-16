@@ -681,6 +681,36 @@ const styles = StyleSheet.create({
     color: '#3366ff',
     marginTop: 10,
   },
+  CreateBtnStyle: {
+    backgroundColor: '#19a7ce',
+    width: 100,
+    margin: 20,
+    padding: 10,
+    borderRadius: 10,
+  },
+  CreateTextStyle: {
+    fontFamily: 'Poppins-Medium',
+    color: 'white',
+    paddingTop: 3,
+    textAlign: 'center',
+  },
+  ManageWrapper: {
+    backgroundColor: 'white',
+    borderTopLeftRadius: 40,
+    borderTopRightRadius: 40,
+    width: '100%',
+    height: '100%',
+    paddingTop: 20,
+  },
+  NoBtnStyle: {
+    backgroundColor: 'green',
+    width: 80,
+    height: 50,
+    borderRadius: 12,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   //Payment Method
   PaymentWrapper: {
     width: '100%',
@@ -714,6 +744,34 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Medium',
     color: 'black',
   },
+  //Delete Modal Style
+  DeleteModalWrapper: {
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 25,
+    backgroundColor: 'white',
+  },
+  DeleteModalSecondWrapper: {
+    width: '80%',
+    height: '20%',
+    padding: 10,
+    backgroundColor: '#19a7ce',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 20,
+    borderRadius: 20,
+    opacity: 1,
+    elevation: 20,
+  },
+  DeleteModalTextStyle: {
+    fontFamily: 'Poppins-Medium',
+    color: 'white',
+    textAlign: 'center',
+  },
   //Profile
   AppbarProfile: {
     fontFamily: 'Poppins-Medium',
@@ -727,6 +785,15 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     gap: 20,
+  },
+  DeleteWrapperStyle: {
+    backgroundColor: '#F24C3D',
+    width: 80,
+    height: 50,
+    borderRadius: 12,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   SelectPictureStyle: {
     backgroundColor: '#19a7ce',
