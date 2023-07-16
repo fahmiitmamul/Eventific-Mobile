@@ -93,7 +93,8 @@ const MyWishlists = ({navigation}) => {
         }
         renderItem={({item}) => {
           return <WishlistData item={item} />;
-        }}></FlatList>
+        }}
+      />
     </View>
   );
 };

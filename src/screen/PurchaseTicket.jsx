@@ -1,13 +1,12 @@
 import React from 'react';
+import http from '../helpers/http';
+import styles from '../styles/global';
 import {Appbar} from 'react-native-paper';
 import {View, Image, Text, TouchableOpacity} from 'react-native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faMinus, faPlus} from '@fortawesome/free-solid-svg-icons';
 import {useFocusEffect} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
-import http from '../helpers/http';
-import styles from '../styles/global';
-import {ScrollView} from 'react-native-gesture-handler';
 import {FlatList} from 'react-native';
 
 const PurchaseTicket = ({route, navigation}) => {
@@ -225,7 +224,7 @@ const PurchaseTicket = ({route, navigation}) => {
                     <TouchableOpacity
                       onPress={() => decrement(item.id)}
                       style={styles.QuantityBtn}>
-                      <FontAwesomeIcon icon={faMinus}></FontAwesomeIcon>
+                      <FontAwesomeIcon icon={faMinus} />
                     </TouchableOpacity>
                     <Text style={{fontFamily: 'Poppins-Bold'}}>
                       {item.id === filledSection.id
@@ -235,7 +234,7 @@ const PurchaseTicket = ({route, navigation}) => {
                     <TouchableOpacity
                       onPress={() => increment(item.id)}
                       style={styles.QuantityBtn}>
-                      <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon>
+                      <FontAwesomeIcon icon={faPlus} />
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -249,7 +248,8 @@ const PurchaseTicket = ({route, navigation}) => {
           backgroundColor: 'white',
           width: '100%',
           height: '100%',
-        }}></FlatList>
+        }}
+      />
     </View>
   );
 };

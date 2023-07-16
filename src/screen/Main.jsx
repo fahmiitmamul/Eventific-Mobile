@@ -32,7 +32,6 @@ import UpdateEvent from './UpdateEvent';
 import SearchResults from './SearchResults';
 
 const AuthStack = createNativeStackNavigator();
-const PaymentStack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
 const theme = {

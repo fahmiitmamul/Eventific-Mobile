@@ -168,11 +168,11 @@ const Profile = ({navigation}) => {
                 gap: 10,
                 alignItems: 'center',
               }}>
-              <FontAwesomeIcon icon={faPencil}></FontAwesomeIcon>
+              <FontAwesomeIcon icon={faPencil} />
               <Text style={{fontFamily: 'Poppins-Medium'}}>Edit Profile</Text>
             </View>
             <View>
-              <FontAwesomeIcon icon={faChevronRight}></FontAwesomeIcon>
+              <FontAwesomeIcon icon={faChevronRight} />
             </View>
           </TouchableOpacity>
           <TouchableOpacity
@@ -192,13 +192,13 @@ const Profile = ({navigation}) => {
                 gap: 10,
                 alignItems: 'center',
               }}>
-              <FontAwesomeIcon icon={faLock}></FontAwesomeIcon>
+              <FontAwesomeIcon icon={faLock} />
               <Text style={{fontFamily: 'Poppins-Medium'}}>
                 Change Password
               </Text>
             </View>
             <View>
-              <FontAwesomeIcon icon={faChevronRight}></FontAwesomeIcon>
+              <FontAwesomeIcon icon={faChevronRight} />
             </View>
           </TouchableOpacity>
         </View>

@@ -123,7 +123,8 @@ const MyBooking = ({navigation}) => {
           }
           renderItem={({item}) => {
             return <HistoryData item={item} />;
-          }}></FlatList>
+          }}
+        />
       </View>
     </View>
   );

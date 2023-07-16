@@ -9,7 +9,6 @@ import http from '../helpers/http';
 import {useDispatch, useSelector} from 'react-redux';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faArrowRightFromBracket} from '@fortawesome/free-solid-svg-icons';
-import DefaultImg from '../assets/images/images.png';
 import {logout} from '../redux/reducers/auth';
 
 const CustomDrawer = props => {
