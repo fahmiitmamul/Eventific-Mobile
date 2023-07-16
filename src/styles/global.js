@@ -3,6 +3,174 @@ import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
   //Home
+  EventCatWrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+    gap: 30,
+    backgroundColor: 'white',
+  },
+  EventCatSecondWrapper: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 20,
+  },
+  EventCatDateWrapper: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 5,
+  },
+  EventCatDateStyle: {
+    fontFamily: 'Poppins-Medium',
+    color: '#FF8900',
+    fontSize: 20,
+  },
+  EventCatDotStyle: {
+    height: 430,
+    width: 5,
+    borderRightColor: '#C1C5D080',
+    borderLeftWidth: 0,
+    borderTopWidth: 0,
+    borderBottomWidth: 0,
+    borderWidth: 3,
+    borderStyle: 'dotted',
+  },
+  EventCatImageStyle: {
+    position: 'relative',
+    overflow: 'hidden',
+    borderRadius: 40,
+  },
+  EventCatImg: {
+    width: 300,
+    height: 450,
+  },
+  LinearGradientStyle: {
+    position: 'absolute',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 5,
+    height: 450,
+    width: '100%',
+  },
+  EventCatTitleWrapper: {
+    position: 'absolute',
+    top: 250,
+    margin: 20,
+  },
+  EventCatDateTextStyle: {
+    color: 'white',
+    fontFamily: 'Poppins-Regular',
+  },
+  EventCatTitleStyle: {
+    color: 'white',
+    fontFamily: 'Poppins-Medium',
+    fontSize: 25,
+  },
+  EventCatFaWrapper: {
+    marginTop: 5,
+    backgroundColor: 'red',
+    width: 40,
+    borderRadius: 10,
+    padding: 5,
+  },
+  EventCatBtnStyle: {
+    backgroundColor: '#19a7ce',
+    borderRadius: 8,
+    marginTop: 10,
+    marginBottom: 20,
+  },
+  EventCatBtnTextStyle: {
+    fontFamily: 'Poppins-Regular',
+    color: 'white',
+  },
+  EventCategoriesStyle: {
+    width: 120,
+    height: 50,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderStyle: 'dotted',
+    shadowColor: '#52006A',
+    backgroundColor: 'white',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 20,
+  },
+  EventCategoriesItemStyle: {
+    fontFamily: 'Poppins-Medium',
+  },
+  EventsDataWrapper: {
+    position: 'relative',
+    marginLeft: 20,
+  },
+  MainWrapper: {
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'white',
+  },
+  MainSecondWrapper: {
+    backgroundColor: '#19a7ce',
+    width: '100%',
+  },
+  FlatListWrapperStyle: {
+    marginLeft: 30,
+  },
+  FlatListEmptyWrapper: {
+    backgroundColor: 'white',
+  },
+  FlatListEmptyStyle: {
+    fontFamily: 'Poppins-Medium',
+    fontSize: 20,
+    textAlign: 'center',
+    marginTop: 20,
+  },
+  HomeAppbar: {
+    fontFamily: 'Poppins-Medium',
+    paddingLeft: 70,
+  },
+  SearchStyle: {
+    fontFamily: 'Poppins-Regular',
+    color: 'white',
+    position: 'absolute',
+    top: 7,
+    left: 50,
+    fontSize: 20,
+  },
+  MainEventsWrapper: {
+    backgroundColor: 'white',
+    borderTopLeftRadius: 40,
+    borderTopRightRadius: 40,
+  },
+  MainEventsSecondWrapper: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 25,
+  },
+  DiscoverWrapperStyle: {
+    marginHorizontal: 20,
+  },
+  DiscoverTextStyle: {
+    fontFamily: 'Poppins-Medium',
+    fontSize: 20,
+    marginBottom: 20,
+  },
+  UpcomingStyle: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginHorizontal: 20,
+  },
+  UpcomingTextStyle: {
+    fontFamily: 'Poppins-Medium',
+    fontSize: 20,
+    marginBottom: 20,
+  },
+  UpcomingBtnStyle: {
+    color: '#3366ff',
+    fontFamily: 'Poppins-Regular',
+  },
   TextInputWrapper: {
     height: 80,
     backgroundColor: '#19A7CE',

@@ -1,38 +1,41 @@
 import React from 'react';
-import {Appbar, Button} from 'react-native-paper';
+import http from '../helpers/http';
+import moment from 'moment';
+import MessageRegular from '../assets/images/message-regular.png';
+import NotificationController from '../helpers/notification';
+import messaging from '@react-native-firebase/messaging';
 import styles from '../styles/global';
 import SplashScreen from 'react-native-splash-screen';
 import HamburgerIcon from '../assets/images/hamburger.png';
+import LinearGradient from 'react-native-linear-gradient';
+import {Appbar, Button} from 'react-native-paper';
 import {View, StatusBar, Text, Image, FlatList} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faArrowRight, faSearch} from '@fortawesome/free-solid-svg-icons';
-import http from '../helpers/http';
 import {useSelector} from 'react-redux';
-import moment from 'moment';
 import {useFocusEffect} from '@react-navigation/native';
-import MessageRegular from '../assets/images/message-regular.png';
-import NotificationController from '../helpers/notification';
-import messaging from '@react-native-firebase/messaging';
-import LinearGradient from 'react-native-linear-gradient';
 
 const Home = ({navigation}) => {
-  const token = useSelector(state => state.auth.token);
-  const fcmToken = useSelector(state => state.deviceToken.data);
   const [events, setEvents] = React.useState([]);
   const [eventCategories, setEventCategories] = React.useState([]);
   const [eventCategoriesData, setEventCategoriesData] = React.useState([]);
+  const token = useSelector(state => state.auth.token);
+  const fcmToken = useSelector(state => state.deviceToken.data);
 
-  async function getEventByCategory(name) {
-    try {
-      const {data} = await http(token).get('/events', {
-        params: {category: name},
-      });
-      setEventCategoriesData(data.results.rows);
-    } catch (err) {
-      console.warn(err.response?.data?.message);
-    }
-  }
+  const getEventByCategory = React.useCallback(
+    async function (name) {
+      try {
+        const {data} = await http(token).get('/events', {
+          params: {category: name},
+        });
+        setEventCategoriesData(data.results.rows);
+      } catch (err) {
+        console.warn(err.response?.data?.message);
+      }
+    },
+    [token],
+  );
 
   const saveToken = React.useCallback(async () => {
     try {
@@ -53,7 +56,7 @@ const Home = ({navigation}) => {
       console.log(remoteMessage);
     });
     return unsubscribe;
-  }, []);
+  }, [saveToken]);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -78,248 +81,86 @@ const Home = ({navigation}) => {
       getEvents();
       getEventCategories();
       getEventByCategory();
-    }, [token]),
+    }, [token, getEventByCategory]),
   );
-
-  const EventCategoriesData = ({item}) => {
-    return (
-      <View
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          gap: 30,
-          backgroundColor: 'white',
-        }}>
-        <View
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginLeft: 20,
-          }}>
-          <View
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              padding: 5,
-            }}>
-            <Text
-              style={{
-                fontFamily: 'Poppins-Medium',
-                color: '#FF8900',
-                fontSize: 20,
-              }}>
-              {moment(item.date).format('DD')}
-            </Text>
-            <Text style={{fontFamily: 'Poppins-Regular'}}>
-              {moment(item.date).format('ddd')}
-            </Text>
-          </View>
-          <View
-            style={{
-              height: 430,
-              width: 5,
-              borderRightColor: '#C1C5D080',
-              borderLeftWidth: 0,
-              borderTopWidth: 0,
-              borderBottomWidth: 0,
-              borderWidth: 3,
-              borderStyle: 'dotted',
-            }}></View>
-        </View>
-        <View>
-          <View style={{position: 'relative'}}>
-            <View
-              style={{
-                position: 'relative',
-                overflow: 'hidden',
-                borderRadius: 40,
-              }}>
-              <Image
-                source={{
-                  uri: `https://res.cloudinary.com/dxnewldiy/image/upload/v1683808473/${item.picture}`,
-                }}
-                style={{width: 300, height: 450}}
-              />
-              <LinearGradient
-                start={{x: 0, y: 0}}
-                end={{x: 0, y: 1}}
-                colors={['#ffffff00', '#000000']}
-                style={{
-                  position: 'absolute',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  borderRadius: 5,
-                  height: 450,
-                  width: '100%',
-                }}></LinearGradient>
-            </View>
-            <View style={{position: 'absolute', top: 250, margin: 20}}>
-              <Text
-                style={{
-                  color: 'white',
-                  fontFamily: 'Poppins-Regular',
-                }}>
-                {moment(item.date).format('LLL')}
-              </Text>
-              <Text
-                style={{
-                  color: 'white',
-                  fontFamily: 'Poppins-Medium',
-                  fontSize: 25,
-                }}>
-                {item.title}
-              </Text>
-              <View
-                style={{
-                  marginTop: 5,
-                  backgroundColor: 'red',
-                  width: 40,
-                  borderRadius: 10,
-                  padding: 5,
-                }}>
-                <FontAwesomeIcon icon={faArrowRight} color="white" size={25} />
-              </View>
-            </View>
-          </View>
-          <Button
-            style={{
-              backgroundColor: '#19a7ce',
-              borderRadius: 8,
-              marginTop: 10,
-              marginBottom: 20,
-            }}>
-            <Text
-              style={{
-                fontFamily: 'Poppins-Regular',
-                color: 'white',
-              }}>
-              Show All 5 Events
-            </Text>
-          </Button>
-        </View>
-      </View>
-    );
-  };
-
-  const EventCategories = ({item}) => {
-    return (
-      <View>
-        <TouchableOpacity
-          style={{
-            width: 120,
-            height: 50,
-            borderRadius: 20,
-            borderWidth: 1,
-            borderStyle: 'dotted',
-            shadowColor: '#52006A',
-            backgroundColor: 'white',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginRight: 20,
-          }}
-          onPress={() => getEventByCategory(item.name)}>
-          <Text style={{fontFamily: 'Poppins-Medium'}}>{item.name}</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  };
-
-  const EventsData = ({item}) => {
-    return (
-      <TouchableOpacity
-        onPress={() => {
-          navigation.navigate('Detail Event', {
-            id: item.id,
-          });
-        }}>
-        <View style={{position: 'relative', marginLeft: 20}}>
-          <View
-            style={{
-              position: 'relative',
-              overflow: 'hidden',
-              borderRadius: 40,
-            }}>
-            <Image
-              source={{
-                uri: `https://res.cloudinary.com/dxnewldiy/image/upload/v1683808473/${item.picture}`,
-              }}
-              style={{width: 300, height: 450}}
-            />
-            <LinearGradient
-              start={{x: 0, y: 0}}
-              end={{x: 0, y: 1}}
-              colors={['#ffffff00', '#000000']}
-              style={{
-                position: 'absolute',
-                alignItems: 'center',
-                justifyContent: 'center',
-                borderRadius: 5,
-                height: 450,
-                width: '100%',
-              }}></LinearGradient>
-          </View>
-          <View style={{position: 'absolute', top: 250, margin: 20}}>
-            <Text
-              style={{
-                color: 'white',
-                fontFamily: 'Poppins-Regular',
-              }}>
-              {moment(item.date).format('LLLL')}
-            </Text>
-            <Text
-              style={{
-                color: 'white',
-                fontFamily: 'Poppins-Medium',
-                fontSize: 25,
-              }}>
-              {item.title}
-            </Text>
-            <View
-              style={{
-                marginTop: 5,
-                backgroundColor: 'red',
-                width: 40,
-                borderRadius: 10,
-                padding: 5,
-              }}>
-              <FontAwesomeIcon icon={faArrowRight} color="white" size={25} />
-            </View>
-          </View>
-        </View>
-      </TouchableOpacity>
-    );
-  };
 
   return (
     <React.Fragment>
       <NotificationController />
       <StatusBar animated={true} backgroundColor="#19A7CE" />
-      <View style={{width: '100%', height: '100%', backgroundColor: 'white'}}>
-        <View
-          style={{
-            backgroundColor: '#19a7ce',
-            width: '100%',
-          }}>
+      <View style={styles.MainWrapper}>
+        <View style={styles.MainSecondWrapper}>
           <FlatList
             data={eventCategoriesData}
             ListEmptyComponent={
-              <View style={{backgroundColor: 'white'}}>
-                <Text
-                  style={{
-                    fontFamily: 'Poppins-Medium',
-                    fontSize: 20,
-                    textAlign: 'center',
-                    marginTop: 20,
-                  }}>
+              <View style={styles.FlatListEmptyWrapper}>
+                <Text style={styles.FlatListEmptyStyle}>
                   No Upcoming Events was found
                 </Text>
               </View>
             }
-            renderItem={EventCategoriesData}
+            renderItem={({item}) => {
+              return (
+                <View style={styles.EventCatWrapper}>
+                  <View style={styles.EventCatSecondWrapper}>
+                    <View style={styles.EventCatDateWrapper}>
+                      <Text style={styles.EventCatDateStyle}>
+                        {moment(item.date).format('DD')}
+                      </Text>
+                      <Text style={styles.FontStyle}>
+                        {moment(item.date).format('ddd')}
+                      </Text>
+                    </View>
+                    <View style={styles.EventCatDotStyle} />
+                  </View>
+                  <View>
+                    <TouchableOpacity
+                      onPress={() => {
+                        navigation.navigate('Detail Event', {
+                          id: item.id,
+                        });
+                      }}>
+                      <View style={styles.EventsDataWrapper}>
+                        <View style={styles.EventCatImageStyle}>
+                          <Image
+                            source={{
+                              uri: `https://res.cloudinary.com/dxnewldiy/image/upload/v1683808473/${item.picture}`,
+                            }}
+                            style={styles.EventCatImg}
+                          />
+                          <LinearGradient
+                            start={{x: 0, y: 0}}
+                            end={{x: 0, y: 1}}
+                            colors={['#ffffff00', '#000000']}
+                            style={styles.LinearGradientStyle}
+                          />
+                        </View>
+                        <View style={styles.EventCatTitleWrapper}>
+                          <Text style={styles.EventCatDateTextStyle}>
+                            {moment(item.date).format('LLLL')}
+                          </Text>
+                          <Text style={styles.EventCatTitleStyle}>
+                            {item.title}
+                          </Text>
+                          <View style={styles.EventCatFaWrapper}>
+                            <FontAwesomeIcon
+                              icon={faArrowRight}
+                              color="white"
+                              size={25}
+                            />
+                          </View>
+                        </View>
+                      </View>
+                    </TouchableOpacity>
+                    <Button style={styles.EventCatBtnStyle}>
+                      <Text style={styles.EventCatBtnTextStyle}>
+                        Show All 5 Events
+                      </Text>
+                    </Button>
+                  </View>
+                </View>
+              );
+            }}
             keyExtractor={item => item.id}
             ListHeaderComponent={
               <View>
@@ -331,13 +172,11 @@ const Home = ({navigation}) => {
                       navigation.openDrawer();
                     }}
                   />
-                  <Appbar.Content
-                    titleStyle={{fontFamily: 'Poppins-Medium', paddingLeft: 70}}
-                  />
+                  <Appbar.Content titleStyle={styles.HomeAppbar} />
                   <Appbar.Action color="white" icon={MessageRegular} />
                 </Appbar.Header>
                 <View style={styles.TextInputWrapper}>
-                  <View style={{position: 'relative'}}>
+                  <View style={styles.TextInputChildWrapper}>
                     <TouchableOpacity
                       style={styles.TextInputChildWrapper}
                       onPress={() => navigation.navigate('Search Results')}>
@@ -349,14 +188,7 @@ const Home = ({navigation}) => {
                       />
                     </TouchableOpacity>
                     <Text
-                      style={{
-                        fontFamily: 'Poppins-Regular',
-                        color: 'white',
-                        position: 'absolute',
-                        top: 7,
-                        left: 50,
-                        fontSize: 20,
-                      }}
+                      style={styles.SearchStyle}
                       onPress={() => {
                         navigation.navigate('Search Results');
                       }}>
@@ -364,74 +196,89 @@ const Home = ({navigation}) => {
                     </Text>
                   </View>
                 </View>
-                <View
-                  style={{
-                    backgroundColor: 'white',
-                    borderTopLeftRadius: 40,
-                    borderTopRightRadius: 40,
-                  }}>
-                  <View
-                    style={{display: 'flex', flexDirection: 'column', gap: 25}}>
+                <View style={styles.MainEventsWrapper}>
+                  <View style={styles.MainEventsSecondWrapper}>
                     <View style={styles.EventsWrapperStyle}>
                       <Text style={styles.EventsTextStyle}>Events For You</Text>
                     </View>
                     <FlatList
                       data={events}
                       ListEmptyComponent={
-                        <View style={{marginLeft: 30}}>
-                          <Text
-                            style={{
-                              fontFamily: 'Poppins-Medium',
-                              fontSize: 20,
-                              textAlign: 'center',
-                              marginTop: 20,
-                            }}>
+                        <View style={styles.FlatListWrapperStyle}>
+                          <Text style={styles.FlatListEmptyStyle}>
                             No Events was found
                           </Text>
                         </View>
                       }
-                      renderItem={EventsData}
+                      renderItem={({item}) => {
+                        return (
+                          <TouchableOpacity
+                            onPress={() => {
+                              navigation.navigate('Detail Event', {
+                                id: item.id,
+                              });
+                            }}>
+                            <View style={styles.EventsDataWrapper}>
+                              <View style={styles.EventCatImageStyle}>
+                                <Image
+                                  source={{
+                                    uri: `https://res.cloudinary.com/dxnewldiy/image/upload/v1683808473/${item.picture}`,
+                                  }}
+                                  style={styles.EventCatImg}
+                                />
+                                <LinearGradient
+                                  start={{x: 0, y: 0}}
+                                  end={{x: 0, y: 1}}
+                                  colors={['#ffffff00', '#000000']}
+                                  style={styles.LinearGradientStyle}
+                                />
+                              </View>
+                              <View style={styles.EventCatTitleWrapper}>
+                                <Text style={styles.EventCatDateTextStyle}>
+                                  {moment(item.date).format('LLLL')}
+                                </Text>
+                                <Text style={styles.EventCatTitleStyle}>
+                                  {item.title}
+                                </Text>
+                                <View style={styles.EventCatFaWrapper}>
+                                  <FontAwesomeIcon
+                                    icon={faArrowRight}
+                                    color="white"
+                                    size={25}
+                                  />
+                                </View>
+                              </View>
+                            </View>
+                          </TouchableOpacity>
+                        );
+                      }}
                       keyExtractor={item => item.id}
                       horizontal
                     />
-                    <View style={{marginHorizontal: 20}}>
-                      <Text
-                        style={{
-                          fontFamily: 'Poppins-Medium',
-                          fontSize: 20,
-                          marginBottom: 20,
-                        }}>
-                        Discover
-                      </Text>
+                    <View style={styles.DiscoverWrapperStyle}>
+                      <Text style={styles.DiscoverTextStyle}>Discover</Text>
                       <FlatList
                         data={eventCategories}
-                        renderItem={EventCategories}
+                        renderItem={({item}) => {
+                          return (
+                            <View>
+                              <TouchableOpacity
+                                style={styles.EventCategoriesStyle}
+                                onPress={() => getEventByCategory(item.name)}>
+                                <Text style={styles.EventCategoriesItemStyle}>
+                                  {item.name}
+                                </Text>
+                              </TouchableOpacity>
+                            </View>
+                          );
+                        }}
                         keyExtractor={item => item.id}
                         horizontal
                       />
                     </View>
-                    <View
-                      style={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        marginHorizontal: 20,
-                      }}>
-                      <Text
-                        style={{
-                          fontFamily: 'Poppins-Medium',
-                          fontSize: 20,
-                          marginBottom: 20,
-                        }}>
-                        Upcoming
-                      </Text>
-                      <Text
-                        style={{
-                          color: '#3366ff',
-                          fontFamily: 'Poppins-Regular',
-                        }}>
-                        See All
-                      </Text>
+                    <View style={styles.UpcomingStyle}>
+                      <Text style={styles.UpcomingTextStyle}>Upcoming</Text>
+                      <Text style={styles.UpcomingBtnStyle}>See All</Text>
                     </View>
                   </View>
                 </View>
