@@ -48,7 +48,7 @@ const UpdateEvent = ({route, navigation}) => {
     React.useCallback(() => {
       async function getEvents() {
         const {data} = await http(token).get(`/events/${eventId}`);
-        setEvents(data.results.rows);
+        setEvents(data.results);
       }
 
       getEvents();
@@ -275,20 +275,11 @@ const UpdateEvent = ({route, navigation}) => {
                         <SelectDropdown
                           data={categoriesName}
                           defaultButtonText="Category"
-                          dropdownStyle={{backgroundColor: '#EFEFEF'}}
+                          dropdownStyle={styles.DropdownStyle}
                           buttonStyle={styles.SelectDropdownStyle}
-                          buttonTextStyle={{
-                            textAlign: 'left',
-                            fontFamily: 'Poppins-Medium',
-                            color: 'gray',
-                            fontSize: 16,
-                            paddingTop: 3,
-                          }}
-                          rowStyle={{
-                            backgroundColor: '#EFEFEF',
-                            borderBottomColor: '#C5C5C5',
-                          }}
-                          rowTextStyle={{color: '#444', textAlign: 'left'}}
+                          buttonTextStyle={styles.CategoriesDropdown}
+                          rowStyle={styles.DropdownRowStyle}
+                          rowTextStyle={styles.DropdownRowTextStyle}
                           renderDropdownIcon={isOpened => {
                             return (
                               <FontAwesomeIcon
@@ -299,7 +290,7 @@ const UpdateEvent = ({route, navigation}) => {
                             );
                           }}
                           onSelect={(selectedItem, index) => {
-                            setSelectedCategory(index);
+                            setSelectedLocation(index);
                           }}
                           buttonTextAfterSelection={(selectedItem, index) => {
                             return selectedItem;
@@ -312,9 +303,7 @@ const UpdateEvent = ({route, navigation}) => {
                     </View>
                   </View>
                   <View>
-                    <Text style={{fontFamily: 'Poppins-Medium', marginTop: 6}}>
-                      Date Time Show
-                    </Text>
+                    <Text style={styles.DateTextStyle}>Date Time Show</Text>
                     <View style={styles.ProfileValueWrapper}>
                       {!editDate && (
                         <Text style={styles.FontStyle}>
@@ -323,38 +312,27 @@ const UpdateEvent = ({route, navigation}) => {
                       )}
                       {!editDate && (
                         <Text
-                          onPress={() => (a = setEditDate(true))}
+                          onPress={() => setEditDate(true)}
                           style={styles.EditBtnStyle}>
                           Edit
                         </Text>
                       )}
                       {editDate && (
                         <TouchableOpacity
-                          style={{
-                            borderWidth: 1,
-                            height: 50,
-                            borderColor: '#9DB2BF',
-                            borderRadius: 5,
-                            display: 'flex',
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                            paddingHorizontal: 15,
-                            paddingVertical: 12,
-                            width: '100%',
-                          }}
+                          style={styles.DateWrapperStyle}
                           onPress={() => setOpen(true)}>
-                          <Text style={{fontFamily: 'Poppins-Medium'}}>
+                          <Text style={styles.PoppinsMedium}>
                             {moment(date).format('DD/MM/YYYY')}
                           </Text>
-                          <FontAwesomeIcon icon={faCalendar}></FontAwesomeIcon>
+                          <FontAwesomeIcon icon={faCalendar} />
                           <DatePicker
                             modal
                             open={open}
                             mode="date"
                             date={date}
-                            onConfirm={date => {
+                            onConfirm={dates => {
                               setOpen(false);
-                              setDate(date);
+                              setDate(dates);
                             }}
                             onCancel={() => {
                               setOpen(false);
@@ -365,51 +343,33 @@ const UpdateEvent = ({route, navigation}) => {
                     </View>
                   </View>
                   <TouchableOpacity onPress={handleDocumentSelection}>
-                    <Text style={{fontFamily: 'Poppins-Medium', marginTop: 6}}>
-                      Select Picture
-                    </Text>
+                    <Text style={styles.DateTextStyle}>Select Picture</Text>
                     <View style={styles.ProfileValueWrapper}>
                       {!editPicture && (
                         <Image
                           source={{
                             uri: `https://res.cloudinary.com/dxnewldiy/image/upload/v1683808473/${events?.picture}`,
                           }}
-                          style={{width: 100, height: 150}}
+                          style={styles.EditPictureImg}
                         />
                       )}
                       {!editPicture && (
                         <Text
-                          onPress={() => (a = setEditPicture(true))}
+                          onPress={() => setEditPicture(true)}
                           style={styles.EditBtnStyle}>
                           Edit
                         </Text>
                       )}
                       {editPicture && (
-                        <View
-                          style={{
-                            borderWidth: 1,
-                            height: 50,
-                            borderColor: '#9DB2BF',
-                            borderRadius: 5,
-                            display: 'flex',
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                            paddingHorizontal: 15,
-                            paddingVertical: 12,
-                            width: '100%',
-                          }}>
-                          <Text style={{fontFamily: 'Poppins-Medium'}}>
-                            Choose File
-                          </Text>
-                          <FontAwesomeIcon icon={faUpload}></FontAwesomeIcon>
+                        <View style={styles.DateWrapperStyle}>
+                          <Text style={styles.PoppinsMedium}>Choose File</Text>
+                          <FontAwesomeIcon icon={faUpload} />
                         </View>
                       )}
                     </View>
                   </TouchableOpacity>
                   <View>
-                    <Text style={{fontFamily: 'Poppins-Medium', marginTop: 5}}>
-                      Description
-                    </Text>
+                    <Text style={styles.SelectPictureText}>Description</Text>
                     {!editDescription && (
                       <Text style={styles.FontStyle}>
                         {events?.description}
@@ -417,31 +377,24 @@ const UpdateEvent = ({route, navigation}) => {
                     )}
                     {!editDescription && (
                       <Text
-                        onPress={() => (a = setEditDescription(true))}
+                        onPress={() => setEditDescription(true)}
                         style={styles.EditBtnStyle}>
                         Edit
                       </Text>
                     )}
                     {editDescription && (
-                      <View
-                        style={{
-                          borderWidth: 1,
-                          borderRadius: 10,
-                          paddingLeft: 10,
-                          width: '100%',
-                          borderColor: '#9DB2BF',
-                          height: 200,
-                        }}>
+                      <View style={styles.DescriptionStyle}>
                         <TextInput
-                          style={{fontFamily: 'Poppins-Regular'}}
+                          style={styles.PoppinsRegular}
                           placeholder="Description"
                           onChangeText={handleChange('description')}
                           onBlur={handleBlur('description')}
-                          value={values.description}></TextInput>
+                          value={values.description}
+                        />
                       </View>
                     )}
                   </View>
-                  <View style={{marginTop: 10}}>
+                  <View style={styles.CreateEventBtnStyle}>
                     <TouchableOpacity
                       onPress={handleSubmit}
                       style={styles.SaveBtnStyle}>
@@ -458,16 +411,7 @@ const UpdateEvent = ({route, navigation}) => {
           onRequestClose={() => {
             setModalVisible(!modalVisible);
           }}>
-          <View
-            style={{
-              width: '100%',
-              height: '100%',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              gap: 25,
-              backgroundColor: 'white',
-            }}>
+          <View style={styles.ModalStyle}>
             <SimpleLottie />
           </View>
         </Modal>
