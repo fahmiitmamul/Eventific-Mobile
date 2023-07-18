@@ -143,6 +143,11 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
   },
+  HomeMainWrapper: {
+    backgroundColor: '#222B45',
+    borderTopLeftRadius: 40,
+    borderTopRightRadius: 40,
+  },
   MainEventsSecondWrapper: {
     display: 'flex',
     flexDirection: 'column',
@@ -209,6 +214,30 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+  },
+  HomeDateWrapper: {
+    width: '100%',
+    height: 100,
+    backgroundColor: '#222B45',
+    borderTopLeftRadius: 40,
+    borderTopRightRadius: 40,
+  },
+  ListEventWrapper: {
+    backgroundColor: 'white',
+    borderTopLeftRadius: 40,
+    borderTopRightRadius: 40,
+  },
+  HomeDateStyle: {
+    paddingHorizontal: 36,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 40,
+    height: '100%',
+  },
+  HomeDateTextStyle: {
+    color: 'white',
+    fontFamily: 'Poppins-Medium',
   },
   //Search Results
   LimitDropdownStyle: {

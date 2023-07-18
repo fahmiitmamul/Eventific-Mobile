@@ -18,8 +18,10 @@ import {useFocusEffect} from '@react-navigation/native';
 
 const Home = ({navigation}) => {
   const [events, setEvents] = React.useState([]);
+  const [filteredEvents, setFilteredEvents] = React.useState([]);
   const [eventCategories, setEventCategories] = React.useState([]);
   const [eventCategoriesData, setEventCategoriesData] = React.useState([]);
+  const [currentDate, setCurrentDate] = React.useState([]);
   const token = useSelector(state => state.auth.token);
   const fcmToken = useSelector(state => state.deviceToken.data);
 
@@ -58,6 +60,16 @@ const Home = ({navigation}) => {
     return unsubscribe;
   }, [saveToken]);
 
+  const getEventsByDate = React.useCallback(
+    current => {
+      const filtered = events.filter(e => {
+        return current === moment(e.date).format('DD');
+      });
+      setFilteredEvents(filtered);
+    },
+    [events],
+  );
+
   useFocusEffect(
     React.useCallback(() => {
       async function getEventCategories() {
@@ -78,9 +90,24 @@ const Home = ({navigation}) => {
         }
       }
 
+      let curr_date = new Date();
+
+      const getAllDates = function getAllDates(year, month) {
+        let dates = [];
+        let date = new Date(year, month, 1);
+        let i = 0;
+        while (date.getMonth() === month) {
+          dates.push(new Date(date));
+          date.setDate(date.getDate() + 1);
+          i = i + 1;
+        }
+        setCurrentDate(dates);
+      };
+
       getEvents();
       getEventCategories();
       getEventByCategory();
+      getAllDates(curr_date.getFullYear(), curr_date.getMonth());
     }, [token, getEventByCategory]),
   );
 
@@ -196,89 +223,118 @@ const Home = ({navigation}) => {
                     </Text>
                   </View>
                 </View>
-                <View style={styles.MainEventsWrapper}>
-                  <View style={styles.MainEventsSecondWrapper}>
-                    <View style={styles.EventsWrapperStyle}>
-                      <Text style={styles.EventsTextStyle}>Events For You</Text>
-                    </View>
+                <View style={styles.HomeMainWrapper}>
+                  <View style={styles.HomeDateWrapper}>
                     <FlatList
-                      data={events}
-                      ListEmptyComponent={
-                        <View style={styles.FlatListWrapperStyle}>
-                          <Text style={styles.FlatListEmptyStyle}>
-                            No Events was found
-                          </Text>
-                        </View>
-                      }
+                      keyExtractor={item => item}
+                      data={currentDate}
                       renderItem={({item}) => {
                         return (
                           <TouchableOpacity
-                            onPress={() => {
-                              navigation.navigate('Detail Event', {
-                                id: item.id,
-                              });
-                            }}>
-                            <View style={styles.EventsDataWrapper}>
-                              <View style={styles.EventCatImageStyle}>
-                                <Image
-                                  source={{
-                                    uri: `https://res.cloudinary.com/dxnewldiy/image/upload/v1683808473/${item.picture}`,
-                                  }}
-                                  style={styles.EventCatImg}
-                                />
-                                <LinearGradient
-                                  start={{x: 0, y: 0}}
-                                  end={{x: 0, y: 1}}
-                                  colors={['#ffffff00', '#000000']}
-                                  style={styles.LinearGradientStyle}
-                                />
-                              </View>
-                              <View style={styles.EventCatTitleWrapper}>
-                                <Text style={styles.EventCatDateTextStyle}>
-                                  {moment(item.date).format('LLLL')}
-                                </Text>
-                                <Text style={styles.EventCatTitleStyle}>
-                                  {item.title}
-                                </Text>
-                                <View style={styles.EventCatFaWrapper}>
-                                  <FontAwesomeIcon
-                                    icon={faArrowRight}
-                                    color="white"
-                                    size={25}
-                                  />
-                                </View>
-                              </View>
-                            </View>
+                            style={styles.HomeDateStyle}
+                            onPress={() =>
+                              getEventsByDate(moment(item).format('DD'))
+                            }>
+                            <Text style={styles.HomeDateTextStyle}>
+                              {item.getDate()}
+                            </Text>
+                            <Text style={styles.HomeDateTextStyle}>
+                              {moment(item).format('ddd')}
+                            </Text>
                           </TouchableOpacity>
                         );
                       }}
-                      keyExtractor={item => item.id}
                       horizontal
                     />
-                    <View style={styles.DiscoverWrapperStyle}>
-                      <Text style={styles.DiscoverTextStyle}>Discover</Text>
+                  </View>
+                  <View style={styles.ListEventWrapper}>
+                    <View style={styles.MainEventsSecondWrapper}>
+                      <View style={styles.EventsWrapperStyle}>
+                        <Text style={styles.EventsTextStyle}>
+                          Events For You
+                        </Text>
+                      </View>
                       <FlatList
-                        data={eventCategories}
+                        data={
+                          filteredEvents.length < 1 ? events : filteredEvents
+                        }
+                        ListEmptyComponent={
+                          <View style={styles.FlatListWrapperStyle}>
+                            <Text style={styles.FlatListEmptyStyle}>
+                              No Events was found
+                            </Text>
+                          </View>
+                        }
                         renderItem={({item}) => {
                           return (
-                            <View>
-                              <TouchableOpacity
-                                style={styles.EventCategoriesStyle}
-                                onPress={() => getEventByCategory(item.name)}>
-                                <Text style={styles.EventCategoriesItemStyle}>
-                                  {item.name}
-                                </Text>
-                              </TouchableOpacity>
-                            </View>
+                            <TouchableOpacity
+                              onPress={() => {
+                                navigation.navigate('Detail Event', {
+                                  id: item.id,
+                                });
+                              }}>
+                              <View style={styles.EventsDataWrapper}>
+                                <View style={styles.EventCatImageStyle}>
+                                  <Image
+                                    source={{
+                                      uri: `https://res.cloudinary.com/dxnewldiy/image/upload/v1683808473/${item.picture}`,
+                                    }}
+                                    style={styles.EventCatImg}
+                                  />
+                                  <LinearGradient
+                                    start={{x: 0, y: 0}}
+                                    end={{x: 0, y: 1}}
+                                    colors={['#ffffff00', '#000000']}
+                                    style={styles.LinearGradientStyle}
+                                  />
+                                </View>
+                                <View style={styles.EventCatTitleWrapper}>
+                                  <Text style={styles.EventCatDateTextStyle}>
+                                    {moment(item.date).format('LLLL')}
+                                  </Text>
+                                  <Text style={styles.EventCatTitleStyle}>
+                                    {item.title}
+                                  </Text>
+                                  <View style={styles.EventCatFaWrapper}>
+                                    <FontAwesomeIcon
+                                      icon={faArrowRight}
+                                      color="white"
+                                      size={25}
+                                    />
+                                  </View>
+                                </View>
+                              </View>
+                            </TouchableOpacity>
                           );
                         }}
                         keyExtractor={item => item.id}
                         horizontal
                       />
-                    </View>
-                    <View style={styles.UpcomingStyle}>
-                      <Text style={styles.UpcomingTextStyle}>Upcoming</Text>
-                      <Text style={styles.UpcomingBtnStyle}>See All</Text>
+                      <View style={styles.DiscoverWrapperStyle}>
+                        <Text style={styles.DiscoverTextStyle}>Discover</Text>
+                        <FlatList
+                          data={eventCategories}
+                          renderItem={({item}) => {
+                            return (
+                              <View>
+                                <TouchableOpacity
+                                  style={styles.EventCategoriesStyle}
+                                  onPress={() => getEventByCategory(item.name)}>
+                                  <Text style={styles.EventCategoriesItemStyle}>
+                                    {item.name}
+                                  </Text>
+                                </TouchableOpacity>
+                              </View>
+                            );
+                          }}
+                          keyExtractor={item => item.id}
+                          horizontal
+                        />
+                      </View>
+                      <View style={styles.UpcomingStyle}>
+                        <Text style={styles.UpcomingTextStyle}>Upcoming</Text>
+                        <Text style={styles.UpcomingBtnStyle}>See All</Text>
+                      </View>
                     </View>
                   </View>
                 </View>
