@@ -22,6 +22,7 @@ const Home = ({navigation}) => {
   const [eventCategories, setEventCategories] = React.useState([]);
   const [eventCategoriesData, setEventCategoriesData] = React.useState([]);
   const [currentDate, setCurrentDate] = React.useState([]);
+  const [selectedItem, setSelectedItem] = React.useState('');
   const token = useSelector(state => state.auth.token);
   const fcmToken = useSelector(state => state.deviceToken.data);
 
@@ -226,19 +227,30 @@ const Home = ({navigation}) => {
                 <View style={styles.HomeMainWrapper}>
                   <View style={styles.HomeDateWrapper}>
                     <FlatList
-                      keyExtractor={item => item}
+                      keyExtractor={(item, index) => index}
                       data={currentDate}
-                      renderItem={({item}) => {
+                      renderItem={({item, index}) => {
                         return (
                           <TouchableOpacity
                             style={styles.HomeDateStyle}
-                            onPress={() =>
-                              getEventsByDate(moment(item).format('DD'))
-                            }>
-                            <Text style={styles.HomeDateTextStyle}>
+                            onPress={() => {
+                              getEventsByDate(moment(item).format('DD'));
+                              setSelectedItem(index);
+                            }}>
+                            <Text
+                              style={
+                                index === selectedItem
+                                  ? styles.HomeDateTextStyleChecked
+                                  : styles.HomeDateTextStyle
+                              }>
                               {item.getDate()}
                             </Text>
-                            <Text style={styles.HomeDateTextStyle}>
+                            <Text
+                              style={
+                                index === selectedItem
+                                  ? styles.HomeDateTextStyleChecked
+                                  : styles.HomeDateTextStyle
+                              }>
                               {moment(item).format('ddd')}
                             </Text>
                           </TouchableOpacity>

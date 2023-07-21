@@ -239,6 +239,10 @@ const styles = StyleSheet.create({
     color: 'white',
     fontFamily: 'Poppins-Medium',
   },
+  HomeDateTextStyleChecked: {
+    color: 'orange',
+    fontFamily: 'Poppins-Medium',
+  },
   //Search Results
   LimitDropdownStyle: {
     width: '25%',
